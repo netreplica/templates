@@ -1,0 +1,25 @@
+  - boot_disk_size: null
+    configuration: |-
+      #cloud-config
+      hostname: {{ name }}
+      manage_etc_hosts: True
+      system_info:
+        default_user:
+          name: cisco
+      password: cisco
+      chpasswd: { expire: False }
+      ssh_pwauth: True
+      ssh_authorized_keys:
+         - your-ssh-pubkey-line-goes-here
+    hide_links: false
+    id: n{{ node_id }}
+    label: ubuntu-{{ node_id }}
+    node_definition: ubuntu
+    tags: []
+    interfaces:
+{%- for sot_int, emulated_int_dict in interfaces.items(): %}
+      - id: i0
+        label: {{ emulated_int_dict['name'] }}
+        slot: {{ emulated_int_dict['index'] }}
+        type: physical
+{% endfor %}

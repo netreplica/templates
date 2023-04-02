@@ -1,0 +1,15 @@
+lab:
+  description: {{name}}
+  notes: ''
+  title: {{name}}
+  version: 0.2.0
+links:
+{%- for link in links: %}
+  {{ link }}
+{%- endfor %}
+nodes:
+{% for node in nodes: -%}
+{{ node }}
+{%- endfor -%}
+annotations: []
+

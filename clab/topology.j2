@@ -1,10 +1,11 @@
 name: {{name}}
 topology:
     nodes:
-# for node in nodes:
+{% for node in nodes: %}
 {{ node }}
-# endfor
+{% endfor %}
     links:
-# for link in links:
+{%- for link in links: %}
         - endpoints: {{link}}
-# endfor
+{%- endfor %}
+
