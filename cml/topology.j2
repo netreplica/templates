@@ -5,11 +5,16 @@ lab:
   version: 0.2.0
 links:
 {%- for link in links: %}
-  {{ link }}
+  - id: l{{ link['id'] }}
+    n1: n{{ link['a']['node_id'] }}
+    n2: n{{ link['b']['node_id'] }}
+    i1: i{{ link['a']['index'] }}
+    i2: i{{ link['b']['index'] }}
+    label: {{ link['a']['kind'] }}-{{ link['a']['node_id'] }}-{{ link['a']['interface'] }}<->{{ link['b']['kind'] }}-{{ link['b']['node_id'] }}-{{ link['b']['interface'] }}
 {%- endfor %}
 nodes:
-{% for node in nodes: -%}
+{%- for node in nodes: %}
 {{ node }}
-{%- endfor -%}
+{%- endfor %}
 annotations: []
 

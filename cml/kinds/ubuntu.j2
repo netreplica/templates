@@ -16,10 +16,12 @@
     label: ubuntu-{{ node_id }}
     node_definition: ubuntu
     tags: []
+    x: {{ node_id * 100 }}
+    y: {{ node_id * 100 }}
     interfaces:
 {%- for sot_int, emulated_int_dict in interfaces.items(): %}
-      - id: i0
+      - id: i{{ emulated_int_dict['index'] }}
         label: {{ emulated_int_dict['name'] }}
         slot: {{ emulated_int_dict['index'] }}
         type: physical
-{% endfor %}
+{%- endfor -%}
