@@ -8,8 +8,8 @@ links:
   - id: l{{ link['id'] }}
     n1: n{{ link['a']['node_id'] }}
     n2: n{{ link['b']['node_id'] }}
-    i1: i{{ link['a']['index'] }}
-    i2: i{{ link['b']['index'] }}
+    i1: {{ link['a']['e_interface'] }}
+    i2: {{ link['b']['e_interface'] }}
     label: {{ link['a']['node'] }}-{{ link['a']['interface'] }}<->{{ link['b']['node'] }}-{{ link['b']['interface'] }}
 {%- endfor %}
 nodes:

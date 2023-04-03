@@ -1,17 +1,16 @@
-  - boot_disk_size: null
-    configuration: hostname inserthostname-here
+  - id: n{{ node_id }}
+    label: {{ name }}
+    node_definition: iosvl2
+    boot_disk_size: null
     cpu_limit: null
     cpus: null
     data_volume: null
-    hide_links: false
-    id: n1
-    image_definition: null
-    label: iosvl2-0
-    node_definition: iosvl2
     ram: null
+    hide_links: false
     tags: []
-    x: -240
-    y: 0
+    x: {{ node_id * 100 }}
+    y: {{ node_id * 100 }}
+    configuration: hostname {{ name }}
     interfaces:
       - id: i0
         label: Loopback0

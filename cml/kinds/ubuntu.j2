@@ -1,4 +1,15 @@
-  - boot_disk_size: null
+  - id: n{{ node_id }}
+    label: {{ name }}
+    node_definition: ubuntu
+    boot_disk_size: null
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    ram: null
+    hide_links: false
+    tags: []
+    x: {{ node_id * 100 }}
+    y: {{ node_id * 100 }}
     configuration: |-
       #cloud-config
       hostname: {{ name }}
@@ -11,17 +22,10 @@
       ssh_pwauth: True
       ssh_authorized_keys:
          - your-ssh-pubkey-line-goes-here
-    hide_links: false
-    id: n{{ node_id }}
-    label: {{ name }}
-    node_definition: ubuntu
-    tags: []
-    x: {{ node_id * 100 }}
-    y: {{ node_id * 100 }}
     interfaces:
 {%- for sot_int, emulated_int_dict in interfaces.items(): %}
-      - id: i{{ emulated_int_dict['index'] }}
-        label: {{ emulated_int_dict['name'] }}
+      - id: {{ emulated_int_dict['name'] }}
+        label: {{ sot_int }}
         slot: {{ emulated_int_dict['index'] }}
         type: physical
 {%- endfor -%}
