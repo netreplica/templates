@@ -4,17 +4,17 @@ lab:
   title: {{name}}
   version: 0.2.0
 links:
-{%- for link in links: %}
+{% for link in links: %}
   - id: l{{ link['id'] }}
     n1: n{{ link['a']['node_id'] }}
     n2: n{{ link['b']['node_id'] }}
     i1: {{ link['a']['e_interface'] }}
     i2: {{ link['b']['e_interface'] }}
     label: {{ link['a']['node'] }}-{{ link['a']['interface'] }}<->{{ link['b']['node'] }}-{{ link['b']['interface'] }}
-{%- endfor %}
+{% endfor %}
 nodes:
-{%- for node in nodes: %}
+{% for node in nodes: %}
 {{ node }}
-{%- endfor %}
+{% endfor %}
 annotations: []
 
