@@ -23,9 +23,9 @@
       ssh_authorized_keys:
          - your-ssh-pubkey-line-goes-here
     interfaces:
-{%- for sot_int, emulated_int_dict in interfaces.items(): %}
+{% for sot_int, emulated_int_dict in interfaces.items(): %}
       - id: {{ emulated_int_dict['name'] }}
         label: {{ sot_int }}
         slot: {{ emulated_int_dict['index'] }}
         type: physical
-{%- endfor -%}
+{% endfor %}
