@@ -11,4 +11,30 @@
     x: {{ node_id * 100 }}
     y: {{ node_id * 100 }}
     configuration: hostname {{ name }}
-{% include 'cml/kinds/ios.interfaces.j2' %}
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+{% set block_size = 4 %}{# CML iosv requires that interfaces to be listed in blocks of four #}
+{# convert interfaces dictionary to a list for accessing values via index #}
+{% set interface_list = [] %}
+{% for key, value in interfaces.items() %}
+    {% do interface_list.append({'key': key, 'value': value}) %}
+{% endfor %}
+{# calculate number of cycles required to list all interfaces in blocks of four #}
+{% set cycles = (interface_list|length / block_size)|ceil %}
+{# loop through cycles and list interfaces in blocks of four #}
+{% for cycle in range(cycles) %}
+    {% set block_counter = cycle * block_size %}{# block_counter is the minimum interface number in the current block #}
+    {% for i in range(block_size) %}
+        {% set index = block_counter + i %}
+        {% if index < interface_list|length %}{# there is interface with current index #}
+      - id: {{ interface_list[index]['value']['name'] }}
+        {% else %}{# there is no interface with current index, so we need to create a dummy interface to pad the block #}
+      - id: i{{ index + 1}}
+        {% endif %}
+        label: GigabitEthernet{{ cycle }}/{{ i }}
+        slot: {{ index }}
+        type: physical
+    {% endfor %}
+{% endfor %}
