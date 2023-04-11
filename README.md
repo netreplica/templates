@@ -7,6 +7,7 @@ This repository provides a set of such templates as a starting point. You're wel
 # Supported Network Emulation Engines
 
 * [Containerlab](https://containerlab.dev/)
+* [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/)
 
 # What is included
 
@@ -14,13 +15,19 @@ Containerlab artifacts:
 
 * `clab/topology.j2`: template for the final Containerlab topology file.
 * `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries.
+* `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab
+
+Cisco Modeling Labs artifacts:
+
+* `cml/topology.j2`: template for the final CML topology file.
+* `cml/kinds/<kind>.j2`: templates for individual CML node entries.
+* `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML
 
 NOS-specific artifacts:
 
-* `interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind`.
 * `interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`.
 
-To customize the way Containerlab topology file should be generated, you would need to change these templates as needed. For example, you might want to change `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
+To customize the way a topology file should be generated, you would need to change these templates as needed. For example, you might want to change `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
 
 # Copyright notice
 
