@@ -15,17 +15,17 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 
 # What is included
 
-| Platform                 | Containerlab                                              | CML                                                |
-| --------------           | ------------                                              | --------                                           |
-| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               |
-| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                               |
-| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/kinds/iosv.j2)      |
-| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    |
-| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/kinds/nxosv9000.j2) |
-| Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                               |
-| Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                               |
-| Ubuntu                   | `ubuntu` -> [`linux`](clab/kinds/linux.j2)                | [`ubuntu`                ](cml/kinds/ubuntu.j2)    |
-| Unknown                  | `unknown` -> [`linux`](clab/kinds/linux.j2)               | `unknown` -> [`iosvl2`   ](cml/kinds/iosvl2.j2)    |
+| Platform                 | Containerlab                                              | CML                                                | Interface Mapping                                     |
+| --------------           | ------------                                              | --------                                           |  --------                                             |
+| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               | [Interface Map](interface_maps/ceos.j2)               |
+| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         |
+| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/kinds/iosv.j2)      | [CML Node Template](cml/kinds/iosv.j2)                |
+| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    | [CML Node Template](cml/kinds/iosvl2.j2)              |
+| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/kinds/nxosv9000.j2) | [CML Node Template](cml/kinds/nxosv9000.j2)           |
+| Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                               | Not supported                                         |
+| Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  |
+| Ubuntu                   | `ubuntu` -> [`linux`](clab/kinds/linux.j2)                | [`ubuntu`                ](cml/kinds/ubuntu.j2)    | Not supported                                         |
+| Unknown                  | `unknown` -> [`linux`](clab/kinds/linux.j2)               | `unknown` -> [`iosvl2`   ](cml/kinds/iosvl2.j2)    | Not supported                                         |
 
 # Template naming convention
 
