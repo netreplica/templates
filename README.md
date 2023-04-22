@@ -15,16 +15,16 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 
 # What is included
 
-| Platform                 | Containerlab              | CML                     |
-| --------------           | ------------              | --------                |
-| Arista EOS               | `ceos`                    | `no`                    |
-| Cisco CSR1000v           | `vr-cisco_csr1000v`       | `no`                    |
-| Cisco IOSv               | `no`                      | `iosv`                  |
-| Cisco IOSvL2             | `no`                      | `iosvl2`                |
-| Cisco NX-OSv9000         | `no`                      | `nxosv9000`             |
-| Linux                    | `linux`                   | `no`                    |
-| Nokia SR-Linux           | `srl`                     | `no`                    |
-| Ubuntu                   | `ubuntu -> linux`         | `ubuntu`                |
+| Platform                 | Containerlab                                              | CML                                   |
+| --------------           | ------------                                              | --------                              |
+| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                  |
+| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                  |
+| Cisco IOSv               | `no`                                                      | [`iosv`     ](cml/kinds/iosv.j2)      |
+| Cisco IOSvL2             | `no`                                                      | [`iosvl2`   ](cml/kinds/iosvl2.j2)    |
+| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`](cml/kinds/nxosv9000.j2) |
+| Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                  |
+| Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                  |
+| Ubuntu                   | [`ubuntu` -> `linux`](clab/kinds/ubuntu.j2)               | [`ubuntu`   ](cml/kinds/ubuntu.j2)    |
 
 
 # Template naming convention
