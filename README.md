@@ -1,8 +1,12 @@
+[![Discord](https://img.shields.io/discord/1075106069862416525?label=discord)](https://discord.gg/M2SkgSdKht)
+
 # Netreplica Templates to build Emulated Network Topologies
 
 We created this repository as a collection of templates for [netreplica nrx](https://github.com/netreplica/nrx/blob/main/README.md) software. It might be useful outside of **nrx** for any other effort to automate creation of software network labs.
 
 This repository provides a set of such templates as a starting point. You're welcome to clone and adopt to your needs. If you'd like to contribute back, it would be greatly appreciated.
+
+This project is in a proof-of-concept phase. We're experimenting with the best ways to automate software network lab orchestration. If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
 
 # Supported Network Emulation Engines
 
@@ -14,20 +18,20 @@ This repository provides a set of such templates as a starting point. You're wel
 Containerlab artifacts:
 
 * `clab/topology.j2`: template for the final Containerlab topology file.
-* `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries.
-* `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab
+* `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries in the topology file.
+* `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab.
 
 Cisco Modeling Labs artifacts:
 
 * `cml/topology.j2`: template for the final CML topology file.
-* `cml/kinds/<kind>.j2`: templates for individual CML node entries.
-* `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML
+* `cml/kinds/<kind>.j2`: templates for individual CML node entries in the topology file.
+* `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 
 NOS-specific artifacts:
 
-* `interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`.
+* `interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`. Not all `kinds` support such mappings.
 
-To customize the way a topology file should be generated, you would need to change these templates as needed. For example, you might want to change `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
+To customize the way a topology file should be generated, change these templates as needed. For example, you might want to modify `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
 
 # Copyright notice
 
