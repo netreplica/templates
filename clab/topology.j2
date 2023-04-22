@@ -1,11 +1,1 @@
-name: {{name}}
-topology:
-    nodes:
-{% for node in nodes: %}
-{{ node }}
-{% endfor %}
-    links:
-{% for link in links: %}
-        - endpoints: ["{{link['a']['node']}}:{{link['a']['e_interface']}}", "{{link['b']['node']}}:{{link['b']['e_interface']}}"]
-{% endfor %}
-
+topology-graphite.j2
