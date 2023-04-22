@@ -15,6 +15,20 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 
 # What is included
 
+| Platform                 | Containerlab              | CML                     |
+| --------------           | ------------              | --------                |
+| Arista EOS               | `ceos`                    | `no`                    |
+| Cisco CSR1000v           | `vr-cisco_csr1000v`       | `no`                    |
+| Cisco IOSv               | `no`                      | `iosv`                  |
+| Cisco IOSvL2             | `no`                      | `iosvl2`                |
+| Cisco NX-OSv9000         | `no`                      | `nxosv9000`             |
+| Linux                    | `linux`                   | `no`                    |
+| Nokia SR-Linux           | `srl`                     | `no`                    |
+| Ubuntu                   | `ubuntu -> linux`         | `ubuntu`                |
+
+
+# Template naming convention
+
 Containerlab artifacts:
 
 * `clab/topology.j2`: template for the final Containerlab topology file.
