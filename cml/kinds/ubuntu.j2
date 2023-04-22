@@ -9,8 +9,7 @@
     ram: null
     hide_links: false
     tags: []
-    x: {{ node_id * 100 }}
-    y: {{ node_id * 100 }}
+    {% include 'cml/coordinates.j2' %}
     configuration: |-
       #cloud-config
       hostname: {{ name }}
