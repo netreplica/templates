@@ -1,0 +1,13 @@
+{% if level is not none %}
+    {% set y_position = level * -200 %}
+{% else %}
+    {% set y_position = device_index * -200 %}
+{% endif %}
+{% if rank is not none %}
+    {% set x_position = (rank * 1000)|int  %}
+{% else %}
+    {% set x_position = device_index * 100 %}
+{% endif %}
+    x: {{ x_position }}
+    y: {{ y_position }}
+

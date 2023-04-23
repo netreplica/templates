@@ -1,0 +1,31 @@
+  - id: n{{ device_index }}
+    label: {{ name }}
+    node_definition: ubuntu
+    image_definition: null
+    boot_disk_size: null
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    ram: null
+    hide_links: false
+    tags: []
+    {% include 'cml/coordinates.j2' %}
+    configuration: |-
+      #cloud-config
+      hostname: {{ name }}
+      manage_etc_hosts: True
+      system_info:
+        default_user:
+          name: cisco
+      password: cisco
+      chpasswd: { expire: False }
+      ssh_pwauth: True
+      ssh_authorized_keys:
+         - your-ssh-pubkey-line-goes-here
+    interfaces:
+{% for sot_int, emulated_int_dict in interfaces.items(): %}
+      - id: {{ emulated_int_dict['name'] }}
+        label: {{ sot_int }}
+        slot: {{ emulated_int_dict['index'] }}
+        type: physical
+{% endfor %}

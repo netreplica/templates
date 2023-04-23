@@ -1,0 +1,72 @@
+  - id: n{{ device_index }}
+    label: {{ name }}
+    node_definition: nxosv9000
+    image_definition: null
+    boot_disk_size: null
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    ram: null
+    hide_links: false
+    tags: []
+    {% include 'cml/coordinates.j2' %}
+    configuration: |-
+      hostname {{ name }}
+      # workaround for booting to loader> prompt
+      echo 'from cli import cli' > set_boot.py
+      echo 'import json' >> set_boot.py
+      echo 'import os' >> set_boot.py
+      echo 'import time' >> set_boot.py
+      echo 'bootimage = json.loads(cli("show version | json"))["kick_file_name"]' >> set_boot.py
+      echo 'set_boot = cli("conf t ; boot nxos {} ; no event manager applet BOOTCONFIG".format(bootimage))' >> set_boot.py
+      echo 'i = 0' >> set_boot.py
+      echo 'while i < 10:' >> set_boot.py
+      echo '    try:' >> set_boot.py
+      echo '        save_config = cli("copy running-config startup-config")' >> set_boot.py
+      echo '        break' >> set_boot.py
+      echo '    except Exception:' >> set_boot.py
+      echo '        i += 1' >> set_boot.py
+      echo '        time.sleep(1)' >> set_boot.py
+      echo 'os.remove("/bootflash/set_boot.py")' >> set_boot.py
+      event manager applet BOOTCONFIG
+       event syslog pattern "Configured from vty"
+       action 1.0 cli python bootflash:set_boot.py
+      # minimum needed config to login
+      no password strength-check
+      username admin role network-admin
+      username admin password cisco role network-admin
+      username cisco role network-admin
+      username cisco password cisco role network-admin
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: mgmt0
+        slot: 0
+        type: physical
+{% set block_size = 4 %}{# Create interfaces in blocks of four #}
+{# convert interfaces dictionary to a list for accessing values via index #}
+{% set interface_list = [] %}
+{% for name, params in interfaces.items() %}
+    {% set interface_name_parts = name.split('/') %}
+    {% set card = interface_name_parts[0] %}
+    {% set port = interface_name_parts[1] %}
+    {% do params.update({'card': card, 'port': port}) %}
+    {% do interface_list.append({'name': name, 'params': params}) %}
+{% endfor %}
+{# calculate number of cycles required to list all interfaces in blocks of four #}
+{% set cycles = (interface_list|length / block_size)|ceil %}
+{# loop through cycles and list interfaces in blocks of four #}
+{% for cycle in range(cycles) %}
+    {% set block_counter = cycle * block_size %}{# block_counter is the minimum interface number in the current block #}
+    {% for i in range(block_size) %}
+        {% set index = block_counter + i %}
+        {% if index < interface_list|length %}{# there is interface with current index #}
+      - id: i{{ index + 2 }}
+        label: {{ interface_list[index]['name'] }}
+        slot: {{ interface_list[index]['params']['port'] }}
+        type: physical
+        {% endif %}
+    {% endfor %}
+{% endfor %}
