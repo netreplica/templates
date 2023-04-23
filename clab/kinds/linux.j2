@@ -1,3 +1,9 @@
         {{ name }}:
             kind: linux
             image: netreplica/ubuntu-host:latest
+            cmd: /start.sh -sS
+            exec:
+                - bash -c "echo root:root | chpasswd"
+            labels:
+                graph-icon: server
+                {% include 'clab/labels.j2' %}
