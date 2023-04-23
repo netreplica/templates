@@ -1,4 +1,6 @@
         {{ name }}:
             kind: vr-cisco_csr1000v
             image: csr1000v:latest
-            {% include 'clab/labels.j2' %}
+            labels:
+                graph-icon: router
+                {% include 'clab/labels.j2' %}

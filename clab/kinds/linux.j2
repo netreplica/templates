@@ -1,4 +1,6 @@
         {{ name }}:
             kind: linux
             image: netreplica/ubuntu-host:latest
-            {% include 'clab/labels.j2' %}
+            labels:
+                graph-icon: server
+                {% include 'clab/labels.j2' %}

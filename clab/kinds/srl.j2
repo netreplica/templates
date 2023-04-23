@@ -2,4 +2,6 @@
             kind: nokia_srlinux
             type: ixrd2
             image: ghcr.io/nokia/srlinux:latest
-            {% include 'clab/labels.j2' %}
+            labels:
+                graph-icon: switch
+                {% include 'clab/labels.j2' %}
