@@ -57,7 +57,7 @@ git clone https://github.com/netreplica/templates.git
 
 > Note, if you would like to contribute your templates back to the community, please [fork](https://github.com/netreplica/templates/fork) the repository and then clone the fork instead.
 
-As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/r/netreplica/docker-sonic-vs) using an image tag `netreplica/docker-sonic-vs` we are going to use.
+As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) using an image tag `netreplica/docker-sonic-vs`, and this is what we are going to use.
 
 As a next step, let's create a new development branch, for example `new-clab-kind-sonic-vs`:
 
@@ -67,11 +67,11 @@ git checkout -b new-clab-kind-sonic-vs
 ```
 
 Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
-* The name of the node should will passed by `nrx` to the template as `name` variable.
-* According to [Containerlab documentation for SONiC](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes.
-* Docker tag for the image is `netreplica/docker-sonic-vs:latest`.
-* For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use `graph-icon: switch` label.
-* Including `clab/labels.j2` will add some common labels, like `graph-level` to visually align nodes in Graphite.
+* `nrx` will pass the name of the node to the template as `name` variable
+* According to [documentation](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes
+* As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
+* For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
+* Including `clab/labels.j2` will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
 
 ```Yaml
 cat > clab/kinds/sonic-vs.j2 << EOF
