@@ -47,15 +47,15 @@ NOS-specific artifacts:
 
 To customize the way a topology file should be generated, change these templates as needed. For example, you might want to modify `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
 
-# How to add new templates
+# How to add a new template
 
-Suppose you want to add a set of templates for a new kind of node. The first step is to `git clone` this repository:
+Suppose you want to add a set of templates for a new node kind. The first step is to clone this repository:
 
 ```Shell
 git clone https://github.com/netreplica/templates.git
 ```
 
-> Note, if you would like to contribute your templates back to the community, please [fork](https://github.com/netreplica/templates/fork) the repository and then clone the fork instead.
+> Note, if you would like to contribute your templates back to the community, please [fork](https://github.com/netreplica/templates/fork) the repository first and then clone the fork instead.
 
 As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) using an image tag `netreplica/docker-sonic-vs`, and this is what we are going to use.
 
@@ -83,6 +83,16 @@ cat > clab/kinds/sonic-vs.j2 << EOF
                 {% include 'clab/labels.j2' %}
 EOF
 ```
+
+The next step is to create another template – for interface naming. Some Containerlab node kinds use special naming conventions for interfaces, like `srl`, for example. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a `default.j2` template for this, all we need is to create a symbolic link for `sonic-vs`:
+
+```Shell
+ln -s default.j2 clab/interface_names/sonic-vs.j2
+```
+
+If interface naming convention for the kind you're adding follows different rules, you will need to create a custom template for that. See [`srl.j2`](clab/interface_names/srl.j2) as an example. `nrx` passed the following variables to the interface naming templates you can leverage:
+* `interface` – original interface name exported from NetBox
+* `index` – position of the interface in the list of exported interfaces for this node, sorted by name. Starts with `0`
 
 # Copyright notice
 
