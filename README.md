@@ -68,14 +68,15 @@ cd templates
 git checkout -b new-clab-kind-sonic-vs
 ```
 
-## Create `kind` template
+## Create a template under `kinds`
 
 Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
 * `nrx` will pass the name of the node to the template as `name` variable
 * According to [documentation](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes
 * As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
 * For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
-* Including `clab/labels.j2` will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
+* Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
+* Another variable `nrx` will pass to the template is `interface_map` if such a template was rendered for this node
 
 ```Yaml
 cat > clab/kinds/sonic-vs.j2 << EOF
@@ -88,7 +89,7 @@ cat > clab/kinds/sonic-vs.j2 << EOF
 EOF
 ```
 
-## Create `interface_names` template
+## Create a template under `interface_names`
 
 The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this, all we need is to create a symbolic link to it using `sonic-vs.j2` file name:
 
@@ -101,6 +102,14 @@ If the interface naming convention for the kind you are adding follows different
 * `index` – position of the interface in the list of exported interfaces for this node, sorted by name
 
 > It is possible that some interface naming conventions cannot be created using current set of variables. Consider creating a [Feature Request](https://github.com/netreplica/nrx/issues/new) for `nrx` to support such a kind.
+
+## Create a template under `interface_maps`
+
+Some network operating systems, like [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping), have a mechanism to map software interface names (those created by Containerlab) to interface names used by the NOS. To support such mechanism, `nrx` can renders a template from the `interface_maps` directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. `nrx` will pass a `map` dictionary variable to these templates:
+* `key` – original interface name exported from NetBox
+* `value` – a dictionary with
+   * `name` – name of the emulated interface name as rendered via `interface_names` template
+   * `index` - position of the interface in the list of exported interfaces for this node, sorted by name
 
 # Copyright notice
 
