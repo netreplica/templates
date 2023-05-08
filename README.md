@@ -49,6 +49,8 @@ To customize the way a topology file should be generated, change these templates
 
 # How to add a new template
 
+## Clone the repository
+
 Suppose you want to add a set of templates for a new node kind. The first step is to clone this repository:
 
 ```Shell
@@ -65,6 +67,8 @@ As a next step, let's create a new development branch, for example `new-clab-kin
 cd templates
 git checkout -b new-clab-kind-sonic-vs
 ```
+
+## Create `kind` template
 
 Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
 * `nrx` will pass the name of the node to the template as `name` variable
@@ -84,15 +88,19 @@ cat > clab/kinds/sonic-vs.j2 << EOF
 EOF
 ```
 
-The next step is to create another template – for interface naming. Some Containerlab node kinds use special naming conventions for interfaces, like `srl`, for example. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a `default.j2` template for this, all we need is to create a symbolic link for `sonic-vs`:
+## Create `interface_names` template
+
+The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this, all we need is to create a symbolic link to it using `sonic-vs.j2` file name:
 
 ```Shell
 ln -s default.j2 clab/interface_names/sonic-vs.j2
 ```
 
-If interface naming convention for the kind you're adding follows different rules, you will need to create a custom template for that. See [`srl.j2`](clab/interface_names/srl.j2) as an example. `nrx` passed the following variables to the interface naming templates you can leverage:
+If the interface naming convention for the kind you are adding follows different rules, you will need to create a custom template for that kind. See [`srl.j2`](clab/interface_names/srl.j2) as an example. `nrx` passed the following variables to the interface naming templates you can leverage:
 * `interface` – original interface name exported from NetBox
-* `index` – position of the interface in the list of exported interfaces for this node, sorted by name. Starts with `0`
+* `index` – position of the interface in the list of exported interfaces for this node, sorted by name
+
+> It is possible that some interface naming conventions cannot be created using current set of variables. Consider creating a [Feature Request](https://github.com/netreplica/nrx/issues/new) for `nrx` to support such a kind.
 
 # Copyright notice
 
