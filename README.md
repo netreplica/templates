@@ -76,7 +76,7 @@ Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` direct
 * As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
 * For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
 * Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
-* Another variable `nrx` will pass to the template is `interface_map` if such a template was rendered for this node
+* Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node
 
 ```Yaml
 cat > clab/kinds/sonic-vs.j2 << EOF
@@ -105,7 +105,7 @@ If the interface naming convention for the kind you are adding follows different
 
 ## Create a template under `interface_maps`
 
-Some network operating systems, like [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping), have a mechanism to map software interface names (those created by Containerlab) to interface names used by the NOS. To support such mechanism, `nrx` can renders a template from the `interface_maps` directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. `nrx` will pass a `map` dictionary variable to these templates:
+Some network operating systems, like [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping), have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. `nrx` will pass a `map` dictionary variable to these templates:
 * `key` – original interface name exported from NetBox
 * `value` – a dictionary with
    * `name` – name of the emulated interface name as rendered via `interface_names` template
