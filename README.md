@@ -113,12 +113,14 @@ Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/ki
 
 ## Make symbolic links using NetBox `platform.slug`
 
-Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a Platform record that would describe NOS used on these devices. In our example, we should create the following Platform record for SONiC NOS. When exporting a topology, `nrx` would use `platform.slug` value as node `kind`. Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device.
+Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
 
 ```CSV
 name,slug
 SONiC,sonic
 ```
+
+When exporting a topology, `nrx` would use `platform.slug` value as node `kind`. Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device. For example, `eos` for Arista EOS, instead of `ceos` for Arista cEOSLab.
 
 Different NetBox users may have very different Platform records. To support `platform.slug` values in your database, create symbolic links that map `slug` value to template names. For our SONiC case, we need to map `sonic` to `sonic-vs.j2`. Here is how:
 
