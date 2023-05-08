@@ -111,6 +111,30 @@ Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/ki
    * `name` – name of the emulated interface name as rendered via `interface_names` template
    * `index` - position of the interface in the list of exported interfaces for this node, sorted by name
 
+## Make symbolic links using NetBox `platform.slug`
+
+Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a Platform record that would describe NOS used on these devices. In our example, we should create the following Platform record for SONiC NOS. When exporting a topology, `nrx` would use `platform.slug` value as node `kind`. Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device.
+
+```CSV
+name,slug
+SONiC,sonic
+```
+
+Different NetBox users may have very different Platform records. To support `platform.slug` values in your database, create symbolic links that map `slug` value to template names. For our SONiC case, we need to map `sonic` to `sonic-vs.j2`. Here is how:
+
+```Shell
+ln -s sonic-vs.j2 clab/kinds/sonic.j2
+ln -s sonic-vs.j2 clab/interface_names/sonic.j2
+```
+
+This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/kinds` and `clab/interface_names` folders.
+
+## Test your templates
+
+Time to test if your templates work as planned.
+
+## Commit your work
+
 # Copyright notice
 
 Copyright 2023 Netreplica Team
