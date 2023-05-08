@@ -105,7 +105,7 @@ If the interface naming convention for the kind you are adding follows different
 
 ## Create a template under `interface_maps`
 
-Some network operating systems, like [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping), have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. `nrx` will pass a `map` dictionary variable to these templates:
+Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
 * `key` – original interface name exported from NetBox
 * `value` – a dictionary with
    * `name` – name of the emulated interface name as rendered via `interface_names` template
