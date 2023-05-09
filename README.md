@@ -162,7 +162,6 @@ Once you are satisfied with the results, commit your work:
 cd templates
 git add .
 git commit -m "new template for YOUR_DEVICE_PLATFORM"
-git push
 ```
 
 In case your want to contribute your changes, create a Pull Request into [netreplica/templates](https://github.com/netreplica/templates/compare). Otherwise, just merge the development branch into the `main`:
@@ -171,7 +170,6 @@ In case your want to contribute your changes, create a Pull Request into [netrep
 git checkout main
 git merge new-clab-kind-sonic-vs
 ```
-
 
 # Copyright notice
 
