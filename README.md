@@ -133,9 +133,30 @@ This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/kinds` and `clab/i
 
 ## Test your templates
 
-Time to test if your templates work as planned.
+Time to test if your templates work as planned. It is recommended to export a topology from NetBox with devices you made the templates for into a `cyjs` file. This step doesn't actually require the templates to be present. Make sure to update API connection parameters in `nrx.conf`, as well as Device Roles to export:
+
+```Shell
+cd ..
+nrx.py --config nrx.conf --input netbox --site YOUR_SITE --output cyjs
+```
+
+Now you're ready to convert `cyjs` data into Containerlab topology using the new templates:
+
+```Shell
+nrx.py --input cyjs --file YOUR_SITE.cyjs --output clab --templates templates --debug
+```
+
+Inspect resulting `YOUR_SITE.clab.yaml` and if looks good, try to deploy it with:
+
+```Shell
+sudo -E clab deploy -t YOUR_SITE.clab.yaml
+```
+
+You might need to adjust your templates and run `nrx` again, using `cyjs` as input.
 
 ## Commit your work
+
+
 
 # Copyright notice
 
