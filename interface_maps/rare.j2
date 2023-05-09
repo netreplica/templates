@@ -1,0 +1,12 @@
+{
+  "ManagementIntf": {
+    "eth0": "eth0"
+  },
+  "EthernetIntf": {
+{% for k, v in map.items(): %}
+    "{{v['name']}}": "{{k}}"{% if not loop.last %},{% endif %}
+
+{% endfor %}
+  }
+}
+
