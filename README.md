@@ -23,6 +23,7 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 | Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    | [CML Node Template](cml/kinds/iosvl2.j2)              |
 | Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/kinds/nxosv9000.j2) | [CML Node Template](cml/kinds/nxosv9000.j2)           |
 | Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                               | Not supported                                         |
+| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`             ](clab/kinds/rare.j2)                 | `no`                                               | Not supported                                         |
 | Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  |
 | SONiC                    | [`sonic-vs`         ](clab/kinds/sonic-vs.j2)             | `no`                                               | Not supported                                         |
 | Ubuntu                   | `ubuntu` -> [`linux`](clab/kinds/linux.j2)                | [`ubuntu`                ](cml/kinds/ubuntu.j2)    | Not supported                                         |
