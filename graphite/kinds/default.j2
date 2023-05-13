@@ -6,5 +6,8 @@
       "group": "",
       "kind": "{{ platform_name }}",
       "labels": {
+        "graph-icon": "{{ role }}",
+        {% include 'graphite/labels.j2' %}
+
       }
     }
