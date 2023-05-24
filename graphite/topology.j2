@@ -1,6 +1,7 @@
 {
   "name": "{{name}}",
-  "type": "nr-netbox",
+  "type": "graphite",
+  "source": "netbox",
   "nodes": {
 {% for node in nodes: %}
 {{ node }}{% if not loop.last %},{% endif %}
