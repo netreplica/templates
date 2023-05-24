@@ -1,0 +1,13 @@
+    "{{ name }}": {
+      "index": "{{ device_index }}",
+      "shortname": "{{ name }}",
+      "longname": "{{ name }}",
+      "fqdn": "{{ name }}",
+      "group": "",
+      "kind": "{{ platform_name }}",
+      "labels": {
+        "graph-icon": "{{ role }}",
+        {% include 'graphite/labels.j2' %}
+
+      }
+    }
