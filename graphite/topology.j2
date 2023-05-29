@@ -2,7 +2,7 @@
   "name": "{{name}}",
   "type": "graphite",
   "source": "netbox",
-  "help": "Run graphite to view the topology: docker run -dt --rm -p 8080:80 --name graphite netreplica/graphite:latest",
+  "motd": "Run graphite to view the topology: docker run -dt --rm -p 8080:80 --name graphite netreplica/graphite:latest",
   "nodes": {
 {% for node in nodes: %}
 {{ node }}{% if not loop.last %},{% endif %}
