@@ -1,10 +1,14 @@
+{%- set primary_ip4_address = primary_ip4.split("/")[0] -%}
+{%- set primary_ip6_address = primary_ip6.split("/")[0] -%}
     "{{ name }}": {
       "index": "{{ device_index }}",
-      "shortname": "{{ name }}",
-      "longname": "{{ name }}",
-      "fqdn": "{{ name }}",
-      "group": "",
-      "kind": "{{ platform_name }}",
+      "role": "{{ role_name }}",
+      "group": "{{ site }}",
+      "platform": "{{ platform_name }}",
+      "vendor": "{{ vendor_name }}",
+      "model": "{{ model_name }}",
+      "mgmt-ipv4-address": "{{ primary_ip4_address }}",
+      "mgmt-ipv6-address": "{{ primary_ip6_address }}",
       "labels": {
         "graph-icon": "{{ role }}",
         {% include 'graphite/labels.j2' %}
