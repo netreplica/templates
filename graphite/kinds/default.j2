@@ -1,5 +1,5 @@
-{%- set primary_ip4_address = primary_ip4.split("/")[0] -%}
-{%- set primary_ip6_address = primary_ip6.split("/")[0] -%}
+{% set primary_ip4_address = primary_ip4.split("/")[0] %}
+{% set primary_ip6_address = primary_ip6.split("/")[0] %}
     "{{ name }}": {
       "index": "{{ device_index }}",
       "role": "{{ role_name }}",
