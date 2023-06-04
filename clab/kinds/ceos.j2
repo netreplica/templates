@@ -5,6 +5,4 @@
             binds:
                 - {{ interface_map }}:/mnt/flash/EosIntfMapping.json:ro
             {% endif %}
-            labels:
-                graph-icon: router
-                {% include 'clab/labels.j2' %}
+            {% include 'clab/labels.j2' %}

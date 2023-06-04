@@ -9,9 +9,7 @@
       "model": "{{ model_name }}",
       "mgmt-ipv4-address": "{{ primary_ip4_address }}",
       "mgmt-ipv6-address": "{{ primary_ip6_address }}",
-      "labels": {
-        "graph-icon": "{{ role }}",
-        {% include 'graphite/labels.j2' %}
+      {% include 'graphite/labels.j2' %}
 
       }
     }
