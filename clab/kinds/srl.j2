@@ -2,4 +2,7 @@
             kind: nokia_srlinux
             type: ixrd2
             image: ghcr.io/nokia/srlinux:latest
+            {% if configuration_file is defined %}
+            startup-config: {{ configuration_file }}
+            {% endif %}
             {% include 'clab/labels.j2' %}
