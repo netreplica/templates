@@ -1,5 +1,9 @@
-{% set primary_ip4_address = primary_ip4.split("/")[0] %}
-{% set primary_ip6_address = primary_ip6.split("/")[0] %}
+{% if primary_ip4 is defined %}
+  {% set primary_ip4_address = primary_ip4.split("/")[0] %}
+{% endif %}
+{% if primary_ip6 is defined %}
+  {% set primary_ip6_address = primary_ip6.split("/")[0] %}
+{% endif %}
     "{{ name }}": {
       "index": "{{ device_index }}",
       "mgmt-ipv4-address": "{{ primary_ip4_address }}",
