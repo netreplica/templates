@@ -1,6 +1,7 @@
   - id: n{{ device_index }}
     label: {{ name }}
     node_definition: iosvl2
+    image_definition: null
     boot_disk_size: null
     cpu_limit: null
     cpus: null
@@ -8,8 +9,8 @@
     ram: null
     hide_links: false
     tags: []
+    {% include 'cml/configs/ios.j2' %}
     {% include 'cml/coordinates.j2' %}
-    configuration: hostname {{ name }}
     interfaces:
       - id: i0
         label: Loopback0
