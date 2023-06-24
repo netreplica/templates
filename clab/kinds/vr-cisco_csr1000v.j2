@@ -1,4 +1,7 @@
         {{ name }}:
             kind: vr-cisco_csr1000v
             image: csr1000v:latest
+            {% if configuration_file is defined %}
+            startup-config: {{ configuration_file }}
+            {% endif %}
             {% include 'clab/labels.j2' %}
