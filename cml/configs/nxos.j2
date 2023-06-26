@@ -1,0 +1,32 @@
+    configuration: |-
+      # workaround for booting to loader> prompt
+      echo 'from cli import cli' > set_boot.py
+      echo 'import json' >> set_boot.py
+      echo 'import os' >> set_boot.py
+      echo 'import time' >> set_boot.py
+      echo 'bootimage = json.loads(cli("show version | json"))["kick_file_name"]' >> set_boot.py
+      echo 'set_boot = cli("conf t ; boot nxos {} ; no event manager applet BOOTCONFIG".format(bootimage))' >> set_boot.py
+      echo 'i = 0' >> set_boot.py
+      echo 'while i < 10:' >> set_boot.py
+      echo '    try:' >> set_boot.py
+      echo '        save_config = cli("copy running-config startup-config")' >> set_boot.py
+      echo '        break' >> set_boot.py
+      echo '    except Exception:' >> set_boot.py
+      echo '        i += 1' >> set_boot.py
+      echo '        time.sleep(1)' >> set_boot.py
+      echo 'os.remove("/bootflash/set_boot.py")' >> set_boot.py
+      event manager applet BOOTCONFIG
+       event syslog pattern "Configured from vty"
+       action 1.0 cli python bootflash:set_boot.py
+    {% if config is defined %}
+      # rendered configuration
+{{ config | indent(width=6, first=True) }}
+    {% else %}
+      # minimum needed config to login
+      hostname {{ name }}
+      no password strength-check
+      username admin role network-admin
+      username admin password cisco role network-admin
+      username cisco role network-admin
+      username cisco password cisco role network-admin
+    {% endif %}

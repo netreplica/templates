@@ -1,0 +1,10 @@
+    {% if config is defined %}
+    configuration: |-
+      ! rendered configuration
+{{ config | indent(width=6, first=True) }}
+    {% else %}
+    configuration: |-
+      ! default configuration
+      hostname {{ name }}
+      end
+    {% endif %}
