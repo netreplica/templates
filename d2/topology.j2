@@ -1,0 +1,19 @@
+
+Topology - {{ name }}
+
+direction: right
+
+style {
+    fill: transparent 
+}
+
+{% for node in nodes: %}
+{{ node }}
+{% endfor %}
+
+{% for link in links: %}
+{{link['a']['node']}} -- {{link['b']['node']}}: {
+    source-arrowhead.label: {{link['a']['interface']}}
+    target-arrowhead.label: {{link['b']['interface']}}
+}  
+{% endfor %}
