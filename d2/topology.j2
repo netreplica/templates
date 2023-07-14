@@ -14,7 +14,7 @@ title: "" {
 direction: right
 
 style {
-    fill: transparent 
+    fill: transparent
 }
 
 {% for node in nodes: %}
@@ -25,5 +25,5 @@ style {
 {{link['a']['node']}} -- {{link['b']['node']}}: {
     source-arrowhead.label: {{link['a']['interface']}}
     target-arrowhead.label: {{link['b']['interface']}}
-}  
+}
 {% endfor %}
