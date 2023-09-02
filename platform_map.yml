@@ -1,66 +1,64 @@
+type: platform_map
 version: v1
-kind: platform_map
 platforms:
-  - default:
+  default:
     kinds:
       clab: linux
       cml: ubuntu
-  - ubuntu:
+  ubuntu:
     kinds:
       clab: linux
-  - arista-eos:
+  arista-eos:
     kinds:
       clab: ceos
-  - eos:
+  eos:
     kinds:
       clab: ceos
-  - cisco_ios:
+  cisco_ios:
     kinds:
       clab: vr-cisco_csr1000v
       cml: iosv
-  - cisco-catalyst-ios:
+  cisco-catalyst-ios:
     kinds:
       cml: iosvl2
-  - cisco-nxos-9000:
+  cisco-nxos-9000:
     kinds:
       cml: nxosv9000
-  - nokia_srlinux:
+  nokia_srlinux:
     kinds:
       clab: srl
-  - srlinux:
+  srlinux:
     kinds:
       clab: srl
-  - sonic:
+  sonic:
     kinds:
       clab: sonic-vs
-maps:
-  kinds:
-    - clab:
-      - ceos:
-        template: clab/kinds/ceos.j2
-        image: ceos:latest
-      - vr-cisco_csr1000v:
-        template: clab/kinds/vr-cisco_csr1000v.j2
-        image: csr1000v:latest
-      - linux:
-        template: clab/kinds/linux.j2
-        image: netreplica/ubuntu-host:latest
-      - rare:
-        template: clab/kinds/rare.j2
-        image: ghcr.io/rare-freertr/freertr-containerlab:latest
-      - srl:
-        template: clab/kinds/srl.j2
-        image: ghcr.io/nokia/srlinux:latest
-        type: ixrd2
-      - sonic-vs:
-        template: clab/kinds/sonic-vs.j2
-        image: netreplica/docker-sonic-vs:latest
-    - cml:
-      - iosv:
-        template: cml/kinds/iosv.j2
-      - iosvl2:
-        template: cml/kinds/iosvl2.j2
-      - nxosv9000:
-        template: cml/kinds/nxosv9000.j2
-      - ubuntu:
-        template: cml/kinds/ubuntu.j2
+kinds:
+  clab:
+    ceos:
+      template: clab/kinds/ceos.j2
+      image: ceos:latest
+    vr-cisco_csr1000v:
+      template: clab/kinds/vr-cisco_csr1000v.j2
+      image: csr1000v:latest
+    linux:
+      image: netreplica/ubuntu-host:latest
+    rare:
+      template: clab/kinds/rare.j2
+      image: ghcr.io/rare-freertr/freertr-containerlab:latest
+    srl:
+      template: clab/kinds/srl.j2
+      image: ghcr.io/nokia/srlinux:latest
+      type: ixrd2
+    sonic-vs:
+      template: clab/kinds/sonic-vs.j2
+      image: netreplica/docker-sonic-vs:latest
+  cml:
+    iosv:
+      template: cml/kinds/iosv.j2
+    iosvl2:
+      template: cml/kinds/iosvl2.j2
+    nxosv9000:
+      template: cml/kinds/nxosv9000.j2
+    ubuntu:
+      template: cml/kinds/ubuntu.j2
