@@ -1,1 +1,21 @@
-linux.j2
+        {{ name }}:
+            {% if kind is defined %}
+            kind: {{ kind }}
+            {% else %}
+            kind: linux
+            {% endif %}
+            {% if image is defined %}
+            image: {{ image }}
+            {% else %}
+            image: alpine:latest
+            {% endif %}
+            {% if cmd is defined %}
+            cmd: {{ cmd }}
+            {% endif %}
+            {% if exec is defined and exec|length > 0 %}
+            exec:
+                {% for e in exec %}
+                - {{ e }}
+                {% endfor %}
+            {% endif %}
+            {% include 'clab/labels.j2' %}
