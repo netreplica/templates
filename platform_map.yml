@@ -47,6 +47,9 @@ kinds:
     linux:
       template: clab/kinds/linux.j2
       image: netreplica/ubuntu-host:latest
+      cmd: /start.sh -sS
+      exec:
+        - bash -c "echo root:root | chpasswd"
     rare:
       template: clab/kinds/rare.j2
       image: ghcr.io/rare-freertr/freertr-containerlab:latest
