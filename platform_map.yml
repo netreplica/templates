@@ -39,14 +39,23 @@ platforms:
 kinds:
   clab:
     ceos:
+      template: clab/kinds/ceos.j2
       image: ceos:latest
     vr-cisco_csr1000v:
+      template: clab/kinds/vr-cisco_csr1000v.j2
       image: csr1000v:latest
     linux:
+      template: clab/kinds/linux.j2
       image: netreplica/ubuntu-host:latest
+    rare:
+      template: clab/kinds/rare.j2
+      image: ghcr.io/rare-freertr/freertr-containerlab:latest
     srl:
+      template: clab/kinds/srl.j2
+      image: ghcr.io/nokia/srlinux:latest
       type: ixrd2
     sonic-vs:
+      template: clab/kinds/sonic-vs.j2
       image: netreplica/docker-sonic-vs:latest
   cml:
     iosv:
