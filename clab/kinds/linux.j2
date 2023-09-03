@@ -12,7 +12,7 @@
             {% if cmd is defined %}
             cmd: {{ cmd }}
             {% endif %}
-            {% if exec is defined and len(exec) > 0 %}
+            {% if exec is defined and exec|length > 0 %}
             exec:
                 {% for e in exec %}
                 - {{ e }}
