@@ -30,6 +30,9 @@ platforms:
   srlinux:
     kinds:
       clab: srl
+  sr-linux:
+    kinds:
+      clab: srl
   sonic:
     kinds:
       clab: sonic-vs
@@ -42,6 +45,7 @@ kinds:
       template: clab/kinds/vr-cisco_csr1000v.j2
       image: csr1000v:latest
     linux:
+      template: clab/kinds/linux.j2
       image: netreplica/ubuntu-host:latest
     rare:
       template: clab/kinds/rare.j2

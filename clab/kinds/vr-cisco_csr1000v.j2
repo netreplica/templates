@@ -1,6 +1,10 @@
         {{ name }}:
             kind: vr-cisco_csr1000v
+            {% if image is defined %}
+            image: {{ image }}
+            {% else %}
             image: csr1000v:latest
+            {% endif %}
             {% if configuration_file is defined %}
             startup-config: {{ configuration_file }}
             {% endif %}

@@ -1,6 +1,10 @@
         {{ name }}:
             kind: ceos
+            {% if image is defined %}
+            image: {{ image }}
+            {% else %}
             image: ceos:latest
+            {% endif %}
             {% if configuration_file is defined %}
             startup-config: {{ configuration_file }}
             {% endif %}

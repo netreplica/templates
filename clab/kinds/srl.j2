@@ -1,7 +1,15 @@
         {{ name }}:
             kind: nokia_srlinux
-            type: ixrd2
+            {% if image is defined %}
+            image: {{ image }}
+            {% else %}
             image: ghcr.io/nokia/srlinux:latest
+            {% endif %}
+            {% if type is defined %}
+            type: {{ type }}
+            {% else %}
+            type: ixrd2
+            {% endif %}
             {% if configuration_file is defined %}
             startup-config: {{ configuration_file }}
             {% endif %}

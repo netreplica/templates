@@ -1,6 +1,10 @@
         {{ name }}:
             kind: linux
+            {% if image is defined %}
+            image: {{ image }}
+            {% else %}
             image: netreplica/ubuntu-host:latest
+            {% endif %}
             cmd: /start.sh -sS
             exec:
                 - bash -c "echo root:root | chpasswd"
