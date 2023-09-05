@@ -1,0 +1,12 @@
+            {% if image is defined %}
+            image: {{ image }}
+            {% endif %}
+            {% if cmd is defined %}
+            cmd: {{ cmd }}
+            {% endif %}
+            {% if exec is defined and exec|length > 0 %}
+            exec:
+                {% for e in exec %}
+                - {{ e }}
+                {% endfor %}
+            {% endif %}

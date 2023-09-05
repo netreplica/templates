@@ -10,7 +10,7 @@ platforms:
   eos:
     kinds:
       clab: ceos
-  cisco_ios:
+  cisco-ios:
     kinds:
       clab: vr-cisco_csr1000v
       cml: iosv
@@ -42,7 +42,7 @@ kinds:
       kind: linux
       image: frrouting/frr:latest
     linux:
-      template: clab/kinds/linux.j2
+      template: clab/kinds/default.j2
       image: netreplica/ubuntu-host:latest
       cmd: /start.sh -sS
       exec:

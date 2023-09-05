@@ -1,8 +1,7 @@
         {{ name }}:
             kind: sonic-vs
-            {% if image is defined %}
-            image: {{ image }}
-            {% else %}
-            image: netreplica/docker-sonic-vs:latest
+            {% if image is not defined %}
+            {% set image = "netreplica/docker-sonic-vs:latest" %}
             {% endif %}
+            {% include 'clab/node_params.j2' %}
             {% include 'clab/labels.j2' %}

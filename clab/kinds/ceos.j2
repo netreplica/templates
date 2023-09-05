@@ -1,9 +1,7 @@
         {{ name }}:
             kind: ceos
-            {% if image is defined %}
-            image: {{ image }}
-            {% else %}
-            image: ceos:latest
+            {% if image is not defined %}
+            {% set image = "ceos:latest" %}
             {% endif %}
             {% if configuration_file is defined %}
             startup-config: {{ configuration_file }}
@@ -12,4 +10,5 @@
             binds:
                 - {{ interface_map }}:/mnt/flash/EosIntfMapping.json:ro
             {% endif %}
+            {% include 'clab/node_params.j2' %}
             {% include 'clab/labels.j2' %}

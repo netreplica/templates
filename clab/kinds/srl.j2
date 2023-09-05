@@ -1,9 +1,7 @@
         {{ name }}:
             kind: nokia_srlinux
-            {% if image is defined %}
-            image: {{ image }}
-            {% else %}
-            image: ghcr.io/nokia/srlinux:latest
+            {% if image is not defined %}
+            {% set image = "ghcr.io/nokia/srlinux:latest" %}
             {% endif %}
             {% if type is defined %}
             type: {{ type }}
@@ -13,4 +11,5 @@
             {% if configuration_file is defined %}
             startup-config: {{ configuration_file }}
             {% endif %}
+            {% include 'clab/node_params.j2' %}
             {% include 'clab/labels.j2' %}

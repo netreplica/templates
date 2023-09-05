@@ -1,8 +1,7 @@
         {{ name }}:
             kind: rare
-            {% if image is defined %}
-            image: {{ image }}
-            {% else %}
-            image: ghcr.io/rare-freertr/freertr-containerlab:latest
+            {% if image is not defined %}
+            {% set image = "ghcr.io/rare-freertr/freertr-containerlab:latest" %}
             {% endif %}
+            {% include 'clab/node_params.j2' %}
             {% include 'clab/labels.j2' %}
