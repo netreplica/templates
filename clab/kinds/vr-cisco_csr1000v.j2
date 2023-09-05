@@ -3,8 +3,5 @@
             {% if image is not defined %}
             {% set image = "csr1000v:latest" %}
             {% endif %}
-            {% if configuration_file is defined %}
-            startup-config: {{ configuration_file }}
-            {% endif %}
             {% include 'clab/node_params.j2' %}
             {% include 'clab/labels.j2' %}

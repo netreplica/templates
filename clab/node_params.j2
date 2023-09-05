@@ -1,6 +1,9 @@
             {% if image is defined %}
             image: {{ image }}
             {% endif %}
+            {% if startup_config is defined %}
+            startup-config: {{ startup_config }}
+            {% endif %}
             {% if cmd is defined %}
             cmd: {{ cmd }}
             {% endif %}
