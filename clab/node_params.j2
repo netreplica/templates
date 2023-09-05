@@ -1,10 +1,10 @@
-            {% if image is defined %}
+            {% if image is defined and image|length > 0 %}
             image: {{ image }}
             {% endif %}
-            {% if startup_config is defined %}
+            {% if startup_config is defined and startup_config|length > 0 %}
             startup-config: {{ startup_config }}
             {% endif %}
-            {% if cmd is defined %}
+            {% if cmd is defined and cmd|length > 0 %}
             cmd: {{ cmd }}
             {% endif %}
             {% if exec is defined and exec|length > 0 %}
