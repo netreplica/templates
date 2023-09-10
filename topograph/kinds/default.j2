@@ -1,0 +1,28 @@
+{% if primary_ip4 is defined and primary_ip4|length > 0%}
+  {% set primary_ip4_address = primary_ip4.split("/")[0] %}
+{% endif %}
+{% if primary_ip6 is defined and primary_ip6|length > 0 %}
+  {% set primary_ip6_address = primary_ip6.split("/")[0] %}
+{% endif %}
+      - name: {{ name }}
+        attributes:
+            role: {{ role }}
+            vendor: {{ vendor }}
+            model: {{ model }}
+            platform: {{ platform }}
+        {% if primary_ip4_address is defined or primary_ip6_address is defined %}
+        services:
+          - name: ssh
+            {% if primary_ip4_address is defined and primary_ip4_address|length > 0%}
+            address_ipv4: {{ primary_ip4_address }}
+            {% endif %}
+            {% if primary_ip6_address is defined and primary_ip6_address|length > 0 %}
+            address_ipv6: {{ primary_ip6_address }}
+            {% endif %}
+            protocol: tcp
+            port: 22
+        {% endif %}
+        interfaces:
+        {% for i in interfaces %}
+          - name: {{ i }}
+        {% endfor %}
