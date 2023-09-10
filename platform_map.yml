@@ -36,10 +36,8 @@ kinds:
   clab:
     ceos:
       template: clab/kinds/ceos.j2
-      image: ceos:latest
     frr:
       template: clab/kinds/default.j2
-      kind: linux
       image: frrouting/frr:latest
     linux:
       template: clab/kinds/default.j2
@@ -49,17 +47,13 @@ kinds:
         - bash -c "echo root:root | chpasswd"
     rare:
       template: clab/kinds/rare.j2
-      image: ghcr.io/rare-freertr/freertr-containerlab:latest
     sonic-vs:
       template: clab/kinds/sonic-vs.j2
-      image: netreplica/docker-sonic-vs:latest
     srl:
       template: clab/kinds/srl.j2
-      image: ghcr.io/nokia/srlinux:latest
       type: ixrd2
     vr-cisco_csr1000v:
       template: clab/kinds/vr-cisco_csr1000v.j2
-      image: csr1000v:latest
   cml:
     iosv:
       template: cml/kinds/iosv.j2
