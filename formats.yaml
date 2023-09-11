@@ -19,5 +19,5 @@ formats:
   graphite:
     description: Graphite topology visualization
     file_format: json
-    file_extension: graphite.yaml
+    file_extension: graphite.json
     startup_config_mode: none
