@@ -1,0 +1,23 @@
+type: formats_map
+version: v1
+formats:
+  clab:
+    description: Containerlab topology
+    file_format: yaml
+    file_extension: clab.yaml
+    startup_config_mode: file
+  cml:
+    description: Cisco Modeling Labs topology
+    file_format: yaml
+    file_extension: cml.yaml
+    startup_config_mode: inline
+  d2:
+    description: D2 topology visualization
+    file_format: custom
+    file_extension: d2
+    startup_config_mode: none
+  graphite:
+    description: Graphite topology visualization
+    file_format: json
+    file_extension: graphite.yaml
+    startup_config_mode: none
