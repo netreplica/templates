@@ -1,9 +1,15 @@
 type: topograph
-version: v0.1
-topology:
+version: v0.2
+inventory:
+    nodes:
+{% for node in rendered_nodes: %}
+{{ node }}
+{% endfor %}
+topologies:
+  - name: {{ name }}
     nodes:
 {% for node in nodes: %}
-{{ node }}
+      - name: {{ node.name }}
 {% endfor %}
     links:
     {% for link in links: %}
