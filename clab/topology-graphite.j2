@@ -16,7 +16,7 @@ topology:
             labels:
                 graph-hide: yes
 
-{% for node in nodes: %}
+{% for node in rendered_nodes: %}
 {{ node }}
 {% endfor %}
     links:
