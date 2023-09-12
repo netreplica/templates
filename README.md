@@ -8,16 +8,18 @@ This repository provides a set of such templates as a starting point. You're wel
 
 This project is in a proof-of-concept phase. We're experimenting with the best ways to automate software network lab orchestration. If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
 
-# Supported Network Emulation Engines
+# Supported formats
 
-* [Containerlab](https://containerlab.dev/)
-* [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/)
+* [Containerlab](https://containerlab.dev/) – Open-source network emulation software using containers
+* [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco
+* [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica
+* [D2](https://d2lang.com/) – Declarative diagramming language
 
 # What is included
 
 | Platform                 | Containerlab                                              | CML                                                | Interface Mapping                                     | Startup Config |
 | --------------           | ------------                                              | --------                                           |  --------                                             | -------------- |
-| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               | [Interface Map](interface_maps/ceos.j2)               | `clab`         |
+| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
 | Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
 | Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/kinds/iosv.j2)      | [CML Node Template](cml/kinds/iosv.j2)                | `cml`          |
 | Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    | [CML Node Template](cml/kinds/iosvl2.j2)              | `cml`          |
@@ -36,6 +38,7 @@ Containerlab artifacts:
 * `clab/topology.j2`: template for the final Containerlab topology file.
 * `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries in the topology file.
 * `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab.
+* `clab/interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`. Not all `kinds` support such mappings.
 
 Cisco Modeling Labs artifacts:
 
@@ -43,10 +46,6 @@ Cisco Modeling Labs artifacts:
 * `cml/kinds/<kind>.j2`: templates for individual CML node entries in the topology file.
 * `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 * `cml/configs/<family>.j2`: templates for embedding startup configuration in the topology file. Use `<family>` to denote NOS family like `ios`, `nxos`, etc.
-
-NOS-specific artifacts:
-
-* `interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`. Not all `kinds` support such mappings.
 
 To customize the way a topology file should be generated, change these templates as needed. For example, you might want to modify `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
 
@@ -79,7 +78,7 @@ Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` direct
 * As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
 * For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
 * Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
-* Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node
+* Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node (uncommon)
 
 ```Yaml
 cat > clab/kinds/sonic-vs.j2 << EOF
@@ -108,7 +107,7 @@ If the interface naming convention for the kind you are adding follows different
 
 ## Create a template under `interface_maps`
 
-Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
+Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](clab/interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
 * `key` – original interface name exported from NetBox
 * `value` – a dictionary with
    * `name` – name of the emulated interface name as rendered via `interface_names` template
