@@ -1,7 +1,7 @@
 name: {{name}}
 topology:
     nodes:
-{% for node in nodes: %}
+{% for node in rendered_nodes: %}
 {{ node }}
 {% endfor %}
     links:
