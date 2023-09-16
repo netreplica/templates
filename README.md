@@ -10,10 +10,11 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 
 # Supported formats
 
-* [Containerlab](https://containerlab.dev/) – Open-source network emulation software using containers
-* [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco
-* [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica
-* [D2](https://d2lang.com/) – Declarative diagramming language
+* [Containerlab](https://containerlab.dev/) – Open-source network emulation software using containers.
+* [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco.
+* [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica.
+* [D2](https://d2lang.com/) – Declarative diagramming language.
+* **nrx** software also supports user-provided formats. You can extend this repository with your own set of templates.
 
 # What is included
 
@@ -70,6 +71,31 @@ cd templates
 git checkout -b new-clab-kind-sonic-vs
 ```
 
+## Define the output format
+
+This step is required only if you're creating a new set of templates for a new output format. In the next sections, we're adding templates for Containerlab, which is already supported by this repository. If you're following a similar path, you can skip this step.
+
+If you do intend to create a new output format, create a subfolder for it under the `templates` directory. For example, `myformat` for you special format:
+
+```Shell
+mkdir myformat
+```
+
+To make the new output format available to nrx, an entry describing basic properties of the format must be added to [`formats.yaml`](formats.yaml) file. Provide the following parameters:
+
+```Yaml
+type: formats_map
+version: v1
+formats:
+  myformat:
+    description: free-form
+    file_format: yaml, json or custom
+    file_extension: extension to add to the output file name
+    startup_config_mode: file, inline on none – if and how the format supports startup configuration for the devices
+```
+
+Next steps describe adding a new kind to an existing output format `clab`.
+
 ## Create a template under `kinds`
 
 Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
@@ -106,6 +132,8 @@ If the interface naming convention for the kind you are adding follows different
 > It is possible that some interface naming conventions cannot be created using current set of variables. Consider creating a [Feature Request](https://github.com/netreplica/nrx/issues/new) for `nrx` to support such a kind.
 
 ## Create a template under `interface_maps`
+
+> Most likely, the kind you're adding the template for doesn't support interface mapping. Proceed with this step only if you know that it does.
 
 Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](clab/interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
 * `key` – original interface name exported from NetBox
