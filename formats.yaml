@@ -21,3 +21,8 @@ formats:
     file_format: json
     file_extension: graphite.json
     startup_config_mode: none
+  topograph:
+    description: Portable network device inventory and topology format
+    file_format: yaml
+    file_extension: topograph.yaml
+    startup_config_mode: none
