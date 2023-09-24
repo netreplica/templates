@@ -13,7 +13,7 @@ links:
     label: {{ link['a']['node'] }}-{{ link['a']['interface'] }}<->{{ link['b']['node'] }}-{{ link['b']['interface'] }}
 {% endfor %}
 nodes:
-{% for node in nodes: %}
+{% for node in rendered_nodes: %}
 {{ node }}
 {% endfor %}
 annotations: []
