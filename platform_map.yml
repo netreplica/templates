@@ -35,47 +35,38 @@ platforms:
 kinds:
   clab:
     ceos:
-      template: clab/nodes/ceos.j2
+      nodes_template: clab/nodes/ceos.j2
+      interface_names_template: clab/interface_names/default.j2
     frr:
-      template: clab/nodes/default.j2
+      nodes_template: clab/nodes/default.j2
+      interface_names_template: clab/interface_names/default.j2
       image: frrouting/frr:latest
     linux:
-      template: clab/nodes/default.j2
+      nodes_template: clab/nodes/default.j2
+      interface_names_template: clab/interface_names/default.j2
       image: netreplica/ubuntu-host:latest
       cmd: /start.sh -sS
       exec:
         - bash -c "echo root:root | chpasswd"
     rare:
-      template: clab/nodes/rare.j2
+      nodes_template: clab/nodes/rare.j2
+      interface_names_template: clab/interface_names/default.j2
     sonic-vs:
-      template: clab/nodes/sonic-vs.j2
+      nodes_template: clab/nodes/sonic-vs.j2
+      interface_names_template: clab/interface_names/default.j2
     srl:
-      template: clab/nodes/srl.j2
+      nodes_template: clab/nodes/srl.j2
+      interface_names_template: clab/interface_names/srl.j2
       type: ixrd2
     vr-cisco_csr1000v:
-      template: clab/nodes/vr-cisco_csr1000v.j2
+      nodes_template: clab/nodes/vr-cisco_csr1000v.j2
+      interface_names_template: clab/interface_names/default.j2
   cml:
     iosv:
-      template: cml/nodes/iosv.j2
+      nodes_template: cml/nodes/iosv.j2
     iosvl2:
-      template: cml/nodes/iosvl2.j2
+      nodes_template: cml/nodes/iosvl2.j2
     nxosv9000:
-      template: cml/nodes/nxosv9000.j2
+      nodes_template: cml/nodes/nxosv9000.j2
     ubuntu:
-      template: cml/nodes/ubuntu.j2
-interfaces:
-  clab:
-    ceos:
-      template: clab/interfaces/default.j2
-    frr:
-      template: clab/interfaces/default.j2
-    linux:
-      template: clab/interfaces/default.j2
-    rare:
-      template: clab/interfaces/default.j2
-    sonic-vs:
-      template: clab/interfaces/default.j2
-    srl:
-      template: clab/interfaces/srl.j2
-    vr-cisco_csr1000v:
-      template: clab/interfaces/default.j2
+      nodes_template: cml/nodes/ubuntu.j2
