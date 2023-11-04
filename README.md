@@ -20,31 +20,31 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 
 | Platform                 | Containerlab                                              | CML                                                | Interface Mapping                                     | Startup Config |
 | --------------           | ------------                                              | --------                                           |  --------                                             | -------------- |
-| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
-| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
-| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/kinds/iosv.j2)      | [CML Node Template](cml/kinds/iosv.j2)                | `cml`          |
-| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    | [CML Node Template](cml/kinds/iosvl2.j2)              | `cml`          |
-| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/kinds/nxosv9000.j2) | [CML Node Template](cml/kinds/nxosv9000.j2)           | `cml`          |
-| Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                               | Not supported                                         | wanted         |
-| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`](clab/kinds/rare.j2)              | `no`                                               | Not supported                                         | wanted         |
-| Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
-| SONiC                    | [`sonic-vs`         ](clab/kinds/sonic-vs.j2)             | `no`                                               | Not supported                                         | wanted         |
-| Ubuntu                   | `ubuntu` -> [`linux`](clab/kinds/linux.j2)                | [`ubuntu`                ](cml/kinds/ubuntu.j2)    | Not supported                                         | wanted         |
-| Default                  | `default` -> [`linux`](clab/kinds/linux.j2)               | `default` -> [`iosvl2`   ](cml/kinds/iosvl2.j2)    | Not supported                                         | n/a            |
+| Arista EOS               | [`ceos`             ](clab/nodes/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
+| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/nodes/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
+| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/nodes/iosv.j2)      | [CML Node Template](cml/nodes/iosv.j2)                | `cml`          |
+| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/nodes/iosvl2.j2)    | [CML Node Template](cml/nodes/iosvl2.j2)              | `cml`          |
+| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/nodes/nxosv9000.j2) | [CML Node Template](cml/nodes/nxosv9000.j2)           | `cml`          |
+| Linux                    | [`linux`            ](clab/nodes/linux.j2)                | `no`                                               | Not supported                                         | wanted         |
+| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`](clab/nodes/rare.j2)              | `no`                                               | Not supported                                         | wanted         |
+| Nokia SR-Linux           | [`srl`              ](clab/nodes/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
+| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | `no`                                               | Not supported                                         | wanted         |
+| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Not supported                                         | wanted         |
+| Default                  | `default` -> [`linux`](clab/nodes/linux.j2)               | `default` -> [`iosvl2`   ](cml/nodes/iosvl2.j2)    | Not supported                                         | n/a            |
 
 # Template naming convention
 
 Containerlab artifacts:
 
 * `clab/topology.j2`: template for the final Containerlab topology file.
-* `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries in the topology file.
+* `clab/nodes/<kind>.j2`: templates for individual Containerlab node entries in the topology file.
 * `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab.
 * `clab/interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`. Not all `kinds` support such mappings.
 
 Cisco Modeling Labs artifacts:
 
 * `cml/topology.j2`: template for the final CML topology file.
-* `cml/kinds/<kind>.j2`: templates for individual CML node entries in the topology file.
+* `cml/nodes/<kind>.j2`: templates for individual CML node entries in the topology file.
 * `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 * `cml/configs/<family>.j2`: templates for embedding startup configuration in the topology file. Use `<family>` to denote NOS family like `ios`, `nxos`, etc.
 
@@ -96,9 +96,9 @@ formats:
 
 Next steps describe adding a new kind to an existing output format `clab`.
 
-## Create a template under `kinds`
+## Create a template under `nodes`
 
-Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
+Now, we need to create a template called `sonic-vs.j2` under `clab/nodes` directory:
 * `nrx` will pass the name of the node to the template as `name` variable
 * According to [documentation](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes
 * As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
@@ -107,7 +107,7 @@ Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` direct
 * Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node (uncommon)
 
 ```Yaml
-cat > clab/kinds/sonic-vs.j2 << EOF
+cat > clab/nodes/sonic-vs.j2 << EOF
         {{ name }}:
             kind: sonic-vs
             image: netreplica/docker-sonic-vs:latest
@@ -155,11 +155,11 @@ When exporting a topology, `nrx` would use `platform.slug` value as node `kind`.
 Different NetBox users may have very different Platform records. To support `platform.slug` values in your database, create symbolic links that map `slug` value to template names. For our SONiC case, we need to map `sonic` to `sonic-vs.j2`. Here is how:
 
 ```Shell
-ln -s sonic-vs.j2 clab/kinds/sonic.j2
+ln -s sonic-vs.j2 clab/nodes/sonic.j2
 ln -s sonic-vs.j2 clab/interface_names/sonic.j2
 ```
 
-This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/kinds` and `clab/interface_names` folders.
+This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/nodes` and `clab/interface_names` folders.
 
 ## Test your templates
 

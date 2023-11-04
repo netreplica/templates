@@ -35,31 +35,47 @@ platforms:
 kinds:
   clab:
     ceos:
-      template: clab/kinds/ceos.j2
+      template: clab/nodes/ceos.j2
     frr:
-      template: clab/kinds/default.j2
+      template: clab/nodes/default.j2
       image: frrouting/frr:latest
     linux:
-      template: clab/kinds/default.j2
+      template: clab/nodes/default.j2
       image: netreplica/ubuntu-host:latest
       cmd: /start.sh -sS
       exec:
         - bash -c "echo root:root | chpasswd"
     rare:
-      template: clab/kinds/rare.j2
+      template: clab/nodes/rare.j2
     sonic-vs:
-      template: clab/kinds/sonic-vs.j2
+      template: clab/nodes/sonic-vs.j2
     srl:
-      template: clab/kinds/srl.j2
+      template: clab/nodes/srl.j2
       type: ixrd2
     vr-cisco_csr1000v:
-      template: clab/kinds/vr-cisco_csr1000v.j2
+      template: clab/nodes/vr-cisco_csr1000v.j2
   cml:
     iosv:
-      template: cml/kinds/iosv.j2
+      template: cml/nodes/iosv.j2
     iosvl2:
-      template: cml/kinds/iosvl2.j2
+      template: cml/nodes/iosvl2.j2
     nxosv9000:
-      template: cml/kinds/nxosv9000.j2
+      template: cml/nodes/nxosv9000.j2
     ubuntu:
-      template: cml/kinds/ubuntu.j2
+      template: cml/nodes/ubuntu.j2
+interfaces:
+  clab:
+    ceos:
+      template: clab/interfaces/default.j2
+    frr:
+      template: clab/interfaces/default.j2
+    linux:
+      template: clab/interfaces/default.j2
+    rare:
+      template: clab/interfaces/default.j2
+    sonic-vs:
+      template: clab/interfaces/default.j2
+    srl:
+      template: clab/interfaces/srl.j2
+    vr-cisco_csr1000v:
+      template: clab/interfaces/default.j2
