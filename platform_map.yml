@@ -39,6 +39,8 @@ kinds:
         template: clab/nodes/ceos.j2
       interface_names:
         template: clab/interface_names/default.j2
+      interface_maps:
+        template: clab/interface_maps/ceos.j2
     frr:
       nodes:
         template: clab/nodes/default.j2
