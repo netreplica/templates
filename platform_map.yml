@@ -81,12 +81,20 @@ kinds:
     iosv:
       nodes:
         template: cml/nodes/iosv.j2
+      interface_names:
+        template: cml/interface_names/iosv.j2
     iosvl2:
       nodes:
         template: cml/nodes/iosvl2.j2
+      interface_names:
+        template: cml/interface_names/iosv.j2
     nxosv9000:
       nodes:
         template: cml/nodes/nxosv9000.j2
+      interface_names:
+        template: cml/interface_names/nxosv9000.j2
     ubuntu:
       nodes:
         template: cml/nodes/ubuntu.j2
+      interface_names:
+        template: cml/interface_names/ubuntu.j2
