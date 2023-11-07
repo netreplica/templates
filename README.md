@@ -110,10 +110,11 @@ Now, we need to create a template called `sonic-vs.j2` under `clab/nodes` direct
 cat > clab/nodes/sonic-vs.j2 << EOF
         {{ name }}:
             kind: sonic-vs
-            image: netreplica/docker-sonic-vs:latest
-            labels:
-                graph-icon: switch
-                {% include 'clab/labels.j2' %}
+            {% if image is not defined %}
+            {% set image = "sonic-vs:latest" %}
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}
 EOF
 ```
 
@@ -141,25 +142,44 @@ Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/ki
    * `name` – name of the emulated interface name as rendered via `interface_names` template
    * `index` - position of the interface in the list of exported interfaces for this node, sorted by name
 
-## Make symbolic links using NetBox `platform.slug`
+## Check NetBox `platform.slug` values
 
-Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
+Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a new Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
 
 ```CSV
 name,slug
 SONiC,sonic
 ```
 
-When exporting a topology, `nrx` would use `platform.slug` value as node `kind`. Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device. For example, `eos` for Arista EOS, instead of `ceos` for Arista cEOSLab.
+Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device. For example, `eos` for Arista EOS, instead of `ceos` for Arista cEOSLab.
 
-Different NetBox users may have very different Platform records. To support `platform.slug` values in your database, create symbolic links that map `slug` value to template names. For our SONiC case, we need to map `sonic` to `sonic-vs.j2`. Here is how:
+## Update `platform_map.yaml`
 
-```Shell
-ln -s sonic-vs.j2 clab/nodes/sonic.j2
-ln -s sonic-vs.j2 clab/interface_names/sonic.j2
+Different NetBox users may have very different Platform records. To support `platform.slug` values from in your NetBox instance, we can map them to the kind `sonic-vs` we created using [`platform_map.yaml`](platform_map.yaml).
+
+For our SONiC case, we need to map `sonic` to `sonic-vs`. Add the following entry to `platform_map.yaml`:
+
+```Yaml
+platforms:  # This line already exists, do not add it again
+  sonic:
+    kinds:
+      clab: sonic-vs
 ```
 
-This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/nodes` and `clab/interface_names` folders.
+You may also want to provide paths to the templates to be used for `sonic-vs` kind explicitly. If not provided, `nrx` will first look for `sonic-vs.j2` and then for `default.j2` files in the respective folders. The configuration below will tell `nrx` to skip looking for `sonic-vs.j2` when determining interface names, and use `default.j2` right away.
+
+You can also override parameters used in the template. Most common example would be to use a different image tag.
+
+```Yaml
+kinds:      # This line already exists, do not add it again
+  clab:     # This line already exists, do not add it again
+    sonic-vs:
+      nodes:
+        template: clab/nodes/sonic-vs.j2
+        image: netreplica/docker-sonic-vs:latest
+      interface_names:
+        template: clab/interface_names/default.j2
+```
 
 ## Test your templates
 

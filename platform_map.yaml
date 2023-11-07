@@ -64,6 +64,7 @@ kinds:
     sonic-vs:
       nodes:
         template: clab/nodes/sonic-vs.j2
+        image: netreplica/docker-sonic-vs:latest
       interface_names:
         template: clab/interface_names/default.j2
     srl:
