@@ -155,29 +155,29 @@ Note, that although we used `sonic-vs` for our template names because this is ho
 
 ## Update `platform_map.yaml`
 
-Different NetBox users may have very different Platform records. To support `platform.slug` values from in your NetBox instance, we can map them to the kind `sonic-vs` we created using [`platform_map.yaml`](platform_map.yaml).
+Different NetBox users may have very different Platform records. To support `platform.slug` values from your NetBox instance, we can map them to the kind `sonic-vs` using [`platform_map.yaml`](platform_map.yaml).
 
-For our SONiC case, we need to map `sonic` to `sonic-vs`. Add the following entry to `platform_map.yaml`:
+For our SONiC case, we need to map `sonic` to `sonic-vs`. Add the following entry to the `platform_map.yaml` under the `platforms` section:
 
 ```Yaml
-platforms:  # This line already exists, do not add it again
-  sonic:
+platforms:              # this line already exists, do not add it again
+  sonic:                # platform.slug value from NetBox
     kinds:
-      clab: sonic-vs
+      clab: sonic-vs    # template name / kind value used by Containerlab
 ```
 
 You may also want to provide paths to the templates to be used for `sonic-vs` kind explicitly. If not provided, `nrx` will first look for `sonic-vs.j2` and then for `default.j2` files in the respective folders. The configuration below will tell `nrx` to skip looking for `sonic-vs.j2` when determining interface names, and use `default.j2` right away.
 
-You can also override parameters used in the template. Most common example would be to use a different image tag.
+You can also override parameters used in the template. Most common example would be to use a different image tag:
 
 ```Yaml
-kinds:      # This line already exists, do not add it again
-  clab:     # This line already exists, do not add it again
-    sonic-vs:
-      nodes:
+kinds:                  # this line already exists, do not add it again
+  clab:                 # this line already exists, do not add it again
+    sonic-vs:           # kind value mapped under platforms section
+      nodes:            # template parameters used to render the nodes
         template: clab/nodes/sonic-vs.j2
         image: netreplica/docker-sonic-vs:latest
-      interface_names:
+      interface_names: # template parameters used to render the interface names
         template: clab/interface_names/default.j2
 ```
 
