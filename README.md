@@ -132,16 +132,6 @@ If the interface naming convention for the kind you are adding follows different
 
 > It is possible that some interface naming conventions cannot be created using current set of variables. Consider creating a [Feature Request](https://github.com/netreplica/nrx/issues/new) for `nrx` to support such a kind.
 
-## Create a template under `interface_maps`
-
-> Most likely, the kind you're adding the template for doesn't support interface mapping. Proceed with this step only if you know that it does.
-
-Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](clab/interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
-* `key` – original interface name exported from NetBox
-* `value` – a dictionary with
-   * `name` – name of the emulated interface name as rendered via `interface_names` template
-   * `index` - position of the interface in the list of exported interfaces for this node, sorted by name
-
 ## Check NetBox `platform.slug` values
 
 Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a new Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
@@ -163,7 +153,7 @@ For our SONiC case, we need to map `sonic` to `sonic-vs`. Add the following entr
 platforms:              # this line already exists, do not add it again
   sonic:                # platform.slug value from NetBox
     kinds:
-      clab: sonic-vs    # template name / kind value used by Containerlab
+      clab: sonic-vs    # template name (kind) to use in Containerlab topologies
 ```
 
 You may also want to provide paths to the templates to be used for `sonic-vs` kind explicitly. If not provided, `nrx` will first look for `sonic-vs.j2` and then for `default.j2` files in the respective folders. The configuration below will tell `nrx` to skip looking for `sonic-vs.j2` when determining interface names, and use `default.j2` right away.
