@@ -62,7 +62,7 @@ git clone https://github.com/netreplica/templates.git
 
 > Note, if you would like to contribute your templates back to the community, please [fork](https://github.com/netreplica/templates/fork) the repository first and then clone the fork instead.
 
-As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) using an image tag `netreplica/docker-sonic-vs`, and this is what we are going to use.
+As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS.
 
 As a next step, let's create a new development branch, for example `new-clab-kind-sonic-vs`:
 
@@ -158,7 +158,7 @@ platforms:              # this line already exists, do not add it again
 
 You may also want to provide paths to the templates to be used for `sonic-vs` kind explicitly. If not provided, `nrx` will first look for `sonic-vs.j2` and then for `default.j2` files in the respective folders. The configuration below will tell `nrx` to skip looking for `sonic-vs.j2` when determining interface names, and use `default.j2` right away.
 
-You can also override parameters used in the template. Most common example would be to use a different image tag:
+You can also override parameters used in the template. Most common example would be to use a different image tag. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) with an image tag `netreplica/docker-sonic-vs:latest`, and this is what we are going to use.
 
 ```Yaml
 kinds:                  # this line already exists, do not add it again
