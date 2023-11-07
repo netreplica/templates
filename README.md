@@ -76,10 +76,9 @@ git checkout -b new-clab-kind-sonic-vs
 Now, we need to create a template called `sonic-vs.j2` under `clab/nodes` directory:
 * `nrx` will pass the name of the node to the template as `name` variable
 * According to [documentation](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes
-* As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
-* For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
-* Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
-* Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node (uncommon)
+* As the Docker image tag let's use a generic `sonic-vs:latest`. We will initialize the `image` variable here as part of a conditional statement to allow overriding it with a different value
+* Including [`clab/node_params.j2`](clab/node_params.j2) provides a way to extend the node template some common parameters, like `image`. See the file for the full list of parameters.
+* Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in [Graphite](https://github.com/netreplica/graphite)
 
 ```Yaml
 cat > clab/nodes/sonic-vs.j2 << EOF
