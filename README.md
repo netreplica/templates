@@ -39,10 +39,10 @@ Containerlab artifacts:
 * [`clab/topology.j2`](clab/topology.j2): template for the final Containerlab topology file.
 * [`clab/nodes/<kind>.j2`](clab/nodes/): templates for individual device node entries in the topology file. Unique for each `kind`.
 * [`clab/nodes/default.j2`](clab/nodes/default.j2): default node template used when a template for a specific `kind` is not found.
-* `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by a specific `kind`.
+* [`clab/interface_names/<kind>.j2`](clab/interface_names/): templates for generating emulated interface names used by a specific `kind`.
 * [`clab/interface_names/default.j2`](clab/interface_names/default.j2): default template for generating emulated interface names.
-* `clab/interface_maps/<kind>.j2`: templates for mapping between real interface names and emulated interface names used by the NOS `kind`. Only a few `kinds` like `ceos` support such mapping.
-* [`clab/node_params.j2`](clab/node_params.j2): extended set of node parameters supported by all `kinds`. Include this template at the end of the `clab/nodes/<kind>.j2` template to leverage these parameters, and define the values you need for each `kind` in [`platform_map.yaml`](platform_map.yaml).
+* [`clab/interface_maps/<kind>.j2`](clab/interface_maps/): templates for mapping between real interface names and emulated interface names used by the `kind`. Only a few `kinds` like [`ceos`](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) support such mapping.
+* [`clab/node_params.j2`](clab/node_params.j2): extended set of node parameters supported by all `kinds`. Always include this template at the end of each `clab/nodes/<kind>.j2` template to leverage these parameters. When some of the parameters needs to be rendered, define the values you need for each `kind` in [`platform_map.yaml`](platform_map.yaml).
 * [`clab/labels.j2`](clab/labels.j2): [custom labels](https://github.com/netreplica/graphite/blob/main/docs/LABELS.md) supported by Netreplica [Graphite](https://github.com/netreplica/graphite/) visualization software. Include this template at the end of the `clab/nodes/<kind>.j2` template to initialize these labels with data from NetBox.
 
 Cisco Modeling Labs artifacts:
