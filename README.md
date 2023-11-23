@@ -37,7 +37,7 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 Containerlab artifacts:
 
 * [`clab/topology.j2`](clab/topology.j2): template for the final Containerlab topology file.
-* [`clab/nodes/<kind>.j2`](`clab/nodes/`): templates for individual device node entries in the topology file. Unique for each `kind`.
+* [`clab/nodes/<kind>.j2`](clab/nodes/): templates for individual device node entries in the topology file. Unique for each `kind`.
 * [`clab/nodes/default.j2`](clab/nodes/default.j2): default node template used when a template for a specific `kind` is not found.
 * `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by a specific `kind`.
 * [`clab/interface_names/default.j2`](clab/interface_names/default.j2): default template for generating emulated interface names.
