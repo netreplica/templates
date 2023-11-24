@@ -98,11 +98,7 @@ EOF
 
 ## Create a template under `interface_names`
 
-The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this, all we need is to create a symbolic link to it using `sonic-vs.j2` file name:
-
-```Shell
-ln -s default.j2 clab/interface_names/sonic-vs.j2
-```
+The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this naming convention, we don't need to add any templates here.
 
 If the interface naming convention for the kind you are adding follows different rules, you will need to create a custom template for that kind. See [`srl.j2`](clab/interface_names/srl.j2) as an example. `nrx` passed the following variables to the interface naming templates you can leverage:
 * `interface` – original interface name exported from NetBox
@@ -145,7 +141,7 @@ kinds:                  # this line already exists, do not add it again
       nodes:            # template parameters used to render the nodes
         template: clab/nodes/sonic-vs.j2
         image: netreplica/docker-sonic-vs:latest
-      interface_names: # template parameters used to render the interface names
+      interface_names:  # template parameters used to render the interface names
         template: clab/interface_names/default.j2
 ```
 
