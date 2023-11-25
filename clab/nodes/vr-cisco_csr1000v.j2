@@ -1,0 +1,7 @@
+        {{ name }}:
+            kind: vr-cisco_csr1000v
+            {% if image is not defined %}
+            {% set image = "csr1000v:latest" %}
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}

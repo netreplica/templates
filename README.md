@@ -14,37 +14,41 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 * [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco.
 * [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica.
 * [D2](https://d2lang.com/) – Declarative diagramming language.
-* **nrx** software also supports user-provided formats. You can extend this repository with your own set of templates.
+* **nrx** software also supports user-provided formats. You can [extend this repository](docs/output_formats.md) with your own set of templates.
 
 # What is included
 
 | Platform                 | Containerlab                                              | CML                                                | Interface Mapping                                     | Startup Config |
 | --------------           | ------------                                              | --------                                           |  --------                                             | -------------- |
-| Arista EOS               | [`ceos`             ](clab/kinds/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
-| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/kinds/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
-| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/kinds/iosv.j2)      | [CML Node Template](cml/kinds/iosv.j2)                | `cml`          |
-| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/kinds/iosvl2.j2)    | [CML Node Template](cml/kinds/iosvl2.j2)              | `cml`          |
-| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/kinds/nxosv9000.j2) | [CML Node Template](cml/kinds/nxosv9000.j2)           | `cml`          |
-| Linux                    | [`linux`            ](clab/kinds/linux.j2)                | `no`                                               | Not supported                                         | wanted         |
-| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`](clab/kinds/rare.j2)              | `no`                                               | Not supported                                         | wanted         |
-| Nokia SR-Linux           | [`srl`              ](clab/kinds/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
-| SONiC                    | [`sonic-vs`         ](clab/kinds/sonic-vs.j2)             | `no`                                               | Not supported                                         | wanted         |
-| Ubuntu                   | `ubuntu` -> [`linux`](clab/kinds/linux.j2)                | [`ubuntu`                ](cml/kinds/ubuntu.j2)    | Not supported                                         | wanted         |
-| Default                  | `default` -> [`linux`](clab/kinds/linux.j2)               | `default` -> [`iosvl2`   ](cml/kinds/iosvl2.j2)    | Not supported                                         | n/a            |
+| Arista EOS               | [`ceos`             ](clab/nodes/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
+| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/nodes/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
+| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/nodes/iosv.j2)      | [CML Node Template](cml/nodes/iosv.j2)                | `cml`          |
+| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/nodes/iosvl2.j2)    | [CML Node Template](cml/nodes/iosvl2.j2)              | `cml`          |
+| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/nodes/nxosv9000.j2) | [CML Node Template](cml/nodes/nxosv9000.j2)           | `cml`          |
+| Linux                    | [`linux`            ](clab/nodes/linux.j2)                | `no`                                               | Not supported                                         | wanted         |
+| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`](clab/nodes/rare.j2)              | `no`                                               | Not supported                                         | wanted         |
+| Nokia SR-Linux           | [`srl`              ](clab/nodes/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
+| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | `no`                                               | Not supported                                         | wanted         |
+| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Not supported                                         | wanted         |
+| Default                  | `default` -> [`linux`](clab/nodes/linux.j2)               | `default` -> [`iosvl2`   ](cml/nodes/iosvl2.j2)    | Not supported                                         | n/a            |
 
 # Template naming convention
 
 Containerlab artifacts:
 
-* `clab/topology.j2`: template for the final Containerlab topology file.
-* `clab/kinds/<kind>.j2`: templates for individual Containerlab node entries in the topology file.
-* `clab/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in Containerlab.
-* `clab/interface_maps/<kind>.j2`: templates for mappings between real interface names and emulated interface names used by the NOS `kind`. Not all `kinds` support such mappings.
+* [`clab/topology.j2`](clab/topology.j2): template for the final Containerlab topology file.
+* [`clab/nodes/<kind>.j2`](clab/nodes/): templates for individual device node entries in the topology file. Unique for each `kind`.
+* [`clab/nodes/default.j2`](clab/nodes/default.j2): default node template used when a template for a specific `kind` is not found.
+* [`clab/interface_names/<kind>.j2`](clab/interface_names/): templates for generating emulated interface names used by a specific `kind`.
+* [`clab/interface_names/default.j2`](clab/interface_names/default.j2): default template for generating emulated interface names.
+* [`clab/interface_maps/<kind>.j2`](clab/interface_maps/): templates for mapping between real interface names and emulated interface names used by the `kind`. Only a few `kinds` like [`ceos`](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) support such mapping.
+* [`clab/node_params.j2`](clab/node_params.j2): extended set of node parameters supported by all `kinds`. Always include this template at the end of each `clab/nodes/<kind>.j2` template to leverage these parameters. When some of the parameters needs to be rendered, define the values you need for each `kind` in [`platform_map.yaml`](platform_map.yaml).
+* [`clab/labels.j2`](clab/labels.j2): [custom labels](https://github.com/netreplica/graphite/blob/main/docs/LABELS.md) supported by Netreplica [Graphite](https://github.com/netreplica/graphite/) visualization software. Include this template at the end of the `clab/nodes/<kind>.j2` template to initialize these labels with data from NetBox.
 
 Cisco Modeling Labs artifacts:
 
 * `cml/topology.j2`: template for the final CML topology file.
-* `cml/kinds/<kind>.j2`: templates for individual CML node entries in the topology file.
+* `cml/nodes/<kind>.j2`: templates for individual CML node entries in the topology file.
 * `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 * `cml/configs/<family>.j2`: templates for embedding startup configuration in the topology file. Use `<family>` to denote NOS family like `ios`, `nxos`, etc.
 
@@ -62,7 +66,7 @@ git clone https://github.com/netreplica/templates.git
 
 > Note, if you would like to contribute your templates back to the community, please [fork](https://github.com/netreplica/templates/fork) the repository first and then clone the fork instead.
 
-As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) using an image tag `netreplica/docker-sonic-vs`, and this is what we are going to use.
+As a practical example, let's create templates for Containerlab `sonic-vs` kind. This kind represents [SONiC](https://sonic-net.github.io/SONiC/) open-source NOS.
 
 As a next step, let's create a new development branch, for example `new-clab-kind-sonic-vs`:
 
@@ -71,59 +75,30 @@ cd templates
 git checkout -b new-clab-kind-sonic-vs
 ```
 
-## Define the output format
+## Create a template under `nodes`
 
-This step is required only if you're creating a new set of templates for a new output format. In the next sections, we're adding templates for Containerlab, which is already supported by this repository. If you're following a similar path, you can skip this step.
-
-If you do intend to create a new output format, create a subfolder for it under the `templates` directory. For example, `myformat` for you special format:
-
-```Shell
-mkdir myformat
-```
-
-To make the new output format available to nrx, an entry describing basic properties of the format must be added to [`formats.yaml`](formats.yaml) file. Provide the following parameters:
-
-```Yaml
-type: formats_map
-version: v1
-formats:
-  myformat:
-    description: free-form
-    file_format: yaml, json or custom
-    file_extension: extension to add to the output file name
-    startup_config_mode: file, inline on none – if and how the format supports startup configuration for the devices
-```
-
-Next steps describe adding a new kind to an existing output format `clab`.
-
-## Create a template under `kinds`
-
-Now, we need to create a template called `sonic-vs.j2` under `clab/kinds` directory:
+Now, we need to create a template called `sonic-vs.j2` under `clab/nodes` directory:
 * `nrx` will pass the name of the node to the template as `name` variable
 * According to [documentation](https://containerlab.dev/manual/kinds/sonic-vs/), we should use `kind: sonic-vs` to describe SONiC nodes
-* As mentioned before, the Docker tag for the image will be `netreplica/docker-sonic-vs:latest`
-* For better visualization with [Graphite](https://github.com/netreplica/graphite), we will use a [custom label](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#changing-visualization-icons) `graph-icon: switch`
-* Including [`clab/labels.j2`](clab/labels.j2) will add some common labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes in Graphite
-* Another variable `nrx` will pass to the template is `interface_map` if [such a template](#create-a-template-under-interface_maps) was rendered for this node (uncommon)
+* As the Docker image tag let's use a generic `sonic-vs:latest`. We will initialize the `image` variable here as part of a conditional statement to allow overriding it with a different value
+* Including [`clab/node_params.j2`](clab/node_params.j2) provides a way to extend the node template with some common parameters, like `image` or `startup-config`. See the file for the full list of parameters.
+* Including [`clab/labels.j2`](clab/labels.j2) will add a few useful custom labels, like `graph-level` to [visually align](https://github.com/netreplica/graphite/blob/main/docs/CONTAINERLAB.md#improve-visualization-via-custom-labels-in-a-containerlab-yaml-file) nodes when showing the topology in [Graphite](https://github.com/netreplica/graphite)
 
 ```Yaml
-cat > clab/kinds/sonic-vs.j2 << EOF
+cat > clab/nodes/sonic-vs.j2 << EOF
         {{ name }}:
             kind: sonic-vs
-            image: netreplica/docker-sonic-vs:latest
-            labels:
-                graph-icon: switch
-                {% include 'clab/labels.j2' %}
+            {% if image is not defined %}
+            {% set image = "sonic-vs:latest" %}
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}
 EOF
 ```
 
 ## Create a template under `interface_names`
 
-The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this, all we need is to create a symbolic link to it using `sonic-vs.j2` file name:
-
-```Shell
-ln -s default.j2 clab/interface_names/sonic-vs.j2
-```
+The next step is to create another template – for interface naming. Some Containerlab node kinds, like `srl`, use special naming conventions for interfaces. In case of `sonic-vs`, the [interface naming convention](https://containerlab.dev/manual/kinds/sonic-vs/#interfaces-mapping) uses default linux-based interface names. As there is already a [`default.j2`](clab/interface_names/default.j2) template for this naming convention, we don't need to add any templates here.
 
 If the interface naming convention for the kind you are adding follows different rules, you will need to create a custom template for that kind. See [`srl.j2`](clab/interface_names/srl.j2) as an example. `nrx` passed the following variables to the interface naming templates you can leverage:
 * `interface` – original interface name exported from NetBox
@@ -131,35 +106,44 @@ If the interface naming convention for the kind you are adding follows different
 
 > It is possible that some interface naming conventions cannot be created using current set of variables. Consider creating a [Feature Request](https://github.com/netreplica/nrx/issues/new) for `nrx` to support such a kind.
 
-## Create a template under `interface_maps`
+## Check NetBox `platform.slug` values
 
-> Most likely, the kind you're adding the template for doesn't support interface mapping. Proceed with this step only if you know that it does.
-
-Some network operating systems, [Arista cEOS](https://containerlab.dev/manual/kinds/ceos/#user-defined-interface-mapping) being a prime example, have a mechanism to map emulated interface names created by the engines like Containerlab to interface names used by the NOS. To support such mechanism, `nrx` can render a template from the `interface_maps` directory, if it finds a file for the node kind in that directory. See [`ceos.j2`](clab/interface_maps/ceos.j2) as an example. When rendering, `nrx` will pass a dictionary variable `map` with:
-* `key` – original interface name exported from NetBox
-* `value` – a dictionary with
-   * `name` – name of the emulated interface name as rendered via `interface_names` template
-   * `index` - position of the interface in the list of exported interfaces for this node, sorted by name
-
-## Make symbolic links using NetBox `platform.slug`
-
-Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
+Now that you created the template files, check relevant Device records in NetBox – specifically, what Platform is used in their configuration. If no Platform is configured currently, create a new Platform record that would describe NOS used on these devices. In our example, we should create a Platform record for SONiC NOS. Importing the CSV below into Platforms would do it:
 
 ```CSV
 name,slug
 SONiC,sonic
 ```
 
-When exporting a topology, `nrx` would use `platform.slug` value as node `kind`. Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device. For example, `eos` for Arista EOS, instead of `ceos` for Arista cEOSLab.
+Note, that although we used `sonic-vs` for our template names because this is how Containerlab identifies SONiC nodes, in NetBox you would typically use a `platform.name` and `platform.slug` that match NOS name on a physical device. For example, `eos` for Arista EOS, instead of `ceos` for Arista cEOSLab.
 
-Different NetBox users may have very different Platform records. To support `platform.slug` values in your database, create symbolic links that map `slug` value to template names. For our SONiC case, we need to map `sonic` to `sonic-vs.j2`. Here is how:
+## Update `platform_map.yaml`
 
-```Shell
-ln -s sonic-vs.j2 clab/kinds/sonic.j2
-ln -s sonic-vs.j2 clab/interface_names/sonic.j2
+Different NetBox users may have very different Platform records. To support `platform.slug` values from your NetBox instance, we can map them to the kind `sonic-vs` using [`platform_map.yaml`](platform_map.yaml).
+
+For our SONiC case, we need to map `sonic` to `sonic-vs`. Add the following entry to the `platform_map.yaml` under the `platforms` section:
+
+```Yaml
+platforms:              # this line already exists, do not add it again
+  sonic:                # platform.slug value from NetBox
+    kinds:
+      clab: sonic-vs    # template name (kind) to use in Containerlab topologies
 ```
 
-This should result in `sonic.j2 -> sonic-vs.j2` in both `clab/kinds` and `clab/interface_names` folders.
+You may also want to provide paths to the templates to be used for `sonic-vs` kind explicitly. If not provided, `nrx` will first look for `sonic-vs.j2` and then for `default.j2` files in the respective folders. The configuration below will tell `nrx` to skip looking for `sonic-vs.j2` when determining interface names, and use `default.j2` right away.
+
+You can also override parameters used in the template. Most common example would be to use a different image tag. There is a [Docker image for SONiC](https://hub.docker.com/r/netreplica/docker-sonic-vs) hosted under [Netrepica Docker Hub](https://hub.docker.com/u/netreplica) with an image tag `netreplica/docker-sonic-vs:latest`, and this is what we are going to use.
+
+```Yaml
+kinds:                  # this line already exists, do not add it again
+  clab:                 # this line already exists, do not add it again
+    sonic-vs:           # kind value mapped under platforms section
+      nodes:            # template parameters used to render the nodes
+        template: clab/nodes/sonic-vs.j2
+        image: netreplica/docker-sonic-vs:latest
+      interface_names:  # template parameters used to render the interface names
+        template: clab/interface_names/default.j2
+```
 
 ## Test your templates
 

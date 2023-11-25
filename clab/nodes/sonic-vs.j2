@@ -1,0 +1,7 @@
+        {{ name }}:
+            kind: sonic-vs
+            {% if image is not defined %}
+            {% set image = "sonic-vs:latest" %}
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}

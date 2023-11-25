@@ -1,0 +1,12 @@
+        {{ name }}:
+            kind: nokia_srlinux
+            {% if image is not defined %}
+            {% set image = "ghcr.io/nokia/srlinux:latest" %}
+            {% endif %}
+            {% if type is defined %}
+            type: {{ type }}
+            {% else %}
+            type: ixrd2
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}
