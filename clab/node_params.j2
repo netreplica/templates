@@ -1,0 +1,84 @@
+            {% if image is defined and image|length > 0 %}
+            image: {{ image }}
+            {% endif %}
+            {% if image_pull_policy is defined and image_pull_policy|length > 0 %}
+            image-pull-policy: {{ image_pull_policy }}
+            {% endif %}
+            {% if license is defined and license|length > 0 %}
+            license: {{ license }}
+            {% endif %}
+            {% if startup_config is defined and startup_config|length > 0 %}
+            startup-config: {{ startup_config }}
+            {% endif %}
+            {% if enforce_startup_config is defined and enforce_startup_config|length > 0 %}
+            enforce-startup-config: {{ enforce_startup_config }}
+            {% endif %}
+            {% if startup_delay is defined and startup_delay|length > 0 %}
+            startup-delay: {{ startup_delay }}
+            {% endif %}
+            {% if binds is defined and binds|length > 0 %}
+            binds:
+                {% for b in binds %}
+                - {{ b }}
+                {% endfor %}
+            {% endif %}
+            {% if ports is defined and ports|length > 0 %}
+            ports:
+                {% for p in ports %}
+                - {{ p }}
+                {% endfor %}
+            {% endif %}
+            {% if env is defined and env|length > 0 %}
+            env:
+                {% for e in env %}
+                {{ e }}
+                {% endfor %}
+            {% endif %}
+            {% if env_files is defined and env_files|length > 0 %}
+            env-files:
+                {% for e in env_files %}
+                - {{ e }}
+                {% endfor %}
+            {% endif %}
+            {% if user is defined and user|length > 0 %}
+            user: {{ user }}
+            {% endif %}
+            {% if entrypoint is defined and entrypoint|length > 0 %}
+            entrypoint: {{ entrypoint }}
+            {% endif %}
+            {% if cmd is defined and cmd|length > 0 %}
+            cmd: {{ cmd }}
+            {% endif %}
+            {% if publish is defined and publish|length > 0 %}
+            publish:
+                {% for p in publish %}
+                - {{ p }}
+                {% endfor %}
+            {% endif %}
+            {% if network_mode is defined and network_mode|length > 0 %}
+            network-mode: {{ network_mode }}
+            {% endif %}
+            {% if runtime is defined and runtime|length > 0 %}
+            runtime: {{ runtime }}
+            {% endif %}
+            {% if exec is defined and exec|length > 0 %}
+            exec:
+                {% for e in exec %}
+                - {{ e }}
+                {% endfor %}
+            {% endif %}
+            {% if memory is defined and memory|length > 0 %}
+            memory: {{ memory }}
+            {% endif %}
+            {% if cpu is defined and cpu|length > 0 %}
+            cpu: {{ cpu }}
+            {% endif %}
+            {% if cpu_set is defined and cpu_set|length > 0 %}
+            cpu-set: {{ cpu_set }}
+            {% endif %}
+            {% if sysctls is defined and sysctls|length > 0 %}
+            sysctls:
+                {% for s in sysctls %}
+                {{ s }}
+                {% endfor %}
+            {% endif %}

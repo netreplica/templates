@@ -1,0 +1,12 @@
+{% set startup_config = "" %}
+        {{ name }}:
+            {% if kind is defined %}
+            kind: {{ kind }}
+            {% else %}
+            kind: linux
+            {% endif %}
+            {% if image is not defined %}
+            {% set image = "alpine:latest" %}
+            {% endif %}
+            {% include 'clab/node_params.j2' %}
+            {% include 'clab/labels.j2' %}

@@ -1,1 +1,25 @@
-topology-graphite.j2
+name: {{name}}
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+{% for node in rendered_nodes: %}
+{{ node }}
+{% endfor %}
+    links:
+{% for link in links: %}
+        - endpoints: ["{{link['a']['node']}}:{{link['a']['e_interface']}}", "{{link['b']['node']}}:{{link['b']['e_interface']}}"]
+{% endfor %}

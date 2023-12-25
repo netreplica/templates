@@ -1,7 +1,0 @@
-        {{ name }}:
-            kind: linux
-            image: netreplica/ubuntu-host:latest
-            cmd: /start.sh -sS
-            exec:
-                - bash -c "echo root:root | chpasswd"
-            {% include 'clab/labels.j2' %}
