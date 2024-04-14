@@ -13,8 +13,9 @@
             env:
               OPT_LISTEN_PORT: 5555
               ARG_IFACE_LIST: {% for i in interface_list %}
-virtual@af_packet,{{ i['parameters']['name'] }}
-              {% endfor %}
+ virtual@af_packet,{{ i['parameters']['name'] }}
+              {%- endfor %}
+
               OPT_NO_HUGEPAGES: Yes
               OPT_NO_PINNING: Yes
               WAIT_FOR_IFACE: Yes
@@ -30,8 +31,9 @@ virtual@af_packet,{{ i['parameters']['name'] }}
             startup-delay: 5
             env:
               INTF_LIST: {% for i in interface_list %}
-{{ i['parameters']['name'] }}
-              {% endfor %}
+{{ i['parameters']['name'] }},
+              {%- endfor %}
+
             {% include 'clab/labels.j2' %}
                 graph-hide: yes
 
