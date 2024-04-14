@@ -1,0 +1,37 @@
+{# convert interfaces dictionary to a list for accessing values via index #}
+{% set interface_list = [] %}
+{% for full_name, parameters in interfaces.items() %}
+    {% do interface_list.append({'full_name': full_name, 'parameters': parameters}) %}
+{% endfor %}
+        {{ name }}:
+            kind: linux
+            {% if image_te is defined %}
+            image: {{ image_te }}
+            {% else %}
+            image: ghcr.io/open-traffic-generator/ixia-c-traffic-engine:latest
+            {% endif %}
+            env:
+              OPT_LISTEN_PORT: 5555
+              ARG_IFACE_LIST: {% for i in interface_list %}
+virtual@af_packet,{{ i['parameters']['name'] }}
+              {% endfor %}
+              OPT_NO_HUGEPAGES: Yes
+              OPT_NO_PINNING: Yes
+              WAIT_FOR_IFACE: Yes
+            {% include 'clab/labels.j2' %}
+        {{ name }}-pe:
+            kind: linux
+            {% if image_pe is defined %}
+            image: {{ image_pe }}
+            {% else %}
+            image: ghcr.io/open-traffic-generator/ixia-c-protocol-engine:latest
+            {% endif %}
+            network-mode: container:{{ name }}
+            startup-delay: 5
+            env:
+              INTF_LIST: {% for i in interface_list %}
+{{ i['parameters']['name'] }}
+              {% endfor %}
+            {% include 'clab/labels.j2' %}
+                graph-hide: yes
+

@@ -1,15 +1,15 @@
 type: platform_map
 version: v1
 platforms:
-  ubuntu:
-    kinds:
-      clab: linux
   arista-eos:
     kinds:
       clab: ceos
   eos:
     kinds:
       clab: ceos
+  ixia-c:
+    kinds:
+      clab: ixia-c
   cisco-ios:
     kinds:
       clab: vr-cisco_csr1000v
@@ -32,6 +32,9 @@ platforms:
   sonic:
     kinds:
       clab: sonic-vs
+  ubuntu:
+    kinds:
+      clab: linux
 kinds:
   clab:
     ceos:
@@ -45,6 +48,12 @@ kinds:
       nodes:
         template: clab/nodes/default.j2
         image: frrouting/frr:latest
+      interface_names:
+        template: clab/interface_names/default.j2
+    ixia-c:
+      nodes:
+        template: clab/nodes/ixia-c.j2
+        image: ghcr.io/open-traffic-generator/ixia-c-traffic-engine:latest
       interface_names:
         template: clab/interface_names/default.j2
     linux:
