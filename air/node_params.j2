@@ -9,9 +9,6 @@
       {% endif %}
       {% include 'air/coordinates.j2' %}
 
-      {% if pxehost is defined %}
-      "pxehost": {{ pxehost }},
-      {% endif %}
       {% if uefi is defined or tpm is defined %}
       "features": {
             {% if uefi is defined %}
@@ -25,6 +22,18 @@
             "tpm": false
             {% endif %}
       },
+      {% endif %}
+      {% if pxehost is defined %}
+      "pxehost": {{ pxehost }},
+      {% endif %}
+      {% if secureboot is defined %}
+      "secureboot": {{ secureboot }},
+      {% endif %}
+      {% if oob is defined %}
+      "oob": {{ oob }},
+      {% endif %}
+      {% if emulation_type is defined %}
+      "emulation_type": "{{ emulation_type }}",
       {% endif %}
       {% if os is defined and os|length > 0%}
       "os": "{{ os }}"
