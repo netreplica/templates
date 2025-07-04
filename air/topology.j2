@@ -1,0 +1,12 @@
+// NVIDIA Air topology in dot notation
+digraph G {
+  // Nodes
+  {% for node in nodes %}
+  {{ node.name }} [label="{{ node.label | default(node.name) }}"];
+  {% endfor %}
+
+  // Links
+  {% for link in links %}
+  {{ link.source }} -> {{ link.target }};
+  {% endfor %}
+}

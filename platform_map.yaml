@@ -99,3 +99,9 @@ kinds:
         template: cml/nodes/ubuntu.j2
       interface_names:
         template: cml/interface_names/ubuntu.j2
+  air:
+    default:
+      nodes:
+        template: air/nodes/default.j2
+      interface_names:
+        template: air/interface_names/default.j2

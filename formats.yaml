@@ -21,3 +21,8 @@ formats:
     file_format: json
     file_extension: graphite.json
     startup_config_mode: none
+  air:
+    description: NVIDIA Air topology (dot notation)
+    file_format: dot
+    file_extension: air.dot
+    startup_config_mode: none
