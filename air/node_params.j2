@@ -10,6 +10,8 @@
       {% if pxehost is defined %}
       "pxehost": {{ pxehost }},
       {% endif %}
+      {% include 'air/coordinates.j2' %}
+
       {% if os is defined and os|length > 0%}
       "os": "{{ os }}"
       {% else %}
