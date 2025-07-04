@@ -105,3 +105,9 @@ kinds:
         template: dot/nodes/default.j2
       interface_names:
         template: dot/interface_names/default.j2
+  air:
+    default:
+      nodes:
+        template: air/nodes/default.j2
+      interface_names:
+        template: air/interface_names/default.j2

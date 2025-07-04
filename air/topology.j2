@@ -1,0 +1,17 @@
+// NVIDIA Air topology in JSON
+{
+  "title": "{{ name }}",
+  "nodes": {
+{% for node in rendered_nodes: %}
+{{ node }}{% if not loop.last %},{% endif %}
+
+{% endfor %}
+  },
+  "links": [
+    {% for link in links %}
+    [{"node": "{{ link['a']['node'] }}"}, {"interface": "{{ link['a']['e_interface'] }}"}, {"node": "{{ link['b']['node'] }}"}, {"interface": "{{ link['b']['e_interface'] }}"}]{% if not loop.last %},
+    {% endif %}
+    {% endfor %}
+
+  ]
+}
