@@ -6,7 +6,7 @@ We created this repository as a collection of templates for [netreplica nrx](htt
 
 This repository provides a set of such templates as a starting point. You're welcome to clone and adopt to your needs. If you'd like to contribute back, it would be greatly appreciated.
 
-This project is in a proof-of-concept phase. We're experimenting with the best ways to automate software network lab orchestration. If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
+If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
 
 # Supported formats
 
@@ -15,7 +15,7 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 * [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco.
 * [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica.
 * [D2](https://d2lang.com/) – Declarative diagramming language.
-* **nrx** software also supports user-provided formats. You can [extend this repository](docs/output_formats.md) with your own set of templates.
+* **nrx** software also supports user-provided formats. You can [extend](docs/output_formats.md) this repository with your own set of templates.
 
 # What is included
 
@@ -26,12 +26,12 @@ This project is in a proof-of-concept phase. We're experimenting with the best w
 | Cisco IOSv               | `no`                                                      | `no`                                               | [`iosv`                  ](cml/nodes/iosv.j2)      | [CML Node Template](cml/nodes/iosv.j2)                | `cml`          |
 | Cisco IOSvL2             | `no`                                                      | `no`                                               | [`iosvl2`                ](cml/nodes/iosvl2.j2)    | [CML Node Template](cml/nodes/iosvl2.j2)              | `cml`          |
 | Cisco NX-OSv9000         | `no`                                                      | `no`                                               | [`nxosv9000`             ](cml/nodes/nxosv9000.j2) | [CML Node Template](cml/nodes/nxosv9000.j2)           | `cml`          |
-| Cumulus                  | `no`                                                      | [`cumulus-vx`            ](air/nodes/default.j2)   | `no`                                               | Not supported                                         | wanted         |
+| Cumulus                  | `no`                                                      | [`cumulus-vx`            ](air/nodes/default.j2)   | `no`                                               | Air                                                   | wanted         |
 | Linux                    | [`linux`            ](clab/nodes/linux.j2)                | `no`                                               | `no`                                               | Not supported                                         | wanted         |
 | [RARE/freeRtr][freertr]  | [`rare`             ](clab/nodes/rare.j2)                 | `no`                                               | `no`                                               | Not supported                                         | wanted         |
 | Nokia SR-Linux           | [`srl`              ](clab/nodes/srl.j2)                  | `no`                                               | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
-| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | [`sonic-vs`              ](air/nodes/default.j2)   | `no`                                               | Not supported                                         | wanted         |
-| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](air/nodes/default.j2)   | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Not supported                                         | wanted         |
+| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | [`sonic-vs`              ](air/nodes/default.j2)   | `no`                                               | Air                                                   | wanted         |
+| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](air/nodes/default.j2)   | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Air                                                   | wanted         |
 | Default                  | `default` -> [`linux`](clab/nodes/linux.j2)               | `default` -> [`ubuntu`   ](air/nodes/default.j2)   | `default` -> [`iosvl2`   ](cml/nodes/iosvl2.j2)    | Not supported                                         | n/a            |
 
 # Template naming convention
