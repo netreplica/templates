@@ -1,12 +1,12 @@
 // Graphviz DOT visualization and NVIDIA Air topology in dot notation
-digraph G {
+graph G {
   // Nodes
-  {% for node in nodes %}
-  {{ node.name }} [label="{{ node.label | default(node.name) }}"];
+  {% for node in rendered_nodes %}
+  {{ node }}
   {% endfor %}
 
   // Links
   {% for link in links %}
-  {{ link.source }} -> {{ link.target }};
+  "{{link['a']['node']}}":"{{link['a']['e_interface']}}" -- "{{link['b']['node']}}":"{{link['b']['e_interface']}}"
   {% endfor %}
 }
