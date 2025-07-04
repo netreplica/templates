@@ -61,7 +61,7 @@ Cisco Modeling Labs artifacts:
 * `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 * `cml/configs/<family>.j2`: templates for embedding startup configuration in the topology file. Use `<family>` to denote NOS family like `ios`, `nxos`, etc.
 
-To customize the way a topology file should be generated, first look if you can do that by redefining paramters in [`platform_map.yaml`](./platform_map.yaml). For example, you might want to modify `image` values depending on the `kind`. For more complicated changes, modify the J2 templates. You can also add new templates, if the platforms you have are not covered by the provided set of templates. For example, Containerlab supports a long list of [kinds](https://containerlab.dev/manual/kinds/), and you can add templates for any of them. See the section below for more details on how to do that.
+To customize the way a topology file should be generated, first look if you can do that by redefining paramters in [`platform_map.yaml`](./platform_map.yaml). For example, you might want to modify `image` values depending on the `kind`. For more complicated changes, modify the J2 templates. You can also add new templates, if the platforms you have are not covered by the provided set of templates. Containerlab supports a long list of [kinds](https://containerlab.dev/manual/kinds/), and you can add templates for any of them. See the section below for more details on how to do that.
 
 # How to add a new template
 
