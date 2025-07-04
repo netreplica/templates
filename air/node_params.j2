@@ -1,0 +1,8 @@
+      {% if cpu is defined %}
+      "cpu": "{{ cpu }}",
+      {% endif %}
+      {% if os is defined and os|length > 0%}
+      "os": "{{ os }}",
+      {% else %}
+      "os": "generic/ubuntu2204"
+      {% endif %}
