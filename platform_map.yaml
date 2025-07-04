@@ -113,7 +113,7 @@ kinds:
         cpu: 2
         memory: 4096
       interface_names:
-        template: air/interface_names/default.j2
+        template: air/interface_names/sonic.j2
     default:
       nodes:
         template: air/nodes/default.j2
