@@ -196,7 +196,7 @@ git merge new-clab-kind-sonic-vs
 
 # Copyright notice
 
-Copyright 2023 Netreplica Team
+Copyright 2023, 2024, 2025 Netreplica Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
