@@ -2,14 +2,4 @@
 {% set interface_prefix = 'Ethernet' %}
 {% set interface_start = 0 %}
 {% set interface_step = 4 %}
-{% set ns_node_links = namespace(interface_list=[]) %}
-{% for i in range(interface_start, radix + interface_start): %}
-  {% set ns_node_links.interface_list = ns_node_links.interface_list + [interface_prefix + (interface_step*i)|string] %}
-{% endfor %}
-{% for interface in ns_node_links.interface_list: %}
-{% if interface not in ns_topology_links.connected_interfaces %}
-      {% include 'air/links/unconnected.j2' %}{% if not loop.last %},
-      {% else %}
-      {% endif %}
-{% endif %}
-{% endfor %}
+{% include 'air/links/unconnected.j2' %}

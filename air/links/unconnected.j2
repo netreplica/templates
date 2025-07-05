@@ -1,1 +1,12 @@
-      [{"node": "{{ node['name'] }}", "interface": "{{ interface }}"}, "unconnected"]
+{% set ns_node_links = namespace(interface_list=[]) %}
+{% for i in range(interface_start, radix + interface_start): %}
+  {% set ns_node_links.interface_list = ns_node_links.interface_list + [interface_prefix + (interface_step*i)|string] %}
+{% endfor %}
+{% for interface in ns_node_links.interface_list: %}
+{% if interface not in ns_topology_links.connected_interfaces %}
+      [{"node": "{{ node['name'] }}", "interface": "{{ interface }}"}, "unconnected"]{% if not loop.last %},
+      {% else %}
+      {% endif %}
+{% endif %}
+{% endfor %}
+
