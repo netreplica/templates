@@ -116,8 +116,8 @@ kinds:
       nodes:
         template: air/nodes/default.j2
         os: cumulus-vx-5.13.1
-        cpu: 1
-        memory: 1024
+        cpu: 2
+        memory: 4096
     default:
       nodes:
         template: air/nodes/default.j2

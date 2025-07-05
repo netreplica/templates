@@ -9,11 +9,26 @@
       {% endfor %}
     },
     "links": [
-      {% for link in links %}
-      [{"node": "{{ link['a']['node'] }}", "interface": "{{ link['a']['e_interface'] }}"}, {"node": "{{ link['b']['node'] }}", "interface": "{{ link['b']['e_interface'] }}"}]{% if not loop.last %},
-      {% endif %}
+      {% for link in links: %}
+      {% include 'air/links/default.j2' %},
       {% endfor %}
 
+      {% for node in nodes: %}
+        {% set ns_topology_links = namespace(connected_interfaces = []) %}
+        {% for link in links: %}
+          {% if link['a']['node'] == node['name'] %}
+            {% set ns_topology_links.connected_interfaces = ns_topology_links.connected_interfaces + [link['a']['interface']] %}
+          {% elif link['b']['node'] == node['name'] %}
+            {% set ns_topology_links.connected_interfaces = ns_topology_links.connected_interfaces + [link['b']['interface']] %}
+          {% endif %}
+        {% endfor %}
+        {% set links_template = 'air/links/' + node['model'] + '.j2' %}
+        {% include links_template %}{% if not loop.last %},
+
+        {% else %}
+
+        {% endif %}
+      {% endfor %}
     ]
   }
 }

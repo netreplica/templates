@@ -1,0 +1,15 @@
+{% set radix = 4 %}
+{% set interface_prefix = 'enp' %}
+{% set interface_start = 59 %}
+{% set interface_step = 1 %}
+{% set ns_node_links = namespace(interface_list=[]) %}
+{% for i in range(interface_start, radix + interface_start): %}
+  {% set ns_node_links.interface_list = ns_node_links.interface_list + [interface_prefix + (interface_step*i)|string + 's0f0', interface_prefix + (interface_step*i)|string + 's0f1'] %}
+{% endfor %}
+{% for interface in ns_node_links.interface_list: %}
+{% if interface not in ns_topology_links.connected_interfaces %}
+      {% include 'air/links/unconnected.j2' %}{% if not loop.last %},
+      {% else %}
+      {% endif %}
+{% endif %}
+{% endfor %}
