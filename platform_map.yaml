@@ -99,3 +99,21 @@ kinds:
         template: cml/nodes/ubuntu.j2
       interface_names:
         template: cml/interface_names/ubuntu.j2
+  air:
+    sonic:
+      nodes:
+        template: air/nodes/default.j2
+        os: sonic-vs-202305
+        cpu: 2
+        memory: 2048
+    cumulus:
+      nodes:
+        template: air/nodes/default.j2
+        os: cumulus-vx-5.13.1
+        cpu: 2
+        memory: 2048
+    default:
+      nodes:
+        template: air/nodes/default.j2
+      interface_names:
+        template: air/interface_names/default.j2

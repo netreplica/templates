@@ -6,31 +6,33 @@ We created this repository as a collection of templates for [netreplica nrx](htt
 
 This repository provides a set of such templates as a starting point. You're welcome to clone and adopt to your needs. If you'd like to contribute back, it would be greatly appreciated.
 
-This project is in a proof-of-concept phase. We're experimenting with the best ways to automate software network lab orchestration. If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
+If you have any feedback, questions or suggestions, please reach out to us via the Netreplica Discord server linked above, [#netreplica](https://netdev-community.slack.com/archives/C054GKBC4LB) channel in NetDev Community on Slack, or open a github issue in this repository.
 
 # Supported formats
 
 * [Containerlab](https://containerlab.dev/) – Open-source network emulation software using containers.
+* [Nvidia Air](https://docs.nvidia.com/networking-ethernet-software/nvidia-air/) - Cloud-hosted, data center emulation platform from Nvidia.
 * [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) - Commercial network emulation software from Cisco.
 * [Graphite](https://github.com/netreplica/graphite) - Network topology visualization software from Netreplica.
 * [D2](https://d2lang.com/) – Declarative diagramming language.
-* **nrx** software also supports user-provided formats. You can [extend this repository](docs/output_formats.md) with your own set of templates.
+* **nrx** software also supports user-provided formats. You can [extend](docs/output_formats.md) this repository with your own set of templates.
 
 # What is included
 
-| Platform                 | Containerlab                                              | CML                                                | Interface Mapping                                     | Startup Config |
-| --------------           | ------------                                              | --------                                           |  --------                                             | -------------- |
-| Arista EOS               | [`ceos`             ](clab/nodes/ceos.j2)                 | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)               | `clab`         |
-| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/nodes/vr-cisco_csr1000v.j2)    | `no`                                               | Not supported                                         | `clab`         |
-| Cisco IOSv               | `no`                                                      | [`iosv`                  ](cml/nodes/iosv.j2)      | [CML Node Template](cml/nodes/iosv.j2)                | `cml`          |
-| Cisco IOSvL2             | `no`                                                      | [`iosvl2`                ](cml/nodes/iosvl2.j2)    | [CML Node Template](cml/nodes/iosvl2.j2)              | `cml`          |
-| Cisco NX-OSv9000         | `no`                                                      | [`nxosv9000`             ](cml/nodes/nxosv9000.j2) | [CML Node Template](cml/nodes/nxosv9000.j2)           | `cml`          |
-| Linux                    | [`linux`            ](clab/nodes/linux.j2)                | `no`                                               | Not supported                                         | wanted         |
-| [RARE/freeRtr](http://docs.freertr.org/) | [`rare`](clab/nodes/rare.j2)              | `no`                                               | Not supported                                         | wanted         |
-| Nokia SR-Linux           | [`srl`              ](clab/nodes/srl.j2)                  | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
-| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | `no`                                               | Not supported                                         | wanted         |
-| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Not supported                                         | wanted         |
-| Default                  | `default` -> [`linux`](clab/nodes/linux.j2)               | `default` -> [`iosvl2`   ](cml/nodes/iosvl2.j2)    | Not supported                                         | n/a            |
+| Platform                 | Containerlab                                              | Nvidia Air                                         | CML                                                | Interface Mapping                                     | Startup Config |
+| --------------           | ------------                                              | --------                                           | --------                                           |  --------                                             | -------------- |
+| Arista EOS               | [`ceos`             ](clab/nodes/ceos.j2)                 | `no`                                               | `no`                                               | [Interface Map](clab/interface_maps/ceos.j2)          | `clab`         |
+| Cisco CSR1000v           | [`vr-cisco_csr1000v`](clab/nodes/vr-cisco_csr1000v.j2)    | `no`                                               | `no`                                               | Not supported                                         | `clab`         |
+| Cisco IOSv               | `no`                                                      | `no`                                               | [`iosv`                  ](cml/nodes/iosv.j2)      | [CML Node Template](cml/nodes/iosv.j2)                | `cml`          |
+| Cisco IOSvL2             | `no`                                                      | `no`                                               | [`iosvl2`                ](cml/nodes/iosvl2.j2)    | [CML Node Template](cml/nodes/iosvl2.j2)              | `cml`          |
+| Cisco NX-OSv9000         | `no`                                                      | `no`                                               | [`nxosv9000`             ](cml/nodes/nxosv9000.j2) | [CML Node Template](cml/nodes/nxosv9000.j2)           | `cml`          |
+| Cumulus                  | `no`                                                      | [`cumulus-vx`            ](air/nodes/default.j2)   | `no`                                               | Air                                                   | wanted         |
+| Linux                    | [`linux`            ](clab/nodes/linux.j2)                | `no`                                               | `no`                                               | Not supported                                         | wanted         |
+| [RARE/freeRtr][freertr]  | [`rare`             ](clab/nodes/rare.j2)                 | `no`                                               | `no`                                               | Not supported                                         | wanted         |
+| Nokia SR-Linux           | [`srl`              ](clab/nodes/srl.j2)                  | `no`                                               | `no`                                               | [Clab Interface Naming](clab/interface_names/srl.j2)  | `clab`         |
+| SONiC                    | [`sonic-vs`         ](clab/nodes/sonic-vs.j2)             | [`sonic-vs`              ](air/nodes/default.j2)   | `no`                                               | Air                                                   | wanted         |
+| Ubuntu                   | `ubuntu` -> [`linux`](clab/nodes/linux.j2)                | [`ubuntu`                ](air/nodes/default.j2)   | [`ubuntu`                ](cml/nodes/ubuntu.j2)    | Air                                                   | wanted         |
+| Default                  | `default` -> [`linux`](clab/nodes/linux.j2)               | `default` -> [`ubuntu`   ](air/nodes/default.j2)   | `default` -> [`iosvl2`   ](cml/nodes/iosvl2.j2)    | Not supported                                         | n/a            |
 
 # Template naming convention
 
@@ -45,6 +47,13 @@ Containerlab artifacts:
 * [`clab/node_params.j2`](clab/node_params.j2): extended set of node parameters supported by all `kinds`. Always include this template at the end of each `clab/nodes/<kind>.j2` template to leverage these parameters. When some of the parameters needs to be rendered, define the values you need for each `kind` in [`platform_map.yaml`](platform_map.yaml).
 * [`clab/labels.j2`](clab/labels.j2): [custom labels](https://github.com/netreplica/graphite/blob/main/docs/LABELS.md) supported by Netreplica [Graphite](https://github.com/netreplica/graphite/) visualization software. Include this template at the end of the `clab/nodes/<kind>.j2` template to initialize these labels with data from NetBox.
 
+Nvidia Air artifacts:
+
+* [`air/topology.j2`](air/topology.j2): template for the final Air topology file in JSON format.
+* [`air/nodes/default.j2`](air/nodes/default.j2): default node template, suitable for most types of OS variants.
+* [`air/interface_names/default.j2`](air/interface_names/default.j2): default template for generating emulated interface names.
+* [`air/node_params.j2`](air/node_params.j2): extended set of node parameters supported by all OS variants. When some of the parameters needs to be rendered, define the values you need for each `kind` in [`platform_map.yaml`](platform_map.yaml).
+
 Cisco Modeling Labs artifacts:
 
 * `cml/topology.j2`: template for the final CML topology file.
@@ -52,7 +61,7 @@ Cisco Modeling Labs artifacts:
 * `cml/interface_names/<kind>.j2`: templates for generating emulated interface names used by the NOS `kind` in CML.
 * `cml/configs/<family>.j2`: templates for embedding startup configuration in the topology file. Use `<family>` to denote NOS family like `ios`, `nxos`, etc.
 
-To customize the way a topology file should be generated, change these templates as needed. For example, you might want to modify `image` values depending on the `kind`. You can also add new templates, if the platforms you have are not covered by the provided set of templates.
+To customize the way a topology file should be generated, first look if you can do that by redefining paramters in [`platform_map.yaml`](./platform_map.yaml). For example, you might want to modify `image` values depending on the `kind`. For more complicated changes, modify the J2 templates. You can also add new templates, if the platforms you have are not covered by the provided set of templates. Containerlab supports a long list of [kinds](https://containerlab.dev/manual/kinds/), and you can add templates for any of them. See the section below for more details on how to do that.
 
 # How to add a new template
 
@@ -187,7 +196,7 @@ git merge new-clab-kind-sonic-vs
 
 # Copyright notice
 
-Copyright 2023 Netreplica Team
+Copyright 2023, 2024, 2025 Netreplica Team
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -200,3 +209,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[freertr]: http://docs.freertr.org/
