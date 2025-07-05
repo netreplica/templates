@@ -111,13 +111,13 @@ kinds:
         template: air/nodes/default.j2
         os: sonic-vs-202305
         cpu: 2
-        memory: 4096
+        memory: 2048
     cumulus:
       nodes:
         template: air/nodes/default.j2
         os: cumulus-vx-5.13.1
         cpu: 2
-        memory: 4096
+        memory: 2048
     default:
       nodes:
         template: air/nodes/default.j2
