@@ -1,12 +1,12 @@
 {% if level is not none %}
-    {% set y_position = level * -250 %}
+    {% set y_position = (level + 1) * -275 %}
 {% else %}
-    {% set y_position = device_index * -250 %}
+    {% set y_position = (device_index + 1) * -275 %}
 {% endif %}
 {% if rank is not none %}
-    {% set x_position = (rank * 800)|int  %}
+    {% set x_position = ((rank * 5 + 1) * 275)|int  %}
 {% else %}
-    {% set x_position = device_index * 100 %}
+    {% set x_position = (device_index + 1) * 275 %}
 {% endif %}
         "positioning": {
           "x": {{ x_position }},
