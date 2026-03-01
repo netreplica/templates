@@ -152,11 +152,13 @@
 
         .table-container {
             overflow-x: auto;
+            max-width: 100%;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         .hide-location-column .location-column {
@@ -191,6 +193,26 @@
             padding: 12px 8px;
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Specific column widths */
+        th:nth-child(1), td:nth-child(1) { width: 14%; } /* Device Name */
+        th:nth-child(2), td:nth-child(2) { width: 11%; } /* Role */
+        th:nth-child(3), td:nth-child(3) { width: 7%; } /* Site */
+        th:nth-child(4), td:nth-child(4) { width: 7%; } /* Location */
+        th:nth-child(5), td:nth-child(5) { width: 7%; }  /* Rack */
+        th:nth-child(6), td:nth-child(6) { width: 10%; } /* Platform */
+        th:nth-child(7), td:nth-child(7) { width: 7%; }  /* Vendor */
+        th:nth-child(8), td:nth-child(8) { width: 12%; } /* Model */
+        th:nth-child(9), td:nth-child(9) { width: 10%; min-width: 110px; }  /* IPv4 - never truncate */
+        th:nth-child(10), td:nth-child(10) { width: 10%; } /* IPv6 */
+
+        /* Prevent IPv4 address truncation */
+        td:nth-child(9) {
+            white-space: nowrap;
         }
 
         td a {
@@ -250,11 +272,6 @@
             opacity: 1;
         }
 
-        /* Ensure table cells with copy buttons don't expand */
-        td {
-            white-space: nowrap;
-        }
-
         .role-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -263,6 +280,18 @@
             font-weight: 500;
             background: #e0e7ff;
             color: #4338ca;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Role column should allow wrapping */
+        td:nth-child(2) {
+            white-space: normal;
+        }
+
+        td:nth-child(2) .role-badge {
             white-space: normal;
             word-wrap: break-word;
         }
