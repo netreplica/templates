@@ -26,3 +26,13 @@ formats:
     file_format: json
     file_extension: air.json
     startup_config_mode: none
+  inventory-csv:
+    description: CSV device inventory
+    file_format: custom
+    file_extension: csv
+    startup_config_mode: none
+  inventory-html:
+    description: HTML device inventory
+    file_format: custom
+    file_extension: html
+    startup_config_mode: none

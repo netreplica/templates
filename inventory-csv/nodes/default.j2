@@ -1,0 +1,11 @@
+{% if primary_ip4 is defined -%}
+  {%- set primary_ip4_address = primary_ip4.split("/")[0] -%}
+{%- else -%}
+  {%- set primary_ip4_address = "" -%}
+{%- endif -%}
+{%- if primary_ip6 is defined -%}
+  {%- set primary_ip6_address = primary_ip6.split("/")[0] -%}
+{%- else -%}
+  {%- set primary_ip6_address = "" -%}
+{%- endif -%}
+{{ name }},{{ role_name }},{{ site }},{{ platform_name }},{{ vendor_name }},{{ model_name }},{{ primary_ip4_address }},{{ primary_ip6_address }}

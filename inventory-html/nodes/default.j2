@@ -1,0 +1,20 @@
+{% if primary_ip4 is defined -%}
+  {%- set primary_ip4_address = primary_ip4.split("/")[0] -%}
+{%- else -%}
+  {%- set primary_ip4_address = "" -%}
+{%- endif -%}
+{%- if primary_ip6 is defined -%}
+  {%- set primary_ip6_address = primary_ip6.split("/")[0] -%}
+{%- else -%}
+  {%- set primary_ip6_address = "" -%}
+{%- endif -%}
+                    <tr>
+                        <td class="device-name">{{ name }}</td>
+                        <td><span class="role-badge">{{ role_name }}</span></td>
+                        <td>{{ site }}</td>
+                        <td>{{ platform_name }}</td>
+                        <td>{{ vendor_name }}</td>
+                        <td>{{ model_name }}</td>
+                        <td>{% if primary_ip4_address %}{{ primary_ip4_address }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td>{% if primary_ip6_address %}{{ primary_ip6_address }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                    </tr>
