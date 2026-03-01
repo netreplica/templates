@@ -188,7 +188,7 @@
         }
 
         td {
-            padding: 12px 15px;
+            padding: 12px 8px;
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
         }
@@ -230,6 +230,31 @@
             color: #667eea;
         }
 
+        .device-name span {
+            cursor: pointer;
+        }
+
+        .device-name span:hover {
+            text-decoration: underline;
+        }
+
+        /* Hide copy buttons in table by default, show on row hover */
+        td .copy-btn {
+            opacity: 0;
+            transition: opacity 0.2s;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        tr:hover td .copy-btn {
+            opacity: 1;
+        }
+
+        /* Ensure table cells with copy buttons don't expand */
+        td {
+            white-space: nowrap;
+        }
+
         .role-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -238,6 +263,8 @@
             font-weight: 500;
             background: #e0e7ff;
             color: #4338ca;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         .footer {
