@@ -13,30 +13,7 @@
             <p>Device Inventory Report</p>
         </div>
 
-        <div class="controls">
-            <div class="search-wrapper">
-                <input type="text"
-                       class="search-box"
-                       id="searchInput"
-                       placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
-                       onkeyup="handleSearchInput(event)">
-                <button class="clear-search" id="clearSearch" onclick="clearSearch()" title="Clear search">×</button>
-            </div>
-            <div class="filters-group">
-                <div class="filter-section">
-                    <span class="filter-label">Site:</span>
-                    <div class="location-buttons" id="siteButtons">
-                        <button class="location-btn active" onclick="filterBySite('')">All</button>
-                    </div>
-                </div>
-                <div class="filter-section">
-                    <span class="filter-label">Location:</span>
-                    <div class="location-buttons" id="locationButtons">
-                        <button class="location-btn active" onclick="filterByLocation('')">All</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% include 'inventory-html/_controls.html' %}
 
         <div class="table-container">
             <table id="inventoryTable">
