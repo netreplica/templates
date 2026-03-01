@@ -49,8 +49,20 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .controls-row:last-child {
+            margin-bottom: 0;
+        }
+
         .search-box {
-            width: 100%;
+            flex: 1;
+            min-width: 250px;
             max-width: 400px;
             padding: 10px 15px;
             border: 1px solid #ddd;
@@ -62,6 +74,44 @@
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .location-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .location-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .location-btn:hover {
+            background: #f0f0f0;
+            border-color: #999;
+        }
+
+        .location-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .location-btn.active:hover {
+            background: #5568d3;
         }
 
         .table-container {
@@ -141,11 +191,19 @@
         </div>
 
         <div class="controls">
-            <input type="text"
-                   class="search-box"
-                   id="searchInput"
-                   placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
-                   onkeyup="filterTable()">
+            <div class="controls-row">
+                <input type="text"
+                       class="search-box"
+                       id="searchInput"
+                       placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
+                       onkeyup="filterTable()">
+            </div>
+            <div class="controls-row">
+                <span class="filter-label">Location:</span>
+                <div class="location-buttons" id="locationButtons">
+                    <button class="location-btn active" onclick="filterByLocation('')">All</button>
+                </div>
+            </div>
         </div>
 
         <div class="table-container">
@@ -178,26 +236,86 @@
     </div>
 
     <script>
+        let currentLocation = '';
+
+        // Populate location buttons on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('inventoryTable');
+            const rows = table.getElementsByTagName('tr');
+            const locations = new Set();
+
+            // Extract unique locations from table (location is column 3)
+            for (let i = 1; i < rows.length; i++) {
+                const locationCell = rows[i].cells[3];
+                if (locationCell) {
+                    const locationText = locationCell.textContent.trim();
+                    if (locationText && locationText !== '-') {
+                        locations.add(locationText);
+                    }
+                }
+            }
+
+            // Populate buttons with sorted locations
+            const locationButtons = document.getElementById('locationButtons');
+            Array.from(locations).sort().forEach(location => {
+                const button = document.createElement('button');
+                button.className = 'location-btn';
+                button.textContent = location;
+                button.onclick = function() { filterByLocation(location); };
+                locationButtons.appendChild(button);
+            });
+        });
+
+        function filterByLocation(location) {
+            currentLocation = location;
+
+            // Update active button state
+            const buttons = document.querySelectorAll('.location-btn');
+            buttons.forEach(btn => {
+                if ((location === '' && btn.textContent === 'All') ||
+                    (btn.textContent === location)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            filterTable();
+        }
+
         function filterTable() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toLowerCase();
+            const searchInput = document.getElementById('searchInput');
+            const searchFilter = searchInput.value.toLowerCase();
             const table = document.getElementById('inventoryTable');
             const rows = table.getElementsByTagName('tr');
 
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 const cells = row.getElementsByTagName('td');
-                let found = false;
+                const locationCell = cells[3]; // Location is column 3
+                let matchesSearch = false;
+                let matchesLocation = true;
 
-                for (let j = 0; j < cells.length; j++) {
-                    const cell = cells[j];
-                    if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
+                // Check search filter (all columns)
+                if (searchFilter) {
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].textContent.toLowerCase().indexOf(searchFilter) > -1) {
+                            matchesSearch = true;
+                            break;
+                        }
                     }
+                } else {
+                    matchesSearch = true;
                 }
 
-                row.style.display = found ? '' : 'none';
+                // Check location filter
+                if (currentLocation && locationCell) {
+                    const locationText = locationCell.textContent.trim();
+                    matchesLocation = locationText === currentLocation;
+                }
+
+                // Show row only if it matches both filters
+                row.style.display = (matchesSearch && matchesLocation) ? '' : 'none';
             }
         }
 
