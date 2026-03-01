@@ -235,7 +235,7 @@
                            class="search-box"
                            id="searchInput"
                            placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
-                           onkeyup="handleSearchInput()">
+                           onkeyup="handleSearchInput(event)">
                     <button class="clear-search" id="clearSearch" onclick="clearSearch()" title="Clear search">×</button>
                 </div>
             </div>
@@ -454,8 +454,14 @@
             filterTable();
         }
 
-        function handleSearchInput() {
+        function handleSearchInput(event) {
             toggleClearButton();
+
+            // Update URL only on Enter key
+            if (event && event.key === 'Enter') {
+                updateUrl();
+            }
+
             filterTable();
         }
 
@@ -473,6 +479,7 @@
             const searchInput = document.getElementById('searchInput');
             searchInput.value = '';
             toggleClearButton();
+            updateUrl();  // Update URL when clearing
             filterTable();
         }
 
@@ -481,9 +488,6 @@
             const searchFilter = searchInput.value.toLowerCase();
             const table = document.getElementById('inventoryTable');
             const rows = table.getElementsByTagName('tr');
-
-            // Update URL when search filter changes
-            updateUrl();
 
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
