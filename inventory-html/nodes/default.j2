@@ -27,6 +27,6 @@
                         <td>{{ platform_name }}</td>
                         <td>{{ vendor_name }}</td>
                         <td>{{ model_name }}</td>
-                        <td>{% if primary_ip4_address %}{{ primary_ip4_address }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
-                        <td>{% if primary_ip6_address %}{{ primary_ip6_address }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td>{% if primary_ip4_address %}<a href="https://{{ primary_ip4_address }}" target="_blank">{{ primary_ip4_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td>{% if primary_ip6_address %}<a href="https://[{{ primary_ip6_address }}]" target="_blank">{{ primary_ip6_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                     </tr>
