@@ -47,17 +47,10 @@
             padding: 20px 30px;
             background: #fafafa;
             border-bottom: 1px solid #e0e0e0;
-        }
-
-        .controls-row {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .controls-row:last-child {
-            margin-bottom: 0;
+            flex-wrap: wrap;
         }
 
         .search-wrapper {
@@ -66,6 +59,19 @@
             max-width: 400px;
             position: relative;
             display: flex;
+            align-items: center;
+        }
+
+        .filters-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 8px;
             align-items: center;
         }
 
@@ -238,26 +244,26 @@
         </div>
 
         <div class="controls">
-            <div class="controls-row">
-                <div class="search-wrapper">
-                    <input type="text"
-                           class="search-box"
-                           id="searchInput"
-                           placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
-                           onkeyup="handleSearchInput(event)">
-                    <button class="clear-search" id="clearSearch" onclick="clearSearch()" title="Clear search">×</button>
-                </div>
+            <div class="search-wrapper">
+                <input type="text"
+                       class="search-box"
+                       id="searchInput"
+                       placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
+                       onkeyup="handleSearchInput(event)">
+                <button class="clear-search" id="clearSearch" onclick="clearSearch()" title="Clear search">×</button>
             </div>
-            <div class="controls-row">
-                <span class="filter-label">Site:</span>
-                <div class="location-buttons" id="siteButtons">
-                    <button class="location-btn active" onclick="filterBySite('')">All</button>
+            <div class="filters-group">
+                <div class="filter-section">
+                    <span class="filter-label">Site:</span>
+                    <div class="location-buttons" id="siteButtons">
+                        <button class="location-btn active" onclick="filterBySite('')">All</button>
+                    </div>
                 </div>
-            </div>
-            <div class="controls-row">
-                <span class="filter-label">Location:</span>
-                <div class="location-buttons" id="locationButtons">
-                    <button class="location-btn active" onclick="filterByLocation('')">All</button>
+                <div class="filter-section">
+                    <span class="filter-label">Location:</span>
+                    <div class="location-buttons" id="locationButtons">
+                        <button class="location-btn active" onclick="filterByLocation('')">All</button>
+                    </div>
                 </div>
             </div>
         </div>
