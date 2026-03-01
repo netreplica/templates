@@ -127,6 +127,10 @@
             display: none;
         }
 
+        .hide-site-column .site-column {
+            display: none;
+        }
+
         thead {
             background: #f9fafb;
             border-bottom: 2px solid #e0e0e0;
@@ -203,6 +207,12 @@
                        onkeyup="filterTable()">
             </div>
             <div class="controls-row">
+                <span class="filter-label">Site:</span>
+                <div class="location-buttons" id="siteButtons">
+                    <button class="location-btn active" onclick="filterBySite('')">All</button>
+                </div>
+            </div>
+            <div class="controls-row">
                 <span class="filter-label">Location:</span>
                 <div class="location-buttons" id="locationButtons">
                     <button class="location-btn active" onclick="filterByLocation('')">All</button>
@@ -216,7 +226,7 @@
                     <tr>
                         <th onclick="sortTable(0)">Device Name</th>
                         <th onclick="sortTable(1)">Role</th>
-                        <th onclick="sortTable(2)">Site</th>
+                        <th class="site-column" onclick="sortTable(2)">Site</th>
                         <th class="location-column" onclick="sortTable(3)">Location</th>
                         <th onclick="sortTable(4)">Rack</th>
                         <th onclick="sortTable(5)">Platform</th>
@@ -240,17 +250,28 @@
     </div>
 
     <script>
+        let currentSite = '';
         let currentLocation = '';
 
-        // Populate location buttons on page load
+        // Populate site and location buttons on page load
         document.addEventListener('DOMContentLoaded', function() {
             const table = document.getElementById('inventoryTable');
             const rows = table.getElementsByTagName('tr');
+            const sites = new Set();
             const locations = new Set();
 
-            // Extract unique locations from table (location is column 3)
+            // Extract unique sites and locations from table
             for (let i = 1; i < rows.length; i++) {
-                const locationCell = rows[i].cells[3];
+                const siteCell = rows[i].cells[2]; // Site is column 2
+                const locationCell = rows[i].cells[3]; // Location is column 3
+
+                if (siteCell) {
+                    const siteText = siteCell.textContent.trim();
+                    if (siteText) {
+                        sites.add(siteText);
+                    }
+                }
+
                 if (locationCell) {
                     const locationText = locationCell.textContent.trim();
                     if (locationText && locationText !== '-') {
@@ -259,7 +280,23 @@
                 }
             }
 
-            // Populate buttons with sorted locations
+            // Populate site buttons with sorted sites
+            const siteButtons = document.getElementById('siteButtons');
+            const sortedSites = Array.from(sites).sort();
+            sortedSites.forEach(site => {
+                const button = document.createElement('button');
+                button.className = 'location-btn';
+                button.textContent = site;
+                button.onclick = function() { filterBySite(site); };
+                siteButtons.appendChild(button);
+            });
+
+            // If there's only one site, select it by default
+            if (sortedSites.length === 1) {
+                filterBySite(sortedSites[0]);
+            }
+
+            // Populate location buttons with sorted locations
             const locationButtons = document.getElementById('locationButtons');
             Array.from(locations).sort().forEach(location => {
                 const button = document.createElement('button');
@@ -270,12 +307,37 @@
             });
         });
 
+        function filterBySite(site) {
+            currentSite = site;
+
+            // Update active button state for site buttons
+            const siteButtons = document.querySelectorAll('#siteButtons .location-btn');
+            siteButtons.forEach(btn => {
+                if ((site === '' && btn.textContent === 'All') ||
+                    (btn.textContent === site)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Hide/show site column based on selection
+            const tableContainer = document.querySelector('.table-container');
+            if (site === '') {
+                tableContainer.classList.remove('hide-site-column');
+            } else {
+                tableContainer.classList.add('hide-site-column');
+            }
+
+            filterTable();
+        }
+
         function filterByLocation(location) {
             currentLocation = location;
 
-            // Update active button state
-            const buttons = document.querySelectorAll('.location-btn');
-            buttons.forEach(btn => {
+            // Update active button state for location buttons
+            const locationButtons = document.querySelectorAll('#locationButtons .location-btn');
+            locationButtons.forEach(btn => {
                 if ((location === '' && btn.textContent === 'All') ||
                     (btn.textContent === location)) {
                     btn.classList.add('active');
@@ -304,8 +366,10 @@
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 const cells = row.getElementsByTagName('td');
+                const siteCell = cells[2]; // Site is column 2
                 const locationCell = cells[3]; // Location is column 3
                 let matchesSearch = false;
+                let matchesSite = true;
                 let matchesLocation = true;
 
                 // Check search filter (all columns)
@@ -320,14 +384,20 @@
                     matchesSearch = true;
                 }
 
+                // Check site filter
+                if (currentSite && siteCell) {
+                    const siteText = siteCell.textContent.trim();
+                    matchesSite = siteText === currentSite;
+                }
+
                 // Check location filter
                 if (currentLocation && locationCell) {
                     const locationText = locationCell.textContent.trim();
                     matchesLocation = locationText === currentLocation;
                 }
 
-                // Show row only if it matches both filters
-                row.style.display = (matchesSearch && matchesLocation) ? '' : 'none';
+                // Show row only if it matches all filters
+                row.style.display = (matchesSearch && matchesSite && matchesLocation) ? '' : 'none';
             }
         }
 
