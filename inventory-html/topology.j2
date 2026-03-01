@@ -705,6 +705,10 @@
             if (urlParams.search) {
                 filterTable();
             }
+
+            // Sort by device name (column 0) in descending order by default on page load
+            table.setAttribute('data-sort-asc', 'true'); // Set to true so sortTable will reverse to descending
+            sortTable(0);
         });
 
         function filterBySite(site) {
