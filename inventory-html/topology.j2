@@ -169,6 +169,10 @@
             display: none;
         }
 
+        .hide-ipv6-column .ipv6-column {
+            display: none;
+        }
+
         thead {
             background: #f9fafb;
             border-bottom: 2px solid #e0e0e0;
@@ -538,7 +542,7 @@
                         <th onclick="sortTable(6)">Vendor</th>
                         <th onclick="sortTable(7)">Model</th>
                         <th onclick="sortTable(8)">IPv4 Address</th>
-                        <th onclick="sortTable(9)">IPv6 Address</th>
+                        <th class="ipv6-column" onclick="sortTable(9)">IPv6 Address</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -611,11 +615,13 @@
             const rows = table.getElementsByTagName('tr');
             const sites = new Set();
             const locations = new Set();
+            let hasIpv6 = false;
 
-            // Extract unique sites and locations from table
+            // Extract unique sites and locations from table, check for IPv6
             for (let i = 1; i < rows.length; i++) {
                 const siteCell = rows[i].cells[2]; // Site is column 2
                 const locationCell = rows[i].cells[3]; // Location is column 3
+                const ipv6Cell = rows[i].cells[9]; // IPv6 is column 9
 
                 if (siteCell) {
                     const siteText = siteCell.textContent.trim();
@@ -630,6 +636,20 @@
                         locations.add(locationText);
                     }
                 }
+
+                // Check if IPv6 column has any data
+                if (ipv6Cell) {
+                    const ipv6Text = ipv6Cell.textContent.trim();
+                    if (ipv6Text && ipv6Text !== '-') {
+                        hasIpv6 = true;
+                    }
+                }
+            }
+
+            // Hide IPv6 column if no data
+            if (!hasIpv6) {
+                const tableContainer = document.querySelector('.table-container');
+                tableContainer.classList.add('hide-ipv6-column');
             }
 
             // Populate site buttons with sorted sites
