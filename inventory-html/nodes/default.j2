@@ -64,7 +64,7 @@
                     }'>
                         <td class="device-name"><span onclick="showDeviceDetails(this.closest('tr'))">{{ name }}</span><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ name }}', this);" title="Copy to clipboard">{% include 'inventory-html/_copy_icon.j2' %}</button></td>
                         <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>
-                        <td class="tags-column">{% if tags %}{% for tag in tags %}<span class="tag-circle" style="background-color: #{{ tag.color }};"><span class="tag-text">{{ tag.name }}</span></span>{% endfor %}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="tags-column">{% if tags %}{% for tag in tags %}<span class="tag-circle" style="background-color: #{{ tag.color }};" onclick="filterBySearch('{{ tag.name }}')"><span class="tag-text">{{ tag.name }}</span></span>{% endfor %}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
                         <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td{% if rack_name %} class="clickable-search" onclick="filterBySearch('{{ rack_name }}')"{% endif %}>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
