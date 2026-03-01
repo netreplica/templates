@@ -387,6 +387,54 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
+        /* Copy button styles */
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            padding: 4px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            vertical-align: middle;
+        }
+
+        .copy-btn:hover {
+            background: #f0f0f0;
+            border-color: #ddd;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: #666;
+        }
+
+        .copy-btn:hover svg {
+            fill: #333;
+        }
+
+        .copy-btn.copied svg {
+            fill: #10b981;
+        }
+
+        .detail-value-with-copy {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -747,13 +795,16 @@
 
             let detailsHTML = '';
 
+            // Copy icon SVG
+            const copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg>';
+
             // Basic Information Section
             detailsHTML += '<div class="detail-section">';
             detailsHTML += '<div class="detail-section-title">Basic Information</div>';
             detailsHTML += '<div class="detail-grid">';
 
             detailsHTML += '<div class="detail-label">Device Name:</div>';
-            detailsHTML += '<div class="detail-value">' + deviceData.name + '</div>';
+            detailsHTML += '<div class="detail-value detail-value-with-copy">' + deviceData.name + '<button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.name + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
 
             if (deviceData.status) {
                 detailsHTML += '<div class="detail-label">Status:</div>';
@@ -798,7 +849,7 @@
 
             if (deviceData.serial) {
                 detailsHTML += '<div class="detail-label">Serial Number:</div>';
-                detailsHTML += '<div class="detail-value">' + deviceData.serial + '</div>';
+                detailsHTML += '<div class="detail-value detail-value-with-copy">' + deviceData.serial + '<button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.serial + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
             }
 
             if (deviceData.asset_tag) {
@@ -816,17 +867,17 @@
 
                 if (deviceData.ipv4) {
                     detailsHTML += '<div class="detail-label">Primary IPv4:</div>';
-                    detailsHTML += '<div class="detail-value"><a href="https://' + deviceData.ipv4 + '" target="_blank">' + deviceData.ipv4 + '</a></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.ipv4 + '" target="_blank">' + deviceData.ipv4 + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.ipv4 + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 if (deviceData.ipv6) {
                     detailsHTML += '<div class="detail-label">Primary IPv6:</div>';
-                    detailsHTML += '<div class="detail-value"><a href="https://[' + deviceData.ipv6 + ']" target="_blank">' + deviceData.ipv6 + '</a></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://[' + deviceData.ipv6 + ']" target="_blank">' + deviceData.ipv6 + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.ipv6 + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 if (deviceData.oob_ip) {
                     detailsHTML += '<div class="detail-label">OOB IP:</div>';
-                    detailsHTML += '<div class="detail-value"><a href="https://' + deviceData.oob_ip + '" target="_blank">' + deviceData.oob_ip + '</a></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.oob_ip + '" target="_blank">' + deviceData.oob_ip + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.oob_ip + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 detailsHTML += '</div></div>';
@@ -867,6 +918,31 @@
         function closeModal() {
             const modal = document.getElementById('deviceModal');
             modal.style.display = 'none';
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(text, buttonElement) {
+            // SVG icons
+            const copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg>';
+            const checkIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg>';
+
+            navigator.clipboard.writeText(text).then(function() {
+                // Visual feedback - change icon to checkmark
+                const originalHTML = buttonElement.innerHTML;
+                buttonElement.innerHTML = checkIcon;
+                buttonElement.classList.add('copied');
+                buttonElement.setAttribute('title', 'Copied!');
+
+                // Reset after 2 seconds
+                setTimeout(function() {
+                    buttonElement.innerHTML = originalHTML;
+                    buttonElement.classList.remove('copied');
+                    buttonElement.setAttribute('title', 'Copy to clipboard');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy text: ', err);
+                buttonElement.setAttribute('title', 'Failed to copy');
+            });
         }
 
         // Close modal when clicking outside of it
