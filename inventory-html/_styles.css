@@ -199,17 +199,18 @@
         /* Specific column widths */
         th:nth-child(1), td:nth-child(1) { width: 16%; } /* Device Name */
         th:nth-child(2), td:nth-child(2) { width: 9%; } /* Role */
-        th:nth-child(3), td:nth-child(3) { width: 7%; } /* Site */
-        th:nth-child(4), td:nth-child(4) { width: 7%; } /* Location */
-        th:nth-child(5), td:nth-child(5) { width: 5%; }  /* Rack */
-        th:nth-child(6), td:nth-child(6) { width: 10%; } /* Platform */
-        th:nth-child(7), td:nth-child(7) { width: 7%; }  /* Vendor */
-        th:nth-child(8), td:nth-child(8) { width: 13%; } /* Model */
-        th:nth-child(9), td:nth-child(9) { width: 10%; min-width: 110px; }  /* IPv4 - never truncate */
-        th:nth-child(10), td:nth-child(10) { width: 10%; } /* IPv6 */
+        th:nth-child(3), td:nth-child(3) { width: 7%; } /* Tags */
+        th:nth-child(4), td:nth-child(4) { width: 7%; } /* Site */
+        th:nth-child(5), td:nth-child(5) { width: 7%; } /* Location */
+        th:nth-child(6), td:nth-child(6) { width: 5%; }  /* Rack */
+        th:nth-child(7), td:nth-child(7) { width: 10%; } /* Platform */
+        th:nth-child(8), td:nth-child(8) { width: 7%; }  /* Vendor */
+        th:nth-child(9), td:nth-child(9) { width: 11%; } /* Model */
+        th:nth-child(10), td:nth-child(10) { width: 10%; min-width: 110px; }  /* IPv4 - never truncate */
+        th:nth-child(11), td:nth-child(11) { width: 10%; } /* IPv6 */
 
         /* Prevent IPv4 address truncation */
-        td:nth-child(9) {
+        td:nth-child(10) {
             white-space: nowrap;
         }
 
@@ -300,6 +301,52 @@
         td:nth-child(2) .role-badge {
             white-space: normal;
             word-wrap: break-word;
+        }
+
+        .tag-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 12px;
+            margin: 0 3px;
+            cursor: pointer;
+            vertical-align: middle;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .tag-text {
+            opacity: 0;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.2s ease;
+            line-height: 1;
+        }
+
+        .tag-circle:hover {
+            position: absolute;
+            width: auto;
+            padding: 4px 10px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .tag-circle:hover .tag-text {
+            opacity: 1;
+        }
+
+        /* Tags column */
+        td:nth-child(3) {
+            white-space: nowrap;
+            position: relative;
+            overflow: visible !important;
         }
 
         .footer {

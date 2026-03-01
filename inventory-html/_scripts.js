@@ -46,9 +46,9 @@
 
             // Extract unique sites and locations from table, check for IPv6
             for (let i = 1; i < rows.length; i++) {
-                const siteCell = rows[i].cells[2]; // Site is column 2
-                const locationCell = rows[i].cells[3]; // Location is column 3
-                const ipv6Cell = rows[i].cells[9]; // IPv6 is column 9
+                const siteCell = rows[i].cells[3]; // Site is column 3
+                const locationCell = rows[i].cells[4]; // Location is column 4
+                const ipv6Cell = rows[i].cells[10]; // IPv6 is column 10
 
                 if (siteCell) {
                     const siteText = siteCell.textContent.trim();
@@ -236,8 +236,8 @@
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 const cells = row.getElementsByTagName('td');
-                const siteCell = cells[2]; // Site is column 2
-                const locationCell = cells[3]; // Location is column 3
+                const siteCell = cells[3]; // Site is column 3
+                const locationCell = cells[4]; // Location is column 4
                 let matchesSearch = false;
                 let matchesSite = true;
                 let matchesLocation = true;
