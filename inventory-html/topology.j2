@@ -60,11 +60,18 @@
             margin-bottom: 0;
         }
 
-        .search-box {
+        .search-wrapper {
             flex: 1;
             min-width: 250px;
             max-width: 400px;
-            padding: 10px 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
@@ -74,6 +81,29 @@
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            display: none;
+            line-height: 1;
+            border-radius: 3px;
+        }
+
+        .clear-search:hover {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .clear-search.visible {
+            display: block;
         }
 
         .filter-label {
@@ -200,11 +230,14 @@
 
         <div class="controls">
             <div class="controls-row">
-                <input type="text"
-                       class="search-box"
-                       id="searchInput"
-                       placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
-                       onkeyup="filterTable()">
+                <div class="search-wrapper">
+                    <input type="text"
+                           class="search-box"
+                           id="searchInput"
+                           placeholder="Search by device name, role, site, location, rack, platform, vendor, or model..."
+                           onkeyup="handleSearchInput()">
+                    <button class="clear-search" id="clearSearch" onclick="clearSearch()" title="Clear search">×</button>
+                </div>
             </div>
             <div class="controls-row">
                 <span class="filter-label">Site:</span>
@@ -341,6 +374,7 @@
             // Apply search from URL if present
             if (urlParams.search) {
                 document.getElementById('searchInput').value = urlParams.search;
+                toggleClearButton();
             }
 
             // Apply filters from URL or defaults
@@ -417,6 +451,28 @@
             }
 
             updateUrl();
+            filterTable();
+        }
+
+        function handleSearchInput() {
+            toggleClearButton();
+            filterTable();
+        }
+
+        function toggleClearButton() {
+            const searchInput = document.getElementById('searchInput');
+            const clearButton = document.getElementById('clearSearch');
+            if (searchInput.value) {
+                clearButton.classList.add('visible');
+            } else {
+                clearButton.classList.remove('visible');
+            }
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            toggleClearButton();
             filterTable();
         }
 
