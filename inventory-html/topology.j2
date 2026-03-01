@@ -253,6 +253,40 @@
         let currentSite = '';
         let currentLocation = '';
 
+        // Parse URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                site: params.get('site') || '',
+                location: params.get('location') || '',
+                search: params.get('search') || ''
+            };
+        }
+
+        // Update URL with current filter state
+        function updateUrl() {
+            const params = new URLSearchParams();
+
+            if (currentSite) {
+                params.set('site', currentSite);
+            }
+
+            if (currentLocation) {
+                params.set('location', currentLocation);
+            }
+
+            const searchValue = document.getElementById('searchInput').value;
+            if (searchValue) {
+                params.set('search', searchValue);
+            }
+
+            const newUrl = params.toString() ?
+                window.location.pathname + '?' + params.toString() :
+                window.location.pathname;
+
+            history.replaceState(null, '', newUrl);
+        }
+
         // Populate site and location buttons on page load
         document.addEventListener('DOMContentLoaded', function() {
             const table = document.getElementById('inventoryTable');
@@ -291,11 +325,6 @@
                 siteButtons.appendChild(button);
             });
 
-            // If there's only one site, select it by default
-            if (sortedSites.length === 1) {
-                filterBySite(sortedSites[0]);
-            }
-
             // Populate location buttons with sorted locations
             const locationButtons = document.getElementById('locationButtons');
             Array.from(locations).sort().forEach(location => {
@@ -305,6 +334,38 @@
                 button.onclick = function() { filterByLocation(location); };
                 locationButtons.appendChild(button);
             });
+
+            // Get URL parameters
+            const urlParams = getUrlParams();
+
+            // Apply search from URL if present
+            if (urlParams.search) {
+                document.getElementById('searchInput').value = urlParams.search;
+            }
+
+            // Apply filters from URL or defaults
+            let siteToSelect = urlParams.site;
+            let locationToSelect = urlParams.location;
+
+            // If no site in URL and only one site exists, select it by default
+            if (!siteToSelect && sortedSites.length === 1) {
+                siteToSelect = sortedSites[0];
+            }
+
+            // Apply site filter
+            if (siteToSelect) {
+                filterBySite(siteToSelect);
+            }
+
+            // Apply location filter
+            if (locationToSelect) {
+                filterByLocation(locationToSelect);
+            }
+
+            // If we applied search from URL, trigger filter
+            if (urlParams.search) {
+                filterTable();
+            }
         });
 
         function filterBySite(site) {
@@ -329,6 +390,7 @@
                 tableContainer.classList.add('hide-site-column');
             }
 
+            updateUrl();
             filterTable();
         }
 
@@ -354,6 +416,7 @@
                 tableContainer.classList.add('hide-location-column');
             }
 
+            updateUrl();
             filterTable();
         }
 
@@ -362,6 +425,9 @@
             const searchFilter = searchInput.value.toLowerCase();
             const table = document.getElementById('inventoryTable');
             const rows = table.getElementsByTagName('tr');
+
+            // Update URL when search filter changes
+            updateUrl();
 
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
