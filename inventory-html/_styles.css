@@ -307,7 +307,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
+            min-width: 20px;
+            max-width: 20px;
             height: 20px;
             border-radius: 12px;
             margin: 0 3px;
@@ -315,7 +316,7 @@
             vertical-align: middle;
             border: 1px solid rgba(0, 0, 0, 0.1);
             white-space: nowrap;
-            transition: width 0.2s ease, padding 0.2s ease, box-shadow 0.2s ease;
+            transition: max-width 0.15s ease, padding 0.15s ease, box-shadow 0.15s ease;
             position: relative;
             z-index: 1;
         }
@@ -329,12 +330,12 @@
             white-space: nowrap;
             max-width: 0;
             overflow: hidden;
-            transition: max-width 0.2s ease, opacity 0.2s ease;
+            transition: max-width 0.15s ease, opacity 0.15s ease;
             opacity: 0;
         }
 
         .tag-circle:hover {
-            width: auto;
+            max-width: 500px;
             padding: 4px 10px;
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
