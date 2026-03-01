@@ -254,10 +254,18 @@
         .device-name {
             font-weight: 600;
             color: #667eea;
+            overflow: visible !important;
+            position: relative;
         }
 
         .device-name span {
             cursor: pointer;
+            display: inline-block;
+            max-width: calc(100% - 30px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
         }
 
         .device-name span:hover {
