@@ -22,7 +22,7 @@
                         <td class="device-name">{{ name }}</td>
                         <td><span class="role-badge">{{ role_name }}</span></td>
                         <td>{{ site }}</td>
-                        <td>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="location-column">{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{{ platform_name }}</td>
                         <td>{{ vendor_name }}</td>

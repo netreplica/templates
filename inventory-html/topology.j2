@@ -123,6 +123,10 @@
             border-collapse: collapse;
         }
 
+        .hide-location-column .location-column {
+            display: none;
+        }
+
         thead {
             background: #f9fafb;
             border-bottom: 2px solid #e0e0e0;
@@ -213,7 +217,7 @@
                         <th onclick="sortTable(0)">Device Name</th>
                         <th onclick="sortTable(1)">Role</th>
                         <th onclick="sortTable(2)">Site</th>
-                        <th onclick="sortTable(3)">Location</th>
+                        <th class="location-column" onclick="sortTable(3)">Location</th>
                         <th onclick="sortTable(4)">Rack</th>
                         <th onclick="sortTable(5)">Platform</th>
                         <th onclick="sortTable(6)">Vendor</th>
@@ -279,6 +283,14 @@
                     btn.classList.remove('active');
                 }
             });
+
+            // Hide/show location column based on selection
+            const tableContainer = document.querySelector('.table-container');
+            if (location === '') {
+                tableContainer.classList.remove('hide-location-column');
+            } else {
+                tableContainer.classList.add('hide-location-column');
+            }
 
             filterTable();
         }
