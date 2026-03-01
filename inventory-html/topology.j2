@@ -212,6 +212,15 @@
             text-decoration: underline;
         }
 
+        .clickable-search {
+            cursor: pointer;
+        }
+
+        .clickable-search:hover {
+            background: #f0f0f0;
+            text-decoration: underline;
+        }
+
         tbody tr:hover {
             background: #f9fafb;
         }
@@ -475,6 +484,14 @@
                 tableContainer.classList.add('hide-location-column');
             }
 
+            updateUrl();
+            filterTable();
+        }
+
+        function filterBySearch(searchTerm) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = searchTerm;
+            toggleClearButton();
             updateUrl();
             filterTable();
         }

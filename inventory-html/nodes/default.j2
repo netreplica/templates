@@ -20,13 +20,13 @@
 {%- endif -%}
                     <tr>
                         <td class="device-name">{{ name }}</td>
-                        <td><span class="role-badge">{{ role_name }}</span></td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>
                         <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
                         <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
-                        <td>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
-                        <td>{{ platform_name }}</td>
-                        <td>{{ vendor_name }}</td>
-                        <td>{{ model_name }}</td>
+                        <td{% if rack_name %} class="clickable-search" onclick="filterBySearch('{{ rack_name }}')"{% endif %}>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ platform_name }}')">{{ platform_name }}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ vendor_name }}')">{{ vendor_name }}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ model_name }}')">{{ model_name }}</td>
                         <td>{% if primary_ip4_address %}<a href="https://{{ primary_ip4_address }}" target="_blank">{{ primary_ip4_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{% if primary_ip6_address %}<a href="https://[{{ primary_ip6_address }}]" target="_blank">{{ primary_ip6_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                     </tr>
