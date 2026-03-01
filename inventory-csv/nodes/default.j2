@@ -8,4 +8,14 @@
 {%- else -%}
   {%- set primary_ip6_address = "" -%}
 {%- endif -%}
-{{ name }},{{ role_name }},{{ site }},{{ platform_name }},{{ vendor_name }},{{ model_name }},{{ primary_ip4_address }},{{ primary_ip6_address }}
+{%- if location is defined and location -%}
+  {%- set location_name = location.name -%}
+{%- else -%}
+  {%- set location_name = "" -%}
+{%- endif -%}
+{%- if rack is defined and rack -%}
+  {%- set rack_name = rack.name -%}
+{%- else -%}
+  {%- set rack_name = "" -%}
+{%- endif -%}
+{{ name }},{{ role_name }},{{ site }},{{ location_name }},{{ rack_name }},{{ platform_name }},{{ vendor_name }},{{ model_name }},{{ primary_ip4_address }},{{ primary_ip6_address }}

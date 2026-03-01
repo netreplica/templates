@@ -8,10 +8,22 @@
 {%- else -%}
   {%- set primary_ip6_address = "" -%}
 {%- endif -%}
+{%- if location is defined and location -%}
+  {%- set location_name = location.name -%}
+{%- else -%}
+  {%- set location_name = "" -%}
+{%- endif -%}
+{%- if rack is defined and rack -%}
+  {%- set rack_name = rack.name -%}
+{%- else -%}
+  {%- set rack_name = "" -%}
+{%- endif -%}
                     <tr>
                         <td class="device-name">{{ name }}</td>
                         <td><span class="role-badge">{{ role_name }}</span></td>
                         <td>{{ site }}</td>
+                        <td>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{{ platform_name }}</td>
                         <td>{{ vendor_name }}</td>
                         <td>{{ model_name }}</td>
