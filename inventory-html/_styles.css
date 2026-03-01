@@ -314,24 +314,26 @@
             cursor: pointer;
             vertical-align: middle;
             border: 1px solid rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             white-space: nowrap;
-            transition: all 0.2s ease;
+            transition: width 0.2s ease, padding 0.2s ease, box-shadow 0.2s ease;
             position: relative;
+            z-index: 1;
         }
 
         .tag-text {
-            opacity: 0;
             font-size: 12px;
             font-weight: 500;
             color: white;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.2s ease;
             line-height: 1;
+            white-space: nowrap;
+            max-width: 0;
+            overflow: hidden;
+            transition: max-width 0.2s ease, opacity 0.2s ease;
+            opacity: 0;
         }
 
         .tag-circle:hover {
-            position: absolute;
             width: auto;
             padding: 4px 10px;
             z-index: 1000;
@@ -339,6 +341,7 @@
         }
 
         .tag-circle:hover .tag-text {
+            max-width: 500px;
             opacity: 1;
         }
 
