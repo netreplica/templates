@@ -958,17 +958,17 @@
 
                 if (deviceData.ipv4) {
                     detailsHTML += '<div class="detail-label">Primary IPv4:</div>';
-                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.ipv4 + '" target="_blank">' + deviceData.ipv4 + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.ipv4 + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.ipv4 + '" target="_blank">' + (deviceData.ipv4_full || deviceData.ipv4) + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + (deviceData.ipv4_full || deviceData.ipv4) + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 if (deviceData.ipv6) {
                     detailsHTML += '<div class="detail-label">Primary IPv6:</div>';
-                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://[' + deviceData.ipv6 + ']" target="_blank">' + deviceData.ipv6 + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.ipv6 + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://[' + deviceData.ipv6 + ']" target="_blank">' + (deviceData.ipv6_full || deviceData.ipv6) + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + (deviceData.ipv6_full || deviceData.ipv6) + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 if (deviceData.oob_ip) {
                     detailsHTML += '<div class="detail-label">OOB IP:</div>';
-                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.oob_ip + '" target="_blank">' + deviceData.oob_ip + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + deviceData.oob_ip + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
+                    detailsHTML += '<div class="detail-value detail-value-with-copy"><a href="https://' + deviceData.oob_ip + '" target="_blank">' + (deviceData.oob_ip_full || deviceData.oob_ip) + '</a><button class="copy-btn" onclick="copyToClipboard(\'' + (deviceData.oob_ip_full || deviceData.oob_ip) + '\', this)" title="Copy to clipboard">' + copyIcon + '</button></div>';
                 }
 
                 detailsHTML += '</div></div>';
