@@ -33,27 +33,27 @@
   {%- set oob_ip_address = "" -%}
 {%- endif -%}
                     <tr data-device-info='{
-                        "name": "{{ name }}",
-                        "role": "{{ role_name }}",
-                        "site": "{{ site }}",
-                        "location": "{{ location_name }}",
-                        "location_description": "{{ location_description }}",
-                        "rack": "{{ rack_name }}",
-                        "platform": "{{ platform_name }}",
-                        "vendor": "{{ vendor_name }}",
-                        "model": "{{ model_name }}",
-                        "serial": "{{ serial }}",
-                        "asset_tag": "{{ asset_tag }}",
-                        "ipv4": "{{ primary_ip4_address }}",
-                        "ipv6": "{{ primary_ip6_address }}",
-                        "oob_ip": "{{ oob_ip_address }}",
-                        "status": "{{ status.label if status else '' }}",
-                        "description": "{{ description }}",
-                        "comments": "{{ comments }}",
-                        "url": "{{ url }}",
-                        "display_url": "{{ display_url }}"
+                        "name": {{ name | tojson }},
+                        "role": {{ role_name | tojson }},
+                        "site": {{ site | tojson }},
+                        "location": {{ location_name | tojson }},
+                        "location_description": {{ location_description | tojson }},
+                        "rack": {{ rack_name | tojson }},
+                        "platform": {{ platform_name | tojson }},
+                        "vendor": {{ vendor_name | tojson }},
+                        "model": {{ model_name | tojson }},
+                        "serial": {{ serial | tojson }},
+                        "asset_tag": {{ asset_tag | tojson }},
+                        "ipv4": {{ primary_ip4_address | tojson }},
+                        "ipv6": {{ primary_ip6_address | tojson }},
+                        "oob_ip": {{ oob_ip_address | tojson }},
+                        "status": {{ (status.label if status else '') | tojson }},
+                        "description": {{ description | tojson }},
+                        "comments": {{ comments | tojson }},
+                        "url": {{ url | tojson }},
+                        "display_url": {{ display_url | tojson }}
                     }'>
-                        <td class="device-name"><span onclick="showDeviceDetails(this.parentElement)">{{ name }}</span><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ name }}', this);" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg></button></td>
+                        <td class="device-name"><span onclick="showDeviceDetails(this.closest('tr'))">{{ name }}</span><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ name }}', this);" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg></button></td>
                         <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>
                         <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
                         <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
