@@ -253,6 +253,140 @@
             color: #999;
             font-style: italic;
         }
+
+        .device-name {
+            cursor: pointer;
+        }
+
+        .device-name:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px 20px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            text-align: right;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .detail-value a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .detail-value a:hover {
+            text-decoration: underline;
+        }
+
+        .detail-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .detail-section:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .detail-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -299,8 +433,9 @@
                         <th onclick="sortTable(5)">Platform</th>
                         <th onclick="sortTable(6)">Vendor</th>
                         <th onclick="sortTable(7)">Model</th>
-                        <th onclick="sortTable(8)">IPv4 Address</th>
-                        <th onclick="sortTable(9)">IPv6 Address</th>
+                        <th onclick="sortTable(8)">Serial Number</th>
+                        <th onclick="sortTable(9)">IPv4 Address</th>
+                        <th onclick="sortTable(10)">IPv6 Address</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -313,6 +448,19 @@
 
         <div class="footer">
             NetBox Device Inventory Report
+        </div>
+    </div>
+
+    <!-- Modal for device details -->
+    <div id="deviceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalDeviceName">Device Details</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Device details will be populated here -->
+            </div>
         </div>
     </div>
 
@@ -587,6 +735,154 @@
             rows.forEach(row => table.tBodies[0].appendChild(row));
             table.setAttribute('data-sort-asc', !isAscending);
         }
+
+        // Modal functions
+        function showDeviceDetails(rowElement) {
+            const deviceData = JSON.parse(rowElement.getAttribute('data-device-info'));
+            const modal = document.getElementById('deviceModal');
+            const modalBody = document.getElementById('modalBody');
+            const modalTitle = document.getElementById('modalDeviceName');
+
+            modalTitle.textContent = deviceData.name;
+
+            let detailsHTML = '';
+
+            // Basic Information Section
+            detailsHTML += '<div class="detail-section">';
+            detailsHTML += '<div class="detail-section-title">Basic Information</div>';
+            detailsHTML += '<div class="detail-grid">';
+
+            detailsHTML += '<div class="detail-label">Device Name:</div>';
+            detailsHTML += '<div class="detail-value">' + deviceData.name + '</div>';
+
+            if (deviceData.status) {
+                detailsHTML += '<div class="detail-label">Status:</div>';
+                detailsHTML += '<div class="detail-value">' + deviceData.status + '</div>';
+            }
+
+            detailsHTML += '<div class="detail-label">Role:</div>';
+            detailsHTML += '<div class="detail-value"><span class="role-badge">' + deviceData.role + '</span></div>';
+
+            detailsHTML += '<div class="detail-label">Site:</div>';
+            detailsHTML += '<div class="detail-value">' + deviceData.site + '</div>';
+
+            if (deviceData.location) {
+                detailsHTML += '<div class="detail-label">Location:</div>';
+                detailsHTML += '<div class="detail-value">' + deviceData.location;
+                if (deviceData.location_description) {
+                    detailsHTML += ' <span style="color: #999; font-size: 12px;">(' + deviceData.location_description + ')</span>';
+                }
+                detailsHTML += '</div>';
+            }
+
+            if (deviceData.rack) {
+                detailsHTML += '<div class="detail-label">Rack:</div>';
+                detailsHTML += '<div class="detail-value">' + deviceData.rack + '</div>';
+            }
+
+            detailsHTML += '</div></div>';
+
+            // Hardware Information Section
+            detailsHTML += '<div class="detail-section">';
+            detailsHTML += '<div class="detail-section-title">Hardware</div>';
+            detailsHTML += '<div class="detail-grid">';
+
+            detailsHTML += '<div class="detail-label">Vendor:</div>';
+            detailsHTML += '<div class="detail-value">' + deviceData.vendor + '</div>';
+
+            detailsHTML += '<div class="detail-label">Model:</div>';
+            detailsHTML += '<div class="detail-value">' + deviceData.model + '</div>';
+
+            detailsHTML += '<div class="detail-label">Platform:</div>';
+            detailsHTML += '<div class="detail-value">' + deviceData.platform + '</div>';
+
+            if (deviceData.serial) {
+                detailsHTML += '<div class="detail-label">Serial Number:</div>';
+                detailsHTML += '<div class="detail-value">' + deviceData.serial + '</div>';
+            }
+
+            if (deviceData.asset_tag) {
+                detailsHTML += '<div class="detail-label">Asset Tag:</div>';
+                detailsHTML += '<div class="detail-value">' + deviceData.asset_tag + '</div>';
+            }
+
+            detailsHTML += '</div></div>';
+
+            // Network Information Section
+            if (deviceData.ipv4 || deviceData.ipv6 || deviceData.oob_ip) {
+                detailsHTML += '<div class="detail-section">';
+                detailsHTML += '<div class="detail-section-title">Network</div>';
+                detailsHTML += '<div class="detail-grid">';
+
+                if (deviceData.ipv4) {
+                    detailsHTML += '<div class="detail-label">Primary IPv4:</div>';
+                    detailsHTML += '<div class="detail-value"><a href="https://' + deviceData.ipv4 + '" target="_blank">' + deviceData.ipv4 + '</a></div>';
+                }
+
+                if (deviceData.ipv6) {
+                    detailsHTML += '<div class="detail-label">Primary IPv6:</div>';
+                    detailsHTML += '<div class="detail-value"><a href="https://[' + deviceData.ipv6 + ']" target="_blank">' + deviceData.ipv6 + '</a></div>';
+                }
+
+                if (deviceData.oob_ip) {
+                    detailsHTML += '<div class="detail-label">OOB IP:</div>';
+                    detailsHTML += '<div class="detail-value"><a href="https://' + deviceData.oob_ip + '" target="_blank">' + deviceData.oob_ip + '</a></div>';
+                }
+
+                detailsHTML += '</div></div>';
+            }
+
+            // Additional Information Section
+            if (deviceData.description || deviceData.comments) {
+                detailsHTML += '<div class="detail-section">';
+                detailsHTML += '<div class="detail-section-title">Additional Information</div>';
+                detailsHTML += '<div class="detail-grid">';
+
+                if (deviceData.description) {
+                    detailsHTML += '<div class="detail-label">Description:</div>';
+                    detailsHTML += '<div class="detail-value">' + deviceData.description + '</div>';
+                }
+
+                if (deviceData.comments) {
+                    detailsHTML += '<div class="detail-label">Comments:</div>';
+                    detailsHTML += '<div class="detail-value">' + deviceData.comments + '</div>';
+                }
+
+                detailsHTML += '</div></div>';
+            }
+
+            // NetBox Link Section
+            if (deviceData.display_url) {
+                detailsHTML += '<div class="detail-section">';
+                detailsHTML += '<div class="detail-grid">';
+                detailsHTML += '<div class="detail-label">NetBox:</div>';
+                detailsHTML += '<div class="detail-value"><a href="' + deviceData.display_url + '" target="_blank">View in NetBox</a></div>';
+                detailsHTML += '</div></div>';
+            }
+
+            modalBody.innerHTML = detailsHTML;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('deviceModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('deviceModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>

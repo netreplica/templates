@@ -15,11 +15,45 @@
 {%- endif -%}
 {%- if rack is defined and rack -%}
   {%- set rack_name = rack.name -%}
+  {%- set rack_url = rack.url -%}
 {%- else -%}
   {%- set rack_name = "" -%}
+  {%- set rack_url = "" -%}
 {%- endif -%}
-                    <tr>
-                        <td class="device-name">{{ name }}</td>
+{%- if location is defined and location -%}
+  {%- set location_url = location.url -%}
+  {%- set location_description = location.description -%}
+{%- else -%}
+  {%- set location_url = "" -%}
+  {%- set location_description = "" -%}
+{%- endif -%}
+{%- if oob_ip is defined and oob_ip -%}
+  {%- set oob_ip_address = oob_ip.address.split("/")[0] -%}
+{%- else -%}
+  {%- set oob_ip_address = "" -%}
+{%- endif -%}
+                    <tr data-device-info='{
+                        "name": "{{ name }}",
+                        "role": "{{ role_name }}",
+                        "site": "{{ site }}",
+                        "location": "{{ location_name }}",
+                        "location_description": "{{ location_description }}",
+                        "rack": "{{ rack_name }}",
+                        "platform": "{{ platform_name }}",
+                        "vendor": "{{ vendor_name }}",
+                        "model": "{{ model_name }}",
+                        "serial": "{{ serial }}",
+                        "asset_tag": "{{ asset_tag }}",
+                        "ipv4": "{{ primary_ip4_address }}",
+                        "ipv6": "{{ primary_ip6_address }}",
+                        "oob_ip": "{{ oob_ip_address }}",
+                        "status": "{{ status.label if status else '' }}",
+                        "description": "{{ description }}",
+                        "comments": "{{ comments }}",
+                        "url": "{{ url }}",
+                        "display_url": "{{ display_url }}"
+                    }'>
+                        <td class="device-name" onclick="showDeviceDetails(this.parentElement)">{{ name }}</td>
                         <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>
                         <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
                         <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
@@ -27,6 +61,7 @@
                         <td class="clickable-search" onclick="filterBySearch('{{ platform_name }}')">{{ platform_name }}</td>
                         <td class="clickable-search" onclick="filterBySearch('{{ vendor_name }}')">{{ vendor_name }}</td>
                         <td class="clickable-search" onclick="filterBySearch('{{ model_name }}')">{{ model_name }}</td>
+                        <td class="serial-column">{{ serial }}</td>
                         <td>{% if primary_ip4_address %}<a href="https://{{ primary_ip4_address }}" target="_blank">{{ primary_ip4_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{% if primary_ip6_address %}<a href="https://[{{ primary_ip6_address }}]" target="_blank">{{ primary_ip6_address }}</a>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                     </tr>
