@@ -60,7 +60,8 @@
                         "description": {{ description | tojson }},
                         "comments": {{ comments | tojson }},
                         "url": {{ url | tojson }},
-                        "display_url": {{ display_url | tojson }}
+                        "display_url": {{ display_url | tojson }},
+                        "tags": {{ tags | tojson }}
                     }'>
                         <td class="device-name"><span onclick="showDeviceDetails(this.closest('tr'))">{{ name }}</span><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ name }}', this);" title="Copy to clipboard">{% include 'inventory-html/_copy_icon.j2' %}</button></td>
                         <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>

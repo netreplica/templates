@@ -320,6 +320,15 @@
             detailsHTML += '<div class="detail-label">Role:</div>';
             detailsHTML += '<div class="detail-value"><span class="role-badge">' + deviceData.role + '</span></div>';
 
+            if (deviceData.tags && deviceData.tags.length > 0) {
+                detailsHTML += '<div class="detail-label">Tags:</div>';
+                detailsHTML += '<div class="detail-value">';
+                deviceData.tags.forEach(function(tag) {
+                    detailsHTML += '<span class="tag-badge" style="background-color: #' + tag.color + '; color: white; display: inline-block; padding: 4px 10px; border-radius: 12px; margin: 0 6px 4px 0; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid rgba(0, 0, 0, 0.1);" onclick="closeModal(); filterBySearch(\'' + tag.name + '\')">' + tag.name + '</span>';
+                });
+                detailsHTML += '</div>';
+            }
+
             detailsHTML += '<div class="detail-label">Site:</div>';
             detailsHTML += '<div class="detail-value">' + deviceData.site + '</div>';
 
