@@ -21,8 +21,8 @@
                     <tr>
                         <td class="device-name">{{ name }}</td>
                         <td><span class="role-badge">{{ role_name }}</span></td>
-                        <td class="site-column">{{ site }}</td>
-                        <td class="location-column">{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
+                        <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
                         <td>{{ platform_name }}</td>
                         <td>{{ vendor_name }}</td>
