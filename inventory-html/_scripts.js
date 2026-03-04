@@ -2,6 +2,10 @@
         let currentSite = '';
         let currentLocation = '';
 
+        // Sort indicator SVG icons
+        const sortAscIcon = '{% include "inventory-html/_sort_asc_icon.j2" %}';
+        const sortDescIcon = '{% include "inventory-html/_sort_desc_icon.j2" %}';
+
         // Parse URL parameters
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
@@ -149,8 +153,7 @@
                 filterTable();
             }
 
-            // Sort by device name (column 0) in descending order by default on page load
-            table.setAttribute('data-sort-asc', 'true'); // Set to true so sortTable will reverse to descending
+            // Sort by device name (column 0) in ascending order by default on page load
             sortTable(0);
         });
 
@@ -290,7 +293,11 @@
         function sortTable(column) {
             const table = document.getElementById('inventoryTable');
             const rows = Array.from(table.rows).slice(1);
+            const lastSortedColumn = parseInt(table.getAttribute('data-sort-column') || '-1');
             const isAscending = table.getAttribute('data-sort-asc') === 'true';
+
+            // If clicking a new column, default to ascending. If same column, toggle.
+            const shouldSortAscending = (column === lastSortedColumn) ? !isAscending : true;
 
             rows.sort((a, b) => {
                 const aText = a.cells[column].textContent.trim();
@@ -299,11 +306,31 @@
                 if (aText === bText) return 0;
 
                 const comparison = aText.localeCompare(bText, undefined, {numeric: true});
-                return isAscending ? comparison : -comparison;
+                return shouldSortAscending ? comparison : -comparison;
             });
 
             rows.forEach(row => table.tBodies[0].appendChild(row));
-            table.setAttribute('data-sort-asc', !isAscending);
+            table.setAttribute('data-sort-column', column);
+            table.setAttribute('data-sort-asc', shouldSortAscending);
+
+            // Update sort indicators
+            const headers = table.querySelectorAll('th');
+            headers.forEach((th, index) => {
+                const indicator = th.querySelector('.sort-indicator');
+                if (index === column) {
+                    th.classList.remove('sorted-asc', 'sorted-desc');
+                    if (shouldSortAscending) {
+                        th.classList.add('sorted-asc');
+                        indicator.innerHTML = sortAscIcon;
+                    } else {
+                        th.classList.add('sorted-desc');
+                        indicator.innerHTML = sortDescIcon;
+                    }
+                } else {
+                    th.classList.remove('sorted-asc', 'sorted-desc');
+                    indicator.innerHTML = '';
+                }
+            });
         }
 
         // Modal functions

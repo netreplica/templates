@@ -192,6 +192,20 @@
             cursor: pointer;
         }
 
+        .sort-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 4px;
+            vertical-align: middle;
+            opacity: 0;
+        }
+
+        th.sorted-asc .sort-indicator,
+        th.sorted-desc .sort-indicator {
+            opacity: 1;
+        }
+
         td {
             padding: 12px 8px;
             border-bottom: 1px solid #f0f0f0;
