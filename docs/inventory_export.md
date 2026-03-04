@@ -66,17 +66,17 @@ An interactive HTML report with advanced filtering, search, and device details c
 - **Auto-hide IPv4/IPv6**: IP address columns hidden automatically when no data present
 
 **Columns** (11 total):
-1. Device Name (16% width, clickable for details)
-2. Role (9% width, clickable badge)
-3. Tags (7% width, expandable colored circles)
-4. Site (7% width, clickable filter)
-5. Location (7% width, clickable filter)
-6. Rack (5% width, searchable)
-7. Platform (10% width, searchable)
-8. Vendor (7% width)
-9. Model (11% width)
-10. IPv4 Address (10% width, never truncates, auto-hides if empty)
-11. IPv6 Address (10% width, auto-hides if empty)
+1. Device Name (clickable for details)
+2. Role (clickable badge)
+3. Tags (expandable colored circles)
+4. Site (clickable filter)
+5. Location (clickable filter)
+6. Rack (searchable)
+7. Platform (searchable)
+8. Vendor
+9. Model
+10. IPv4 Address (never truncates, auto-hides if empty)
+11. IPv6 Address (auto-hides if empty)
 
 #### Device Details Modal
 
