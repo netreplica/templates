@@ -382,7 +382,6 @@ Both formats handle special characters safely:
 
 Potential improvements for future versions:
 
-- **CSV**: Add optional tags column, serial numbers, status fields
 - **HTML**:
   - Export filtered results to CSV
   - Print-friendly view
