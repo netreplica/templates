@@ -19,26 +19,33 @@ A simple CSV (Comma-Separated Values) export suitable for spreadsheets and datab
 **Columns**:
 1. Device Name
 2. Role
-3. Site
-4. Location
-5. Rack
-6. Platform
-7. Vendor
-8. Model
-9. IPv4 Address (with CIDR notation, e.g., 10.1.1.1/24)
-10. IPv6 Address (with prefix length, e.g., 2001:db8::1/64)
+3. Status (e.g., Active, Staged, Decommissioning)
+4. Site
+5. Location
+6. Rack
+7. Platform
+8. Vendor
+9. Model
+10. Serial Number
+11. Asset Tag
+12. IPv4 Address (with CIDR notation, e.g., 10.1.1.1/24)
+13. IPv6 Address (with prefix length, e.g., 2001:db8::1/64)
+14. Tags (semicolon-separated, e.g., "production; monitored; critical")
 
 **Features**:
 - Standard CSV format with header row
 - Compatible with Excel, Google Sheets, and database imports
 - IP addresses include full subnet masks
+- Multiple tags separated by semicolons
 - Empty fields output as blank values
+- Includes hardware details (serial number, asset tag)
+- Device status for lifecycle tracking
 
 **Example Output**:
 ```csv
-Device Name,Role,Site,Location,Rack,Platform,Vendor,Model,IPv4 Address,IPv6 Address
-spine01,Spine,Santa Clara,Data Center 1,Rack 1,Arista EOS,Arista,DCS-7280CR3-32P4,10.1.1.1/24,2001:db8::1/64
-leaf01,Leaf,Santa Clara,Data Center 1,Rack 2,Arista EOS,Arista,DCS-7050SX3-48YC8,10.1.1.2/24,2001:db8::2/64
+Device Name,Role,Status,Site,Location,Rack,Platform,Vendor,Model,Serial Number,Asset Tag,IPv4 Address,IPv6 Address,Tags
+spine01,Spine,Active,Santa Clara,DC1,Rack1,Arista EOS,Arista,DCS-7280CR3-32P4,SN12345,AT001,10.1.1.1/24,2001:db8::1/64,production; core
+leaf01,Leaf,Active,Santa Clara,DC1,Rack2,Arista EOS,Arista,DCS-7050SX3-48YC8,SN12346,AT002,10.1.1.2/24,2001:db8::2/64,production; access
 ```
 
 ---
