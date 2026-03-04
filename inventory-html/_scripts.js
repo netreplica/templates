@@ -42,12 +42,14 @@
             const rows = table.getElementsByTagName('tr');
             const sites = new Set();
             const locations = new Set();
+            let hasIpv4 = false;
             let hasIpv6 = false;
 
-            // Extract unique sites and locations from table, check for IPv6
+            // Extract unique sites and locations from table, check for IPv4 and IPv6
             for (let i = 1; i < rows.length; i++) {
                 const siteCell = rows[i].cells[3]; // Site is column 3
                 const locationCell = rows[i].cells[4]; // Location is column 4
+                const ipv4Cell = rows[i].cells[9]; // IPv4 is column 9
                 const ipv6Cell = rows[i].cells[10]; // IPv6 is column 10
 
                 if (siteCell) {
@@ -64,6 +66,14 @@
                     }
                 }
 
+                // Check if IPv4 column has any data
+                if (ipv4Cell) {
+                    const ipv4Text = ipv4Cell.textContent.trim();
+                    if (ipv4Text && ipv4Text !== '-') {
+                        hasIpv4 = true;
+                    }
+                }
+
                 // Check if IPv6 column has any data
                 if (ipv6Cell) {
                     const ipv6Text = ipv6Cell.textContent.trim();
@@ -71,6 +81,12 @@
                         hasIpv6 = true;
                     }
                 }
+            }
+
+            // Hide IPv4 column if no data
+            if (!hasIpv4) {
+                const tableContainer = document.querySelector('.table-container');
+                tableContainer.classList.add('hide-ipv4-column');
             }
 
             // Hide IPv6 column if no data

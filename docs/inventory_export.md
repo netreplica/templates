@@ -63,7 +63,7 @@ An interactive HTML report with advanced filtering, search, and device details c
 - **Site/Location filters**: Quick-filter buttons with device counts
 - **URL parameters**: Shareable links with pre-applied filters
 - **Responsive layout**: Fixed column widths prevent horizontal scrolling
-- **Auto-hide IPv6**: Column hidden automatically when no IPv6 data present
+- **Auto-hide IPv4/IPv6**: IP address columns hidden automatically when no data present
 
 **Columns** (11 total):
 1. Device Name (16% width, clickable for details)
@@ -75,7 +75,7 @@ An interactive HTML report with advanced filtering, search, and device details c
 7. Platform (10% width, searchable)
 8. Vendor (7% width)
 9. Model (11% width)
-10. IPv4 Address (10% width, never truncates)
+10. IPv4 Address (10% width, never truncates, auto-hides if empty)
 11. IPv6 Address (10% width, auto-hides if empty)
 
 #### Device Details Modal

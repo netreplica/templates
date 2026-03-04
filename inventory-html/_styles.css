@@ -163,6 +163,11 @@
             display: none;
         }
 
+        .hide-ipv4-column th:nth-child(10),
+        .hide-ipv4-column td:nth-child(10) {
+            display: none;
+        }
+
         .hide-ipv6-column .ipv6-column {
             display: none;
         }
