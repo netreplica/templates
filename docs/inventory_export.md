@@ -162,16 +162,18 @@ Export inventory for a single site:
 
 ```bash
 # CSV format
-nrx export -o inventory-csv -s "Site Name" -D ./output
+nrx export -o inventory-csv -s "Site Name" -D ./output --nolinks
 
 # HTML format
-nrx export -o inventory-html -s "Site Name" -D ./output
+nrx export -o inventory-html -s "Site Name" -D ./output --nolinks
 ```
+
+**Note**: Use `--nolinks` flag for faster exports. Inventory formats only use device-level data and don't require link/interface information.
 
 ### Filter by Multiple Sites
 
 ```bash
-nrx export -o inventory-html --sites "Site1,Site2,Site3" -D ./output
+nrx export -o inventory-html --sites "Site1,Site2,Site3" -D ./output --nolinks
 ```
 
 ### Filter by Tags
@@ -179,13 +181,13 @@ nrx export -o inventory-html --sites "Site1,Site2,Site3" -D ./output
 Export only devices with specific tags:
 
 ```bash
-nrx export -o inventory-html -s "Site Name" -t "production,monitored" -D ./output
+nrx export -o inventory-html -s "Site Name" -t "production,monitored" -D ./output --nolinks
 ```
 
 ### Custom Output Name
 
 ```bash
-nrx export -o inventory-csv -s "Site Name" -n "My Custom Inventory" -D ./output
+nrx export -o inventory-csv -s "Site Name" -n "My Custom Inventory" -D ./output --nolinks
 # Creates: ./output/My Custom Inventory.csv
 ```
 
@@ -194,7 +196,22 @@ nrx export -o inventory-csv -s "Site Name" -n "My Custom Inventory" -D ./output
 Export from a previously saved NetBox data file:
 
 ```bash
-nrx export -i cyjs -f netbox-data.cyjs -o inventory-html -D ./output
+nrx export -i cyjs -f netbox-data.cyjs -o inventory-html -D ./output --nolinks
+```
+
+### Performance Tip
+
+Always use `--nolinks` when exporting inventory formats:
+- **Faster exports**: Skips unnecessary link/interface data fetching
+- **Smaller memory footprint**: Only device data is processed
+- **Recommended for all inventory exports**: Both CSV and HTML formats
+
+```bash
+# Fast export (recommended)
+nrx export -o inventory-html -s "Large Site" -D ./output --nolinks
+
+# Slower export (fetches unused link data)
+nrx export -o inventory-html -s "Large Site" -D ./output
 ```
 
 ---
