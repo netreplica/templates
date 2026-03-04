@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} - Device Inventory</title>
+{% include 'inventory-html/_styles.css' %}
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ name }}</h1>
+            <p>Device Inventory Report</p>
+        </div>
+
+{% include 'inventory-html/_controls.html' %}
+
+        <div class="table-container">
+            <table id="inventoryTable">
+{% include 'inventory-html/_table_header.html' %}
+                <tbody>
+{% for node in rendered_nodes -%}
+{{ node }}
+{%- endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            NetBox Device Inventory Report | Generated with <a href="https://netreplica.com" target="_blank" rel="noopener noreferrer">netreplica nrx</a>
+        </div>
+    </div>
+
+{% include 'inventory-html/_modal.html' %}
+{% include 'inventory-html/_scripts.js' %}
+</body>
+</html>

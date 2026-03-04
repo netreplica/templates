@@ -1,0 +1,41 @@
+{% if primary_ip4 is defined -%}
+  {%- set primary_ip4_address = primary_ip4 -%}
+{%- else -%}
+  {%- set primary_ip4_address = "" -%}
+{%- endif -%}
+{%- if primary_ip6 is defined -%}
+  {%- set primary_ip6_address = primary_ip6 -%}
+{%- else -%}
+  {%- set primary_ip6_address = "" -%}
+{%- endif -%}
+{%- if location is defined and location -%}
+  {%- set location_name = location.name -%}
+{%- else -%}
+  {%- set location_name = "" -%}
+{%- endif -%}
+{%- if rack is defined and rack -%}
+  {%- set rack_name = rack.name -%}
+{%- else -%}
+  {%- set rack_name = "" -%}
+{%- endif -%}
+{%- if status is defined and status -%}
+  {%- set status_label = status.label -%}
+{%- else -%}
+  {%- set status_label = "" -%}
+{%- endif -%}
+{%- if serial is defined and serial -%}
+  {%- set serial_number = serial -%}
+{%- else -%}
+  {%- set serial_number = "" -%}
+{%- endif -%}
+{%- if asset_tag is defined and asset_tag -%}
+  {%- set asset_tag_value = asset_tag -%}
+{%- else -%}
+  {%- set asset_tag_value = "" -%}
+{%- endif -%}
+{%- if tags is defined and tags -%}
+  {%- set tags_list = tags | map(attribute='name') | join('; ') -%}
+{%- else -%}
+  {%- set tags_list = "" -%}
+{%- endif -%}
+{{ name }},{{ role_name }},{{ status_label }},{{ site }},{{ location_name }},{{ rack_name }},{{ platform_name }},{{ vendor_name }},{{ model_name }},{{ serial_number }},{{ asset_tag_value }},{{ primary_ip4_address }},{{ primary_ip6_address }},{{ tags_list }}

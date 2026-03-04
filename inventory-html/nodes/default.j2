@@ -1,0 +1,77 @@
+{% if primary_ip4 is defined -%}
+  {%- set primary_ip4_address = primary_ip4.split("/")[0] -%}
+  {%- set primary_ip4_full = primary_ip4 -%}
+{%- else -%}
+  {%- set primary_ip4_address = "" -%}
+  {%- set primary_ip4_full = "" -%}
+{%- endif -%}
+{%- if primary_ip6 is defined -%}
+  {%- set primary_ip6_address = primary_ip6.split("/")[0] -%}
+  {%- set primary_ip6_full = primary_ip6 -%}
+{%- else -%}
+  {%- set primary_ip6_address = "" -%}
+  {%- set primary_ip6_full = "" -%}
+{%- endif -%}
+{%- if location is defined and location -%}
+  {%- set location_name = location.name -%}
+{%- else -%}
+  {%- set location_name = "" -%}
+{%- endif -%}
+{%- if rack is defined and rack -%}
+  {%- set rack_name = rack.name -%}
+  {%- set rack_url = rack.url -%}
+{%- else -%}
+  {%- set rack_name = "" -%}
+  {%- set rack_url = "" -%}
+{%- endif -%}
+{%- if location is defined and location -%}
+  {%- set location_url = location.url -%}
+  {%- set location_description = location.description -%}
+{%- else -%}
+  {%- set location_url = "" -%}
+  {%- set location_description = "" -%}
+{%- endif -%}
+{%- if oob_ip is defined and oob_ip -%}
+  {%- set oob_ip_address = oob_ip.address.split("/")[0] -%}
+  {%- set oob_ip_full = oob_ip.address -%}
+{%- else -%}
+  {%- set oob_ip_address = "" -%}
+  {%- set oob_ip_full = "" -%}
+{%- endif -%}
+                    <tr data-device-info='{
+                        "name": {{ name | tojson }},
+                        "role": {{ role_name | tojson }},
+                        "site": {{ site | tojson }},
+                        "location": {{ location_name | tojson }},
+                        "location_description": {{ location_description | tojson }},
+                        "rack": {{ rack_name | tojson }},
+                        "platform": {{ platform_name | tojson }},
+                        "vendor": {{ vendor_name | tojson }},
+                        "model": {{ model_name | tojson }},
+                        "serial": {{ serial | tojson }},
+                        "asset_tag": {{ asset_tag | tojson }},
+                        "ipv4": {{ primary_ip4_address | tojson }},
+                        "ipv4_full": {{ primary_ip4_full | tojson }},
+                        "ipv6": {{ primary_ip6_address | tojson }},
+                        "ipv6_full": {{ primary_ip6_full | tojson }},
+                        "oob_ip": {{ oob_ip_address | tojson }},
+                        "oob_ip_full": {{ oob_ip_full | tojson }},
+                        "status": {{ (status.label if status else '') | tojson }},
+                        "description": {{ description | tojson }},
+                        "comments": {{ comments | tojson }},
+                        "url": {{ url | tojson }},
+                        "display_url": {{ display_url | tojson }},
+                        "tags": {{ tags | tojson }}
+                    }'>
+                        <td class="device-name"><span onclick="showDeviceDetails(this.closest('tr'))">{{ name }}</span><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ name }}', this);" title="Copy to clipboard">{% include 'inventory-html/_copy_icon.j2' %}</button></td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ role_name }}')"><span class="role-badge">{{ role_name }}</span></td>
+                        <td class="tags-column">{% if tags %}{% for tag in tags %}<span class="tag-circle" style="background-color: #{{ tag.color }};" onclick="filterBySearch('{{ tag.name }}')"><span class="tag-text">{{ tag.name }}</span></span>{% endfor %}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="site-column clickable-filter" onclick="filterBySite('{{ site }}')">{{ site }}</td>
+                        <td class="location-column{% if location_name %} clickable-filter{% endif %}"{% if location_name %} onclick="filterByLocation('{{ location_name }}')"{% endif %}>{% if location_name %}{{ location_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td{% if rack_name %} class="clickable-search" onclick="filterBySearch('{{ rack_name }}')"{% endif %}>{% if rack_name %}{{ rack_name }}{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ platform_name }}')">{{ platform_name }}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ vendor_name }}')">{{ vendor_name }}</td>
+                        <td class="clickable-search" onclick="filterBySearch('{{ model_name }}')">{{ model_name }}</td>
+                        <td>{% if primary_ip4_address %}<a href="https://{{ primary_ip4_address }}" target="_blank">{{ primary_ip4_address }}</a><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ primary_ip4_address }}', this);" title="Copy to clipboard">{% include 'inventory-html/_copy_icon.j2' %}</button>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                        <td class="ipv6-column">{% if primary_ip6_address %}<a href="https://[{{ primary_ip6_address }}]" target="_blank">{{ primary_ip6_address }}</a><button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('{{ primary_ip6_address }}', this);" title="Copy to clipboard">{% include 'inventory-html/_copy_icon.j2' %}</button>{% else %}<span class="empty-cell">-</span>{% endif %}</td>
+                    </tr>
